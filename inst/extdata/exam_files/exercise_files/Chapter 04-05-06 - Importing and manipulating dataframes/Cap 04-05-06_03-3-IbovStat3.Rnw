@@ -1,0 +1,40 @@
+<<echo=FALSE, results=hide>>=
+sol.q <- sum(sign(df.ibov$ret.adjusted.prices) == sign(lag(df.ibov$ret.adjusted.prices)), 
+             na.rm = TRUE)
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(floor(rnd.vec*sol.q) , digits = 4)
+
+
+@
+
+\begin{question}
+
+Considerando os retornos do Ibovespa, quantas vezes o sinal do retorno repetiu-se ao longo do tempo? Isto é, quantas dias existem onde um retorno positivo (negativo) é seguido por outro retorno positivo (negativo)?
+
+\begin{answerlist}
+  \item \Sexpr{my.answers[1]}
+  \item \Sexpr{my.answers[2]}
+  \item \Sexpr{my.answers[3]}
+  \item \Sexpr{my.answers[4]}
+  \item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+  \item True.
+  \item False.
+  \item False.
+  \item False.
+  \item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.3}
+\exshuffle{TRUE}
+

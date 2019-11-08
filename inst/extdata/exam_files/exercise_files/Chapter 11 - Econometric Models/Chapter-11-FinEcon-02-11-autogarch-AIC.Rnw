@@ -1,0 +1,95 @@
+<<echo=FALSE, results=hide>>=
+#library(fGarch)
+library(tidyverse)
+library(purrr)
+
+f.in <- get_SP500_file()
+df.stocks <- get_SP500_data()
+
+max.lag <- 2
+
+unique.stocks <- unique(df.stocks$ticker)
+my.rnd.stock <- sample(unique.stocks, 1)
+
+temp.df <- df.stocks %>%
+  dplyr:::filter(ticker == my.rnd.stock)
+
+
+auto.garch <- function(y.in, max.lag) {
+  df.est <- na.omit(data_frame(y = y.in))
+  
+  df.formula <- expand.grid(AR = 1:max.lag,
+                            MA = 1:max.lag,
+                            ARCH = 1:max.lag,
+                            GARCH = 1:max.lag)
+  
+  df.formula <- as.tibble(df.formula)
+  df.formula$formula <- paste0('y ~ arma(', df.formula$AR,', ',df.formula$MA ,') + ',
+                               'garch(',df.formula$ARCH, ', ', df.formula$GARCH, ')')
+  
+  my.l <- pmap(.l = list(data = rep(list(df.est), nrow(df.formula) ),
+                         formula = lapply(df.formula$formula, formula),
+                         trace = rep(TRUE, nrow(df.formula))), 
+               .f = fGarch::garchFit)
+  
+  aic.vec <- sapply(my.l, function(x) x@fit$ics['AIC'])
+  
+  best.model <- my.l[[which.min(aic.vec)]]
+  
+  return(list(best.model, df.formula))
+}
+
+my.best.model <- auto.garch(y.in = temp.df$ret.adjusted.prices, max.lag = max.lag)
+
+df.formula <- my.best.model[[2]]
+
+best.formula <- paste0('y ~ ', as.character(my.best.model[[1]]@formula)[3])
+
+possible.answers <- df.formula$formula[df.formula$formula != best.formula]
+
+my.answers <- c(best.formula, sample(possible.answers, 4))
+
+if (lan == 'en') {
+  question.1 <- paste0('While package forecast offers function auto.arima for estimating the best ARIMA model, there is no such thing for fGarch. As a clever R analyst, create your own \\textit{auto.garch} function that takes as input a series of returns, a single maximum lag in AR, MA, ARCH and GARCH parameters, and outputs the best Garch model using the AIC criteria. That is, the best model is the one with the lowest value of AIC (see element \\verb|@fit$ics| from the output of garchFit. Notice that you will need to iterate all possible combinations between the AR, MA, ARCH and GARCH parameters, from 1 to max.lag for each. [TIP: function expand.grid can help with this operation!].')
+  
+  question.2 <- paste0('Using data available in file ', basename(f.in),' for stock ', my.rnd.stock,', use your newly created function with max.lag = ' ,max.lag, '. What is the best formula for the dataset?')
+  
+}
+
+@
+
+\begin{question}
+
+<<echo=False, results=tex>>=
+cat(paste(question.1,collapse = ""))
+@
+
+\vspace{1cm}
+
+<<echo=False, results=tex>>=
+cat(paste(question.2,collapse = ""))
+@
+
+
+<<echo=FALSE, results=tex>>=
+exams::answerlist(my.answers)
+@
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

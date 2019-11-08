@@ -1,0 +1,46 @@
+<<echo=FALSE, results=hide>>=
+idx <- match(temp.stocks$ref.date,
+             df.ibov$ref.date )
+
+temp.stocks$ret.ibov <- df.ibov$ret[idx]
+temp.stocks$exc.ret <- temp.stocks$ret - temp.stocks$ret.ibov
+
+sol.q <- sum(temp.stocks$exc.ret,
+             na.rm = T)
+rnd.vec <- gen.rnd.vec()
+
+my.answers <- format(sol.q*rnd.vec)
+@
+
+\begin{question}
+
+Com base nos retornos dos ativos e o retorno do índice ibovespa, adicione uma coluna ao dataframe dos ativos, a qual deve indicar o retorno excessivo de cada ação para cada data. Este retorno excessivo é calculado como sendo a diferença de retorno do ativo e o índice Ibovespa.
+
+Para a coluna criada, qual é a soma da mesma quando ignora-se os valores NA?
+
+\begin{answerlist}
+  \item \Sexpr{my.answers[1]}
+  \item \Sexpr{my.answers[2]}
+  \item \Sexpr{my.answers[3]}
+  \item \Sexpr{my.answers[4]}
+  \item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+  \item True.
+  \item False.
+  \item False.
+  \item False.
+  \item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

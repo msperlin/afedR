@@ -9,7 +9,7 @@
 afedR_get_links_book <- function() {
 
   my_l <- list(book_site = 'https://www.msperlin.com/blog/publication/2017_book-pafdr-en/',
-               book_site_zip = 'https://www.msperlin.com/blog/files/afedR/afedR_files.zip',
+               book_site_zip = 'https://github.com/msperlin/afedR/raw/master/inst/extdata/afedR_files.zip',
                blog_site = 'https://www.msperlin.com/blog')
 
   return(my_l)

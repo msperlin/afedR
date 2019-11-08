@@ -1,0 +1,47 @@
+<<echo=FALSE, results=hide>>=
+
+n.buy <- sample(10:100,1)
+
+my.tab <- temp.df %>% group_by(asset.code) %>%
+  summarise(buy.price = price.bid[which.min(ref.date)],
+            sell.price= price.bid[which.max(ref.date)]) %>%
+  mutate(profit=sell.price-buy.price)
+  
+sol.q <- sum(n.buy*my.tab$profit)
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(sol.q*rnd.vec, digits = 8)
+
+
+@
+
+\begin{question}
+
+Considere um investidor que, na data de lançamento, comprou \Sexpr{n.buy} contratos de cada um dos ativos do Tesouro Direto selecionados no exercício anterior. Caso o investidor vendesse cada título pelo preço na última data disponível nos dados, qual seria o seu lucro nominal bruto total na operação inteira? 
+
+\begin{answerlist}
+\item \Sexpr{my.answers[1]}
+\item \Sexpr{my.answers[2]}
+\item \Sexpr{my.answers[3]}
+\item \Sexpr{my.answers[4]}
+\item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

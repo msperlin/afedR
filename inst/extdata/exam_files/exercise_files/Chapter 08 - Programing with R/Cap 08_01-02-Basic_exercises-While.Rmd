@@ -1,0 +1,49 @@
+```{r data generation, echo = FALSE, results = "hide"}
+my.seed <- sample(1:100, 1)
+set.seed(my.seed)
+N <- 10000
+my.x <- runif(N)*sample(c(-0.5, 1), size = N, replace = TRUE)
+
+threshold <- floor(sample(10:50, 1))
+
+res <- 0
+i <- 0
+while (res < threshold) {
+  
+  i <- i + 1
+  res <- res + my.x[i]
+  
+}
+
+sol.q <- i
+rnd.vec <- gen.rnd.vec()
+
+my.answers <- format(floor(sol.q*rnd.vec))
+```
+
+
+Question
+========
+
+Utilizando _my.seed = `r my.seed`_, crie um vetor com o seguinte código:
+
+```{r, eval=FALSE}
+set.seed(my.seed)
+N <- 10000
+my.x <- runif(N)*sample(c(-0.5, 1), size = N, replace = TRUE)
+```
+
+Utilizando o comando do tipo _while_, qual é o primeiro elemento onde a soma cumulativa do vetor atinge um valor maior do que `r threshold`?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

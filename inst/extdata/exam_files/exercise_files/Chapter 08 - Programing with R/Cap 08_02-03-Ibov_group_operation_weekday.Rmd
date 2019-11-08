@@ -1,0 +1,32 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+my_ibov_file <- basename(get_ibov_file())
+df.ibov <- get_ibov_data()
+
+tab <- df.ibov %>%
+  mutate(weekday = weekdays(ref.date)) %>%
+  group_by(weekday) %>%
+  summarise(mean.vol = mean(volume))
+
+sol.q <- tab$weekday[which.min(tab$mean.vol)]
+
+rnd.vec <- c(sol.q, sample(tab$weekday[tab$weekday != sol.q],4))
+my.answers <- rnd.vec
+```
+
+Question
+========
+
+Para os dados do índice Ibovespa disponibilizado no arquivo `r my_ibov_file`, calcule o volume médio negociado para cada dia da semana. Qual é o dia da semana com o menor volume médio negociado?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

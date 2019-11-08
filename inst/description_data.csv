@@ -2,6 +2,7 @@ file_name,description
 grunfeld.csv, The grunfeld database
 MySQLiteDatabase.SQLITE, Example of sqlite data
 pride_and_prejudice.txt, The full text of book price and prejudice
+FTSE.csv, The FTSE index
 SP500.csv, The SP500 index
 SP500_Excel.xlsx, The SP500 index in excel
 SP500-Stocks_long.csv, US stocks in the long format
@@ -9,4 +10,4 @@ SP500-Stocks_wide.csv,  US stocks in the wide format
 SP500-Stocks-WithRet.rds, US stocks in the long format and with return
 top25babynames-by-sex-2005-2017.csv, Baby names of USC
 UCI_Credit_Card.csv, Credit card data from UCI
-SP500_long_yearly_2010-01-01_2019-11-04.rds, Price data from Yahoo Finance
+SP500_Stocks_long_by_year.rds, Yearly price data from Yahoo Finance

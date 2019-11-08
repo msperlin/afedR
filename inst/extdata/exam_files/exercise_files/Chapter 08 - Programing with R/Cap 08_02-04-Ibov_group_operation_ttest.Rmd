@@ -1,0 +1,41 @@
+```{r data generation, echo = FALSE, results = "hide"}
+my_ibov_file <- basename(get_ibov_file())
+df.ibov <- get_ibov_data()
+
+tab <- df.ibov %>%
+  mutate(weekday = weekdays(ref.date)) %>%
+  group_by(weekday) %>%
+  summarise(mean.vol = mean(volume))
+
+df.ibov <- df.ibov %>%
+   mutate(weekday = weekdays(ref.date))
+
+min.vol <- tab$weekday[which.min(tab$mean.vol)]
+max.vol <- tab$weekday[which.max(tab$mean.vol)]
+
+my.ttest <- t.test(df.ibov$volume[df.ibov$weekday == min.vol],
+                   df.ibov$volume[df.ibov$weekday == max.vol])
+
+sol.q <- my.ttest$p.value
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(rnd.vec*sol.q, digits = 4)
+```
+
+Question
+========
+
+Com base nas informações do exercício anterior, dados do arquivo `r my_ibov_file`, teste se a diferença de média entre o volume negociado do dia da semana com menor valor médio em relação ao dia com maior valor médio de volume negociado é diferente de zero. Para isso, podes utilizar o teste T (função t.test()).
+
+Qual o valor do _p-value_ do teste?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

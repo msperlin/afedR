@@ -1,0 +1,44 @@
+```{r data generation, echo = FALSE, results = "hide"}
+my.file.football <- basename(get_football_file())
+df <- get_football_games()
+
+tab <- df  %>% 
+  group_by(Adversario) %>%
+  summarise(nwin = sum(GolsBR>GolsAdv)) %>%
+  arrange(-nwin, Adversario)
+
+most.losses <- tab$Adversario[1]
+
+temp.df <- df[df$Adversario == most.losses, ] %>%
+  arrange(Data) %>%
+  slice(n())
+
+sol.q <- paste0(temp.df$GolsBR, ' - ', 
+                temp.df$GolsAdv)
+
+temp <- paste0(df$GolsBR, ' - ', 
+               df$GolsAdv)
+possible.anwers <- temp[temp != sol.q]
+  
+rnd.vec <- c(sol.q, sample(possible.anwers, 4) )
+my.answers <- rnd.vec
+```
+
+
+Question
+========
+
+Para os mesmos dados do arquivo `r my.file.football`, qual o placar (BR X ADV) do último jogo contra o time com maior número de derrotas para a seleção Brasileira?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

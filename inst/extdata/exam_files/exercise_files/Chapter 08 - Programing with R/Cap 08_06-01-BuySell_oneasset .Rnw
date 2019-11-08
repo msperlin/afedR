@@ -1,0 +1,42 @@
+<<echo=FALSE, results=hide>>=
+n.buy <- sample(10:100,1)
+my.asset <- sample(my.rnd.assets,1)
+
+temp2 <- temp.df[temp.df$asset.code==my.asset, ]
+
+sol.q <- n.buy*(temp2$price.bid[nrow(temp2)]-temp2$price.bid[1])
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(sol.q*rnd.vec, digits = 8)
+@
+
+\begin{question}
+
+Considere um investidor que comprou \Sexpr{n.buy} contratos de \Sexpr{my.asset} na data de lançamento do título. Caso o investidor vendesse o título na última data disponível nos dados, qual seria o seu lucro nominal? Para esta questão e as seguintes, a data de lançamento é a primeira data disponível para o contrato.
+
+\begin{answerlist}
+\item \Sexpr{my.answers[1]}
+\item \Sexpr{my.answers[2]}
+\item \Sexpr{my.answers[3]}
+\item \Sexpr{my.answers[4]}
+\item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

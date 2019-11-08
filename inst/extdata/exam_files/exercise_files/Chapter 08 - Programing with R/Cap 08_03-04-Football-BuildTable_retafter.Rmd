@@ -1,0 +1,82 @@
+```{r data generation, echo = FALSE, results = "hide"}
+my.file.football <- basename(get_football_file())
+df.football <- get_football_games()
+
+my.file.ibov <- basename(get_ibov_file())
+df.ibov <- get_ibov_data()
+
+games.dates <- as.Date(df.football$Data)
+ibov.dates <- as.Date(df.ibov$ref.date)
+diff.goals <- df.football$GolsBR - df.football$GolsAdv
+
+find.idx.date <- function(my.date, ibov.dates, type){
+  
+  dist <- ibov.dates - my.date  
+  
+  if (type == 'bef'){
+    dist[dist>=0] <- NA
+    idx <- which.min(abs(dist))
+    
+  } 
+  
+  if (type == 'aft'){
+    dist[dist<=0] <- NA
+    idx <- which.min(abs(dist))
+    
+  } 
+  
+  return(idx)
+  
+}
+
+idx.aft <-sapply(games.dates, FUN = find.idx.date, ibov.dates=ibov.dates, type='aft')
+idx.bef <-sapply(games.dates, FUN = find.idx.date, ibov.dates=ibov.dates, type='bef')
+
+after.date <- ibov.dates[idx.aft]
+bef.date <- ibov.dates[idx.bef]
+ret.after.date <- df.ibov$ret.adjusted.prices[idx.aft]
+ret.before.date <- df.ibov$ret.adjusted.prices[idx.bef]
+
+
+df.answer <<- data.frame(games.dates = games.dates, 
+                        diff.goals = diff.goals,
+                        after.date = after.date,
+                        ret.after.date = ret.after.date,
+                        bef.date=bef.date,
+                        ret.before.date = ret.before.date)
+                        
+sol.q <- sum(df.answer$ret.after.date>0, na.rm = T)
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(floor(rnd.vec*sol.q), digits = 4)
+
+```
+
+Question
+========
+
+Utilizando ambas bases de dados, resultados da seleção (`r basename(my.file.football)`) e preços/retorno do Ibovespa (`r basename(my.file.ibov)`), construa uma tabela onde as linhas sejam correpondentes a cada jogo e as colunas sejam: 
+
+- data do jogo; 
+- diferença de gols (BR - Adv); 
+- data posterior onde mercado estava aberto; 
+- retorno do Ibovespa na data posterior; 
+- data anterior onde mercado estava aberto; 
+- retorno do Ibovespa na data anterior.
+
+Pergunta: Qual é a quantidade de retornos positivos na quarta coluna da tabela resultante (Retorno do Ibovespa na data posterior)?
+
+DICA: A maneira mais simples de resolver o problema é utilizando _loops_. Itere sobre cada jogo e realize as comparações entre as bases de dados. Construa cada linha da tabela resultante em cada iteração do _loop_.
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE
+

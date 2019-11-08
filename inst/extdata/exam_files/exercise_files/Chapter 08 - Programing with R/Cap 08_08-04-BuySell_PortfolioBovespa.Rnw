@@ -1,0 +1,76 @@
+<<echo=FALSE, results=hide>>=
+
+n.oper <- 50
+traded.assets = sample(unique(df.stocks$ticker),
+                       n.oper, replace = F)
+
+temp <- filter(df.stocks, ticker %in% traded.assets)
+
+df.oper <- temp %>% group_by(ticker) %>%
+  summarise(buy.date = sample(ref.date[1:floor(n()/2)],1),
+            sell.date = sample(ref.date[ (floor(n()/2)+1):n()],1),
+            n.contracts = sample(seq(10,50),1))
+
+profit <- 0
+my.c <- c()
+for (i in seq(1,n.oper)){
+
+  temp <- filter(df.stocks, ticker==df.oper$ticker[i])
+
+  buy.price <- temp$price.adjusted[temp$ref.date==df.oper$buy.date[i]]
+  sell.price <- temp$price.adjusted[temp$ref.date==df.oper$sell.date[i]]
+  n.contracts <- df.oper$n.contracts[i]
+
+  profit <- profit + (sell.price-buy.price)*n.contracts
+  my.c <- c(my.c, (sell.price-buy.price)*n.contracts)
+}
+
+sol.q <- profit
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(round(sol.q*rnd.vec,digits = 2), digits = 8)
+
+@
+
+\begin{question}
+
+Para este exercício, considere o dataframe inicial com todos os dados. Com base neste, assuma que um investidor  realizou as seguintes operações de compra e venda de ações:
+
+<<echo=FALSE, results=tex>>=
+df.oper$buy.date <- as.character(df.oper$buy.date)
+df.oper$sell.date <- as.character(df.oper$sell.date)
+
+df.to.print <- df.oper
+my.align <- paste0(c('|',rep('c|',ncol(df.to.print)+1)), collapse = '')
+print(xtable(df.to.print ,auto = TRUE,
+             align = my.align,digits = 2), include.rownames=FALSE,include.colnames = T)
+@
+
+Com bases nestes dados, qual foi o lucro total bruto deste investidor? Dica: salvem a tabela no Excel ou Calc e importem as operações no R.
+
+\begin{answerlist}
+\item \Sexpr{my.answers[1]}
+\item \Sexpr{my.answers[2]}
+\item \Sexpr{my.answers[3]}
+\item \Sexpr{my.answers[4]}
+\item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

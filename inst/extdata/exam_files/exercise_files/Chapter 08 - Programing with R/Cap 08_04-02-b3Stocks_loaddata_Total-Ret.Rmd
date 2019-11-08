@@ -1,0 +1,34 @@
+```{r data generation, echo = FALSE, results = "hide"}
+require(tidyverse)
+
+my.sp500.f <- basename(get_SP500_yearly_file())
+df.sp500 <- get_SP500_yearly_data()
+
+tab <- df.sp500 %>%
+  group_by(ticker) %>%
+  summarise(tot.ret = last(price.adjusted)/first(price.adjusted) - 1)
+
+sol.q <- tab$ticker[which.max(tab$tot.ret)]
+
+possible.anwers <- tab$ticker[tab$ticker != sol.q]
+
+my.answers <- c(sol.q, sample(possible.anwers, 4) )
+```
+
+Question
+========
+
+Para os dados disponibilizados no arquivo `r my.sp500.f`, calcule o retorno total (preço final/preço inicial - 1) de cada uma das ações. Qual ação apresentou maior retorno total?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

@@ -1,0 +1,48 @@
+<<echo=FALSE, results=hide>>=
+
+rnd.ticker <- sample(unique.tickers, 1)
+
+df.single.stock <- df.stocks %>%
+  filter(ticker == rnd.ticker)
+
+my.price <- sample(seq(floor(min(df.single.stock$price.adjusted)),
+                       floor(max(df.single.stock$price.adjusted)), by = 0.5), 
+                   1)
+
+idx <- which.min(abs(df.single.stock$price.adjusted - my.price))
+sol.q <- df.single.stock$ref.date[idx]
+
+rnd.vec <- c(0, -25, 50, 6, 1)
+my.answers <- format(sol.q + rnd.vec , digits = 4)
+@
+
+\begin{question}
+
+Agora filtre os dados anteriores para a ação \Sexpr{rnd.ticker}. Com base nos dados filtrados, qual a data onde o preço da ação é o mais próximo possível do valor de \Sexpr{my.price} reais.
+
+\begin{answerlist}
+\item \Sexpr{my.answers[1]}
+\item \Sexpr{my.answers[2]}
+\item \Sexpr{my.answers[3]}
+\item \Sexpr{my.answers[4]}
+\item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.3}
+\exshuffle{TRUE}
+

@@ -1,0 +1,29 @@
+```{r data generation, echo = FALSE, results = "hide"}
+temp <- df.answer %>%
+  filter(diff.goals>0)
+
+sol.q <- sum(temp$ret.after.date>0, na.rm = T)/nrow(temp)
+my.perc <- sol.q*100
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- paste0(format(rnd.vec*my.perc, digits = 4), '%')
+```
+
+Question
+========
+
+Considerando apenas os jogos onde o time brasileiro teve vitória, qual é a percentagem de retornos positivos na data posterior aos jogos?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE
+

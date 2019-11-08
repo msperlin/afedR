@@ -1,0 +1,56 @@
+<<echo=FALSE, results=hide>>=
+library(tidyverse)
+
+f.in <- get_SP500_file()
+df.stocks <- get_SP500_data()
+
+unique.stocks <- unique(df.stocks$ticker)
+my.rnd.stock <- sample(unique.stocks, 1)
+
+temp.df <- df.stocks %>%
+  dplyr::filter(ticker == my.rnd.stock)
+
+my.ar.order <- sample(2:5, 1)
+my.ma.order <- sample(1:2, 1)
+
+my.arima <- arima(x = temp.df$ret.adjusted.prices, order = c(my.ar.order, 0, my.ma.order))
+
+sol.q <- sum(coef(my.arima)[1:my.ar.order])
+
+my.answers <- format(gen.rnd.vec()*sol.q, digits = 4)
+
+if (lan == 'en') {
+  question.1 <- paste0('Load the data in file ', basename(f.in), ' and, based on the data for stock ', my.rnd.stock, ', estimate an ARIMA(', my.ar.order, ', 0, ', my.ma.order,') model for the returns of adjusted prices of the asset. What is the sum of the AR parameters?')
+
+}
+
+@
+
+\begin{question}
+
+<<echo=False, results=tex>>=
+cat(paste(question.1,collapse = ""))
+@
+
+<<echo=FALSE, results=tex>>=
+exams::answerlist(my.answers)
+@
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+  \item True.
+  \item False.
+  \item False.
+  \item False.
+  \item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

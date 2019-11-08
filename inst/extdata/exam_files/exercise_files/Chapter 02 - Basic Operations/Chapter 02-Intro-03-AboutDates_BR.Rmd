@@ -1,0 +1,39 @@
+```{r data generation, echo = FALSE, results = "hide"}
+my.date <- Sys.Date()
+
+my.answers <- character(5)
+my.answers[1] <- 'format(my.date,"\\%d/\\%m/\\%Y")'
+my.answers[2] <- 'format(my.date,"\\%dd/\\%mm/\\%yyyy")'
+my.answers[3] <- 'format(my.date,"\\%dd/\\%mm/\\%Y")'
+my.answers[4] <- 'format(my.date,"dd/mm/yyyy")'
+my.answers[5] <- 'format(my.date,"brazil")'
+
+#my.answers <- paste0('\\verb|',my.answers,'|')
+
+if (lan == 'en') {
+  question <- paste0('In Brazil, dates are represented as dd/mm/yyyy (day/month/year). If you had a date in R such as ',Sys.Date(),' how would you change it to the brazilian way?')
+}
+
+if (lan == 'pt-br') {
+  question <- paste0('Datas são representadas como dd/mm/yyyy (dia/mês/ano) no Brasil. Caso você tivesse uma data no formato ',Sys.Date(),', qual comando utilizaria para modificar para o caso Brasileiro?')
+}
+
+```
+
+Question
+========
+
+```{r body, echo = FALSE, results = "asis"}
+cat(paste(question,collapse = ""))
+```
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

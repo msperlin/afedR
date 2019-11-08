@@ -1,0 +1,52 @@
+```{r data generation, echo = FALSE, results = "hide"}
+require(tidyverse)
+
+my.sp500.f <- basename(get_SP500_yearly_file())
+df.sp500 <- get_SP500_yearly_data()
+
+tab <- df.sp500 %>%
+  group_by(ticker) %>%
+  summarise(mean.ret = mean(ret.adjusted.prices, na.rm = TRUE),
+            sd.ret = sd(ret.adjusted.prices, na.rm = TRUE))
+
+sol.q.1 <- tab$ticker[which.min(tab$sd.ret)]
+sol.q.2 <- tab$ticker[which.max(tab$sd.ret)]
+
+idx <- !(tab$ticker %in% c(sol.q.1, sol.q.2))
+possible.anwers <- tab$ticker[idx]
+
+sol.q <- paste0(sol.q.1, ' e ', sol.q.2)
+
+#rnd.vec <- gen.rnd.vec()
+#my.answers <- format(rnd.vec*sol.q , digits = 4)
+
+temp <- paste0(sample(possible.anwers, 4), ' e ', sample(possible.anwers, 4))
+
+my.answers <- c(sol.q, temp)
+```
+
+Question
+========
+
+Abra o Rstudio e carregue os dados disponibilizados no arquivo `r my.sp500.f`. Este contém dados de ações do índice SP500 na frequência anual. Utilizando as ferramentas de programação com o R, crie uma nova tabela que contenha três colunas:
+
+- ticker da ação;
+- retorno médio anual;
+- desvio padrão dos retornos anuais. 
+
+Quais são as ações com menor e maior desvio padrão dos retornos anuais, respectivamente? 
+
+Observação: Note que terás que lidar/eliminar os casos de NAs encontrados nos dados.
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

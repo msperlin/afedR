@@ -17,7 +17,7 @@ afedR_list_available_data <- function(be_silent = FALSE) {
 
   if (!be_silent) print(df_desc)
 
-  return(df_desc)
+  return(invisible(df_desc))
 }
 
 #' Get path to data file

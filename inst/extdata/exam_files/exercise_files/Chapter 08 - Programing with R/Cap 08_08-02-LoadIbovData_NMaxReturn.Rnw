@@ -1,0 +1,48 @@
+<<echo=FALSE, results=hide>>=
+f.ibov.name <- basename(get_ibov_file())
+df.ibov <- get_ibov_data()
+
+df.ibov$ret <- my.fct(df.ibov$price.adjusted)
+
+sorted.ret <- sort(df.ibov$ret, decreasing = T)
+
+n.chosen <- sample(2:15,1)
+
+sol.q <- sum(sorted.ret[1:n.chosen])
+rnd.vec <- gen.rnd.vec()
+
+my.answers <- format(sol.q*rnd.vec)
+@
+
+\begin{question}
+
+Considere os dados do arquivo \verb|\Sexpr{f.ibov.name}| e calcule o retorno aritmético diário do índice Ibovespa. 
+
+Qual a soma dos $\Sexpr{n.chosen}$ maiores retornos diários do índice?
+
+\begin{answerlist}
+  \item \Sexpr{my.answers[1]}
+  \item \Sexpr{my.answers[2]}
+  \item \Sexpr{my.answers[3]}
+  \item \Sexpr{my.answers[4]}
+  \item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+  \item True.
+  \item False.
+  \item False.
+  \item False.
+  \item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

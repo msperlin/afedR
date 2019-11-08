@@ -1,0 +1,43 @@
+<<echo=FALSE, results=hide>>=
+
+my.fct <- function(x) return(c(NA, x[2:length(x)]/x[1:(length(x)-1)] -1 ))
+
+temp.stocks$ret <- unlist(tapply(temp.stocks$price.adjusted, 
+                                 temp.stocks$ticker, my.fct))
+
+sol.q <- min(temp.stocks$ret, na.rm = T)
+rnd.vec <- gen.rnd.vec()
+
+my.answers <- format(sol.q*rnd.vec)
+@
+
+\begin{question}
+
+Com base nos dados das ações selecionadas, adicione uma coluna no dataframe com os retornos aritméticos ($R_t = P_t/P_{t-1} - 1$) das ações em cada uma das datas. Nesta nova coluna, qual é o menor retorno encontrado para todas as ações?
+
+\begin{answerlist}
+  \item \Sexpr{my.answers[1]}
+  \item \Sexpr{my.answers[2]}
+  \item \Sexpr{my.answers[3]}
+  \item \Sexpr{my.answers[4]}
+  \item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+  \item True.
+  \item False.
+  \item False.
+  \item False.
+  \item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.1}
+\exshuffle{TRUE}
+

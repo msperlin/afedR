@@ -1,0 +1,43 @@
+```{r data generation, echo = FALSE, results = "hide"}
+my.seed <- sample(1:100, 1)
+set.seed(my.seed)
+my.nrow <- 100
+my.mat <- matrix(runif(my.nrow*10), nrow = my.nrow )
+
+res <- numeric(length = nrow(my.mat))
+for (i in 1:my.nrow) {
+  res[i] <- sum(my.mat[i, ] )
+}
+
+sol.q <- which.max(res)
+possible.answers <- 1:my.nrow
+
+rnd.vec <- c(sol.q, sample(possible.answers[possible.answers != sol.q], 4) )
+my.answers <- rnd.vec
+```
+
+
+Question
+========
+
+Utilizando _my.seed = `r my.seed`_, crie uma matrix com o seguinte código:
+
+```{r, eval=FALSE}
+set.seed(my.seed)
+my.nrow <- 100
+my.mat <- matrix(runif(my.nrow*10), nrow = my.nrow )
+```
+
+Qual é a linha da matriz com a maior soma dos elementos? Dica: Podes resolver facilmente utilizando um _loop_ e iterando sobre as linhas da criada matriz.
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

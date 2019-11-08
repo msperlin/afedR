@@ -1,0 +1,44 @@
+<<echo=FALSE, results=hide>>=
+unique.tickers <- unique(df.stocks$ticker)
+
+my.rnd.letter <- sample(LETTERS, 1)
+
+idx <- str_detect(unique.tickers, my.rnd.letter )
+
+sol.q <- sum(idx)
+
+rnd.vec <- c(0, sample(c(-seq(1, sol.q-1),
+                         seq(1, length(unique.tickers)- sol.q)), 4) )
+my.answers <- format(sol.q + rnd.vec , digits = 4)
+@
+
+\begin{question}
+
+Para todos os tickers disponíveis nos dados importados originalmente, quantas ações usam a letra \Sexpr{my.rnd.letter} no seu ticker?
+
+\begin{answerlist}
+\item \Sexpr{my.answers[1]}
+\item \Sexpr{my.answers[2]}
+\item \Sexpr{my.answers[3]}
+\item \Sexpr{my.answers[4]}
+\item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.3}
+\exshuffle{TRUE}
+

@@ -9,12 +9,6 @@
 #' @examples
 #' x <- afedR_replace_outliers(runif(100))
 afedR_replace_outliers <- function(col_in, my_prob = 0.05) {
-  #
-  #
-  # INPUTS: col_in
-  #         my_prob
-  #
-  # OUTPUT:
 
   # return if class is other than numeric
   if (!(class(col_in) %in% c('numeric', 'integer'))) return(col_in)
@@ -27,5 +21,26 @@ afedR_replace_outliers <- function(col_in, my_prob = 0.05) {
   col_in[idx] <- NA
 
   return(col_in)
+
+}
+
+#' Replaces outliers in all numeric columns of a dataframe
+#'
+#' @param df_in The dataframe
+#' @param my_prob Probability of quantiles (will remove quantiles at p and 1-p)
+#'
+#' @return A dataframe without the outliers in all numeric columns
+#' @export
+#'
+#' @examples
+#' x <- afedR_replace_outliers(runif(100))
+afedR_replace_outliers_df <- function(df_in, my_prob = 0.05) {
+
+  l_out <- purrr::map(df_in, afedR_replace_outliers, my_prob = my_prob)
+
+  # rebuild dataframe
+  df_out <- dplyr::as_tibble(l_out)
+
+  return(df_out)
 
 }

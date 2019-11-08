@@ -1,0 +1,56 @@
+```{r data generation, echo = FALSE, results = "hide"}
+
+#possible.repo <- getCRANmirrors()$URL  # doenst work well for all repos
+my.pkgs <- c('dplyr', 'exams', 'ggplot2','readr','quantmod', 'texreg', 
+             'BatchGetSymbols', 'readxl')
+
+my.pkg <- sample(my.pkgs,1)
+library(my.pkg, character.only = T)
+
+n.fcts <- length(ls(paste0('package:', my.pkg)))
+#n.pkgs <- nrow(available.packages(repos = my.repo))
+
+sol.q <- n.fcts
+rnd.vec <- (sample((-n.fcts + 1):(n.fcts + 50),4))
+rnd.vec[rnd.vec==0] <- sum(rnd.vec)
+
+rnd.vec <- c(0, rnd.vec)
+
+
+if (lan == 'en') {
+  question.1 <- paste0('How many function are availabe in in the latest version of package ',
+                       my.pkg, '?')
+  
+  my.answers <- paste0(sol.q + rnd.vec, ' functions')
+
+}
+
+if (lan == 'pt-br') {
+  question.1 <- paste0('Quantas funcões estão disponíveis na última versão do pacote ', 
+                       my.pkg, '?')
+  
+  my.answers <- paste0(sol.q + rnd.vec, ' funções')
+
+}
+
+```
+
+
+Question
+========
+
+```{r body, echo = FALSE, results = "asis"}
+cat(paste(question.1, collapse = ""))
+```
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+answerlist(my.answers, markup = "markdown")
+```
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: t statistic
+exshuffle: TRUE

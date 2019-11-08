@@ -1,0 +1,46 @@
+<<echo=FALSE, results=hide>>=
+my.f.df.stocks <- basename(get_stock_br_file())
+df.stocks <- get_stock_br_data()
+
+unique.tickers <- unique(df.stocks$ticker)
+rnd.ticker <- sample(unique.tickers, 1)
+
+df.single.stock <- df.stocks %>%
+  filter(ticker == rnd.ticker)
+
+sol.q <- as.numeric(max(df.single.stock$ref.date) - min(df.single.stock$ref.date))
+
+rnd.vec <- gen.rnd.vec()
+my.answers <- format(floor(rnd.vec*sol.q) , digits = 4)
+@
+
+\begin{question}
+
+Para os mesmos dados anterioes, filtre o dataframe para a ação \Sexpr{rnd.ticker}. Calcule a maior e a menor data disponível nos dados. Qual é o número de dias entre essas datas?
+
+\begin{answerlist}
+  \item \Sexpr{my.answers[1]}
+  \item \Sexpr{my.answers[2]}
+  \item \Sexpr{my.answers[3]}
+  \item \Sexpr{my.answers[4]}
+  \item \Sexpr{my.answers[5]}
+\end{answerlist}
+
+\end{question}
+
+\begin{solution}
+\begin{answerlist}
+  \item True.
+  \item False.
+  \item False.
+  \item False.
+  \item False.
+\end{answerlist}
+\end{solution}
+
+%% META-INFORMATION
+\extype{schoice}
+\exsolution{10000}
+\exname{Q.3}
+\exshuffle{TRUE}
+

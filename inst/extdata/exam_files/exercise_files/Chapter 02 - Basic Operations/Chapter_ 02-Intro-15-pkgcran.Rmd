@@ -23,7 +23,7 @@ rnd.vec <- floor(sol.q*gen.rnd.vec())[2:5]
 
 if (lan == 'en') {
   question.1 <- paste0('How many packages you can find today (',Sys.Date(),') in CRAN? Use the repository in ',
-                       my.repo, ' for your answer.')
+                       my.repo, ' for your answer. Be aware there might be small differences for the number of packages from one day to the next. Pick the answer that is closest to the found value.')
   
   my.answers <- paste0(floor(sol.q*gen.rnd.vec()), ' packages')
 
@@ -31,7 +31,7 @@ if (lan == 'en') {
 
 if (lan == 'pt-br') {
   question.1 <- paste0('Quantos pacotes existem hoje (',Sys.Date(),') no CRAN? Use o repositório em ',
-                       my.repo,' para a sua resposta.')
+                       my.repo,' para a sua resposta. Saiba que é possível que o número de pacotes tenha mudado entre um dia e outro. Assinale a resposta mais próxima do valor encontrado. ')
   
   my.answers <- paste0(floor(sol.q*gen.rnd.vec()), ' pacotes')
 
@@ -46,7 +46,7 @@ Question
 ```{r body, echo = FALSE, results = "asis"}
 cat(paste(question.1, collapse = ""))
 ```
-
+  
 
 ```{r questionlist, echo = FALSE, results = "asis"}
 answerlist(my.answers, markup = "markdown")
@@ -56,5 +56,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: about pkgs in cran
 exshuffle: TRUE

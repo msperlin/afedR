@@ -1,5 +1,4 @@
 ```{r data generation, echo = FALSE, results = "hide"}
-
 first.value <- sample(-50:20,1)
 last.value <- sample(50:100,1)
 
@@ -20,14 +19,14 @@ my.answers[5] <- paste0('x = ',x+12, ', ','y = ',y+12)
 
 if (lan == 'en') {
   question.1 <- 'Consider the following code.'
-  question.2 <- 'Without the execution of the code, what is the content of objects \\verb|x| and \\verb|y|?
+  question.2 <- 'Without the execution of the code, what is the content of objects x and y?
 ?'
 }
 
 if (lan == 'pt-br') {
   
   question.1 <- 'Considere o código a seguir.'
-  question.2 <- 'Sem executar o código, qual é o conteúdo dos objetos \\verb|x| e \\verb|y|?'
+  question.2 <- 'Sem executar o código, qual é o conteúdo dos objetos x e y?'
 }
 
 ```
@@ -57,5 +56,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: x and y
 exshuffle: TRUE

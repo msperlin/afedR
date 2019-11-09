@@ -1,7 +1,7 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 
 if (lan == 'en') {
-  question.1 <- 'If you are working in a directory of your computer called \\verb|C:/MyCode| and you want to change the directory to a subfolder called \\verb|data|, which of the following commands will do that?'
+  question.1 <- 'If you are working in a directory of your computer called "C:/MyCode" and want to change the directory to a subfolder called "data", which of the following commands will do that?'
   
 }
 
@@ -35,5 +35,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: about directory
 exshuffle: TRUE

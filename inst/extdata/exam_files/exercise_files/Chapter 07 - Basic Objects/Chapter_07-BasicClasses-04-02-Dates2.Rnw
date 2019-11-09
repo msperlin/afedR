@@ -11,17 +11,18 @@ my.diff <- sample(50:100,1)
 my.weekday.us <- 'Wednesday'
 
 if (lan == 'en') {
-  
+
   question.1 <- paste0('Use R to create a sequence of dates between ',date.1, ' and ',date.2,' every three days. What is the quantity of wednesdays in the resulting vector?')
 }
 
 if (lan == 'pt-br') {
   question.1 <- paste0('Utilize o R para construir uma sequência de datas entre ',date.1, ' e ',date.2,' separadas a cada três dias. Qual é a quantidade de quartas-feiras no vetor resultante?')
-  
+
 }
 
 # set to English to avoid problems in correct answer
-Sys.setlocale("LC_TIME","US")
+#Sys.setlocale("LC_TIME","US")
+
 sol.q <- sum(weekdays(my.vec)==my.weekday.us)
 
 my.answers <- sol.q  + c(0, sample(seq(-(sol.q-1),sol.q+50,by = 3),4))
@@ -47,7 +48,7 @@ exams::answerlist(my.answers,markup = 'latex')
   \item False.
   \item False.
   \item False.
-  \item False. 
+  \item False.
 \end{answerlist}
 \end{solution}
 
@@ -56,4 +57,3 @@ exams::answerlist(my.answers,markup = 'latex')
 \exsolution{10000}
 \exname{Q.1}
 \exshuffle{TRUE}
-

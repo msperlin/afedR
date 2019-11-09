@@ -25,7 +25,7 @@ my.answers <- format(floor(sol.q*rnd.vec))
 Question
 ========
 
-Utilizando _my.seed = `r my.seed`_, crie um vetor com o seguinte código:
+Using _my.seed = `r my.seed`_, create a vector with the following code:
 
 ```{r, eval=FALSE}
 set.seed(my.seed)
@@ -33,7 +33,7 @@ N <- 10000
 my.x <- runif(N)*sample(c(-0.5, 1), size = N, replace = TRUE)
 ```
 
-Utilizando o comando do tipo _while_, qual é o primeiro elemento onde a soma cumulativa do vetor atinge um valor maior do que `r threshold`?
+Using a `while` command, what is the first element where the cumulative sum of `my.x` reaches a value higher than `r threshold`?
 
 ```{r questionlist, echo = FALSE, results = "asis"}
 answerlist(my.answers, markup = "markdown")
@@ -45,5 +45,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: while loop
 exshuffle: TRUE

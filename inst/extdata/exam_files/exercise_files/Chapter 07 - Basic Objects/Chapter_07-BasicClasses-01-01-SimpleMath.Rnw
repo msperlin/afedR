@@ -10,14 +10,14 @@ my.answers <- round(sol.q*rnd.vec,digits = 0)
 
 if (lan == 'en') {
   question.1 <- 'Given the following variables:'
-  question.2 <- 'Using R prompt to calculate $x*y+z$, what is the result?'
+  question.2 <- 'Using R prompt to calculate $x*y+z$. What is the result?'
 
-  
+
 }
 
 if (lan == 'pt-br') {
   question.1 <- 'Considere as seguintes variáveis:'
-  question.2 <- 'Utilizando o \\textit{prompt} do R para calcular $x*y+z$, qual é o resultado?'
+  question.2 <- 'Utilizando o \\textit{prompt} do R para calcular $x*y+z$. Qual é o resultado?'
 
 }
 
@@ -50,7 +50,7 @@ exams::answerlist(my.answers,markup = 'latex')
   \item False.
   \item False.
   \item False.
-  \item False. 
+  \item False.
 \end{answerlist}
 \end{solution}
 

@@ -67,5 +67,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: selecting values
 exshuffle: TRUE

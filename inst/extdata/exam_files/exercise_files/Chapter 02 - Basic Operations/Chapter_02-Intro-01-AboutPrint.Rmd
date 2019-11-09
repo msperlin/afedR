@@ -10,21 +10,16 @@ my.fct <- my.fct[!stringr::str_detect(my.fct,'_')]
 # remove fct related to print
 my.fct <- my.fct[!stringr::str_detect(my.fct,'print')]
 
-# remove fct related to cat
-my.fct <- my.fct[!stringr::str_detect(my.fct,'cat')]
-
-my.answers <- c('cat','print',sample(my.fct,3))
+my.answers <- c('print','cat',sample(my.fct,3))
 
 if (lan == 'en') {
-  question <- 'What is the name of the function that parses (processes) and presents a text output in the prompt of R?'
+  question <- "What is the name of the function that shows the representation of an object in R's prompt ?"
 }
 
-if (lan == 'pt-br') {
-  question <- 'Qual é o nome da função que processa e apresenta um texto no prompt do R?'
+  if (lan == 'pt-br') {
+  question <- 'Qual é o nome da função que mostra a representação de um objeto no prompt do R?'
 }
 ```
-
-
 
 Question
 ========
@@ -42,5 +37,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: about print
 exshuffle: TRUE

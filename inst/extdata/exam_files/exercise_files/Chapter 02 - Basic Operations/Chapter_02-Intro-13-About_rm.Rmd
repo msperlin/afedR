@@ -32,7 +32,6 @@ Question
 cat(paste(question.1, collapse = ""))
 ```
 
-
 ```{r, eval=FALSE}
 set.seed(my.seed)
 y <- sample(1:10, 3)
@@ -53,5 +52,5 @@ Meta-information
 ================
 extype: schoice
 exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
-exname: t statistic
+exname: about x
 exshuffle: TRUE

@@ -1,15 +1,19 @@
 <<echo=FALSE, results=hide>>=
 
-sol.q <- ((temp2$price.bid[nrow(temp2)]/temp2$price.bid[1]) -1)*(1-0.15)
+my.tab <- temp.df %>%
+  group_by(asset.code) %>%
+  summarise(mean.price=mean(price.bid))
 
-rnd.vec <- gen.rnd.vec()
-my.answers <- format(sol.q*rnd.vec, digits = 4)
+sol.q <- sum(my.tab$mean.price)
+
+rnd.vec <- afedR::afedR_gen_rnd_vec()
+my.answers <- format(sol.q*rnd.vec, digits = 8)
 
 @
 
 \begin{question}
 
-Para o mesmo investidor da questão anterior, qual é o retorno percentual obtido na operação, após o desconto do imposto de 15\% sobre o retorno bruto?
+Using the filtered data of \Sexpr{n.assets} brazilian debt instruments from previous question, calculate the average price of each instrument. What is the sum of average of prices?
 
 \begin{answerlist}
 \item \Sexpr{my.answers[1]}

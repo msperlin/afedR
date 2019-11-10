@@ -1,18 +1,16 @@
 <<echo=FALSE, results=hide>>=
 
-my.tab <- temp.df %>% group_by(asset.code) %>% summarise(mean.price=mean(price.bid))
+my.date <- sample(unique(temp.df$ref.date), 1)
 
-sol.q <- sum(my.tab$mean.price)
+sol.q <- sum(temp.df$ref.date>my.date)
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 
-rnd.vec <- gen.rnd.vec()
-my.answers <- format(sol.q*rnd.vec, digits = 8)
-
-
+my.answers <- format(floor(sol.q*rnd.vec), digits = 4)
 @
 
 \begin{question}
 
-Calcule a média de preços para cada ativo, para todas as datas. Considerando todos os ativos, qual é a soma das médias de preços?
+For the same previous data, what is the quantity of observations (rows) after date \Sexpr{my.date}?
 
 \begin{answerlist}
 \item \Sexpr{my.answers[1]}

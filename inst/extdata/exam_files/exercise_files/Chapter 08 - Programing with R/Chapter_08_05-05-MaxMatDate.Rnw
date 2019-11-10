@@ -9,14 +9,14 @@ temp.df$matur.date <- as.Date(sapply(temp.df$asset.code,my.fct),origin = '1970-0
 
 sol.q <- (max(temp.df$matur.date) - min(temp.df$matur.date))[[1]]
 
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 
 my.answers <- format(floor(sol.q*rnd.vec), digits = 4)
 @
 
 \begin{question}
 
-Utilizando o nome dos títulos, extraia a data de vencimento de cada título e adicione esta informação como uma coluna do tipo \verb|Date| ao dataframe. Qual o número de dias entre a data mais recente e a data menos recente de maturidade dos ativos selecionados?
+Using the maturity date, what is the number of days between the oldeast and the most recent date?
 
 \begin{answerlist}
 \item \Sexpr{my.answers[1]}

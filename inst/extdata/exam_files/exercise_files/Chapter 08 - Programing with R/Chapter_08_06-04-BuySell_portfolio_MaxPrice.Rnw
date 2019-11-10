@@ -6,10 +6,10 @@ my.tab <- temp.df %>% group_by(asset.code) %>%
   summarise(buy.price = price.bid[which.min(ref.date)],
             sell.price= price.bid[which.max(price.bid)]) %>%
   mutate(profit=sell.price-buy.price)
-  
+
 sol.q <- sum(n.buy*my.tab$profit)
 
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 my.answers <- format(sol.q*rnd.vec, digits = 8)
 
 
@@ -17,7 +17,7 @@ my.answers <- format(sol.q*rnd.vec, digits = 8)
 
 \begin{question}
 
-Considere um investidor que comprou \Sexpr{n.buy} contratos de cada um dos ativos na data de lançamento. Caso o investidor vendesse cada título pelo maior preço possível no seu histórico, qual seria o seu lucro nominal bruto total na operação inteira? 
+This time, consider a investor that bought  \Sexpr{n.buy} contracts of each debt contract in the launch day. If the investor sold each one at its highest available price, what would be his gross profit?
 
 \begin{answerlist}
 \item \Sexpr{my.answers[1]}

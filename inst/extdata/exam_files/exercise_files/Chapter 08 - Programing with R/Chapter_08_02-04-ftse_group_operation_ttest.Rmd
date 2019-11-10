@@ -21,7 +21,7 @@ my.ttest <- t.test(df_index$volume[df_index$weekday == min.vol],
 
 sol.q <- my.ttest$p.value
 
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 my.answers <- format(rnd.vec*sol.q, digits = 4)
 ```
 

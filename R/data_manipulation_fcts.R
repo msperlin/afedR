@@ -44,3 +44,43 @@ afedR_replace_outliers_df <- function(df_in, my_prob = 0.05) {
   return(df_out)
 
 }
+
+
+afedR_calc_ret <- function(P,
+                     tickers = rep('ticker', length(P))) {
+  # calculates arithmetic returns from a vector of prices
+  #
+  # Args:
+  #   P - vector of prices (numeric)
+  #   tickers - vector of tickers (optional)
+  #
+  # Returns:
+  #   A vector of returns
+
+  # ret_t = p_{t}/p_{t-1} - 1
+
+  # error checking
+  if ( !(class(P) %in% c('numeric', 'integer'))) {
+    stop('P should be a numeric object.')
+  }
+
+  if ( !(class(tickers) %in% c('character', 'factor'))) {
+    stop('tickers should be a character or factor object.')
+  }
+
+  if (length(P) != length(tickers)) {
+    stop('The length of P and tickers does not match.')
+  }
+
+  if ( length(P) < 2) {
+    stop('input P should have at least 2 elements.')
+  }
+
+  my_length <- length(P)
+  ret <- c(NA, P[2:my_length]/P[1:(my_length - 1)] - 1)
+
+  idx <- (tickers != c(NA, tickers[1:(my_length-1)]))
+  ret[idx] <- NA
+
+  return(ret)
+}

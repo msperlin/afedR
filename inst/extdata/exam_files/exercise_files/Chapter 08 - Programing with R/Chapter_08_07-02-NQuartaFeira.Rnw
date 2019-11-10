@@ -3,14 +3,14 @@
 temp.stocks$weekdays <- weekdays(temp.stocks$ref.date)
 
 sol.q <- sum(temp.stocks$weekdays %in% c('quarta-feira','Wednesday','quarta'))
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 
 my.answers <- format(floor(sol.q*rnd.vec))
 @
 
 \begin{question}
 
-Para o dataframe obtido anteriormente, qual é a quantidade de observações em uma quarta feira?
+For the same table as the previous exercises, what is the number of observations in a wednesday?
 
 \begin{answerlist}
   \item \Sexpr{my.answers[1]}

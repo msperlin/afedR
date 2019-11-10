@@ -1,16 +1,15 @@
 <<echo=FALSE, results=hide>>=
 
-my.date <- sample(unique(temp.df$ref.date), 1)
+sol.q <- ((temp2$price.bid[nrow(temp2)]/temp2$price.bid[1]) -1)*(1-0.15)
 
-sol.q <- sum(temp.df$ref.date>my.date)
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
+my.answers <- format(sol.q*rnd.vec, digits = 4)
 
-my.answers <- format(floor(sol.q*rnd.vec), digits = 4)
 @
 
 \begin{question}
 
-Para os dados carregados anteriormente, qual é a quantidade de observações (linhas) após a data de \Sexpr{my.date}?
+For the same investor of the previous questions, what is the percentage return in the operation, after the tax rate of 15 percent over the gross return?
 
 \begin{answerlist}
 \item \Sexpr{my.answers[1]}

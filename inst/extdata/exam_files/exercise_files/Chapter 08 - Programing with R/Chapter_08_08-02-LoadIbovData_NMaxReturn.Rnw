@@ -1,19 +1,20 @@
 <<echo=FALSE, results=hide>>=
+f.ibov.name <- afedR::afedR_get_data_file('Ibov_long_2010-01-01_2018-09-12.rds')
+df.ibov <- readr::read_rds(f.ibov.name)
 
-my.fct <- function(x) return(c(NA, x[2:length(x)]/x[1:(length(x)-1)] -1 ))
+sorted.ret <- sort(df.ibov$ret.adjusted.prices, decreasing = T)
 
-temp.stocks$ret <- unlist(tapply(temp.stocks$price.adjusted, 
-                                 temp.stocks$ticker, my.fct))
+n.chosen <- sample(2:15,1)
 
-sol.q <- min(temp.stocks$ret, na.rm = T)
-rnd.vec <- gen.rnd.vec()
+sol.q <- sum(sorted.ret[1:n.chosen])
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 
 my.answers <- format(sol.q*rnd.vec)
 @
 
 \begin{question}
 
-Com base nos dados das ações selecionadas, adicione uma coluna no dataframe com os retornos aritméticos ($R_t = P_t/P_{t-1} - 1$) das ações em cada uma das datas. Nesta nova coluna, qual é o menor retorno encontrado para todas as ações?
+Consider the data in file \verb|\Sexpr{basename(f.ibov.name)}|. What is the sum of the $\Sexpr{n.chosen}$ largest daily return of the Ibovespa index?
 
 \begin{answerlist}
   \item \Sexpr{my.answers[1]}

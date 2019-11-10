@@ -37,12 +37,16 @@ afedR_get_data_file <- function(name_dataset) {
 
   df_available <- afedR_list_available_data(be_silent = TRUE)
 
-  if (!(name_dataset %in% df_available$file_name)) {
-    stop('Cant find name ', name_dataset, ' in list of available tables.')
-  }
+  #if (!(name_dataset %in% df_available$file_name)) {
+    #stop('Cant find name ', name_dataset, ' in list of available tables.')
+  #}
 
   path_out <- system.file(paste0('extdata/', name_dataset),
                           package = 'afedR')
+
+  if (path_out == '') {
+    stop('Cant find name ', name_dataset, ' in list of available tables.')
+  }
 
   return(path_out)
 }

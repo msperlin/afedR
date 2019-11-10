@@ -16,7 +16,7 @@ while (res < threshold) {
 }
 
 sol.q <- i
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 
 my.answers <- format(floor(sol.q*rnd.vec))
 ```

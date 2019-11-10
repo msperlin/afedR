@@ -1,8 +1,8 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 require(tidyverse)
 
-my.sp500.f <- basename(get_SP500_yearly_file())
-df.sp500 <- get_SP500_yearly_data()
+my.sp500.f <- afedR::afedR_get_data_file('SP500_comp_YEARLY_long_2014-10-03_2019-10-02.rds')
+df.sp500 <- readr::read_rds(my.sp500.f)
 
 tab <- df.sp500 %>%
   group_by(ticker) %>%
@@ -28,15 +28,15 @@ my.answers <- c(sol.q, temp)
 Question
 ========
 
-Abra o Rstudio e carregue os dados disponibilizados no arquivo `r my.sp500.f`. Este contém dados de ações do índice SP500 na frequência anual. Utilizando as ferramentas de programação com o R, crie uma nova tabela que contenha três colunas:
+Open RStudio and load the data from file `r my.sp500.f` using `afedR::afedR_get_data_file`. This file contains stock data for companies in the SP500 index in the yearly frequency. Using the programming tools of R, create a new table with three columns:
 
-- ticker da ação;
-- retorno médio anual;
-- desvio padrão dos retornos anuais. 
+- stock's ticker
+- average yearly return;
+- standard deviation of yearly returns.
 
-Quais são as ações com menor e maior desvio padrão dos retornos anuais, respectivamente? 
+Which stocks have the lowest and highest standard deviation, respectively?
 
-Observação: Note que terás que lidar/eliminar os casos de NAs encontrados nos dados.
+Note: You'll have to deal with NA values and remove them within the originial data. 
 
 
 ```{r questionlist, echo = FALSE, results = "asis"}

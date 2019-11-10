@@ -1,8 +1,8 @@
 ```{r data generation, echo = FALSE, results = "hide"}
 require(tidyverse)
 
-my.sp500.f <- basename(get_SP500_yearly_file())
-df.sp500 <- get_SP500_yearly_data()
+my.sp500.f <- afedR::afedR_get_data_file('SP500_comp_YEARLY_long_2014-10-03_2019-10-02.rds')
+df.sp500 <- readr::read_rds(my.sp500.f)
 
 tab <- df.sp500 %>%
   group_by(ticker) %>%
@@ -18,7 +18,7 @@ my.answers <- c(sol.q, sample(possible.anwers, 4) )
 Question
 ========
 
-Para os dados disponibilizados no arquivo `r my.sp500.f`, calcule o retorno total (preço final/preço inicial - 1) de cada uma das ações. Qual ação apresentou maior retorno total?
+For the data in file `r basename(my.sp500.f)`, calculate the total return (final price/first price - 1) for each stock. Which one has higher total return?
 
 
 ```{r questionlist, echo = FALSE, results = "asis"}

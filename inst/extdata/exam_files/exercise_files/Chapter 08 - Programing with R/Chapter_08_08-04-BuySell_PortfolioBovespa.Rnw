@@ -1,10 +1,12 @@
 <<echo=FALSE, results=hide>>=
+br_stocks_file <- afedR::afedR_get_data_file('IbovComp_long_2015-01-01_2019-11-10.rds')
+df_br_stocks <- readr::read_rds(br_stocks_file)
 
 n.oper <- 50
-traded.assets = sample(unique(df.stocks$ticker),
+traded.assets = sample(unique(df_br_stocks$ticker),
                        n.oper, replace = F)
 
-temp <- filter(df.stocks, ticker %in% traded.assets)
+temp <- filter(df_br_stocks, ticker %in% traded.assets)
 
 df.oper <- temp %>% group_by(ticker) %>%
   summarise(buy.date = sample(ref.date[1:floor(n()/2)],1),
@@ -15,7 +17,7 @@ profit <- 0
 my.c <- c()
 for (i in seq(1,n.oper)){
 
-  temp <- filter(df.stocks, ticker==df.oper$ticker[i])
+  temp <- filter(df_br_stocks, ticker==df.oper$ticker[i])
 
   buy.price <- temp$price.adjusted[temp$ref.date==df.oper$buy.date[i]]
   sell.price <- temp$price.adjusted[temp$ref.date==df.oper$sell.date[i]]
@@ -27,14 +29,14 @@ for (i in seq(1,n.oper)){
 
 sol.q <- profit
 
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 my.answers <- format(round(sol.q*rnd.vec,digits = 2), digits = 8)
 
 @
 
 \begin{question}
 
-Para este exercício, considere o dataframe inicial com todos os dados. Com base neste, assuma que um investidor  realizou as seguintes operações de compra e venda de ações:
+Consider the raw table from file \Sexpr{basename(br_stocks_file)}. Based on it, assume that a investor realized the following trade operations:
 
 <<echo=FALSE, results=tex>>=
 df.oper$buy.date <- as.character(df.oper$buy.date)
@@ -42,11 +44,13 @@ df.oper$sell.date <- as.character(df.oper$sell.date)
 
 df.to.print <- df.oper
 my.align <- paste0(c('|',rep('c|',ncol(df.to.print)+1)), collapse = '')
-print(xtable(df.to.print ,auto = TRUE,
+print(xtable::xtable(df.to.print ,auto = TRUE,
              align = my.align,digits = 2), include.rownames=FALSE,include.colnames = T)
 @
 
-Com bases nestes dados, qual foi o lucro total bruto deste investidor? Dica: salvem a tabela no Excel ou Calc e importem as operações no R.
+Based on this information, what is the total gross profit of the investor?
+
+Tip: load the trade table to excel or csv first, and later import it in the R code for the calculations.
 
 \begin{answerlist}
 \item \Sexpr{my.answers[1]}

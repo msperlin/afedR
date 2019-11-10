@@ -1,7 +1,7 @@
 <<echo=FALSE, results=hide>>=
 
-f.stocks.name <- get_stock_br_file()
-df.stocks <- get_stock_br_data()
+f.stocks.name <- afedR::afedR_get_data_file('SP500-Stocks_long.csv')
+df.stocks <- readr::read_csv(f.stocks.name, col_types = readr::cols())
 
 n.stocks <- 10
 my.assets <- sample(unique(df.stocks$ticker), n.stocks)
@@ -16,18 +16,18 @@ my.answers <- format(floor(sol.q*rnd.vec))
 
 \begin{question}
 
-Considere os dados do arquivo \verb|\Sexpr{f.stocks.name}|. Neste encontrarás o preço de negociação de diferentes ativos. Para a sua prova em particular, considere apenas os dados para os ativos a seguir:
+Load the data in file \verb|\Sexpr{f.stocks.name}|, which contains the trading price of different assets. For your exercise, consider only the following assets:
 
 <<echo=FALSE, results=tex>>=
-df.to.print <- data.frame(`Ações Selecionadas` = my.assets)
+df.to.print <- data.frame(`Selected stocks` = my.assets)
 my.align <- paste0(c('|',rep('c|',ncol(df.to.print)+1)), collapse = '')
-print(xtable(df.to.print ,auto = TRUE, 
+print(xtable::xtable(df.to.print ,auto = TRUE,
              align = my.align,digits = 2), include.rownames=FALSE,include.colnames = T)
 @
 
-e exclua os demais do dataframe importado. 
+and exclude all others.
 
-Após esta operação de exclusão, qual é o número de linhas no dataframe resultante?
+What is the number of rows in the resulting dataframe?
 
 \begin{answerlist}
   \item \Sexpr{my.answers[1]}

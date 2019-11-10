@@ -166,7 +166,13 @@ afedR_grade_exam <- function(l_in) {
 }
 
 
-gen.rnd.vec <- function(){
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+afedR_gen_rnd_vec <- function(){
   rnd.vec.1 <- c(1, seq(runif(1,0.1,0.2), runif(1,0.7,0.8), length.out = 4))
   rnd.vec.2 <- c(1, seq(runif(1,1.1,1.2), runif(1,1.7, 1.8), length.out = 4))
   rnd.vec.3 <- c(1, seq(runif(1,0.25,0.5),runif(1,0.6,0.8), length.out = 2),

@@ -17,7 +17,7 @@ print(my.profit)
 
 sol.q <- my.profit
 
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 my.answers <- round(sol.q*rnd.vec,digits = 2)
 
 if (lan == 'en') {

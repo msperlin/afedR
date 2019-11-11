@@ -5,9 +5,9 @@ temp.df$type.instrument <- sapply(strsplit(temp.df$asset.code,' '), function(x) 
 possible.types <- c("LFT", "LTN",  "NTN-B", "NTN-C", "NTN-F")
 
 my.tab <- temp.df %>%
-  group_by(type.instrument) %>%
-  summarise(my.n = n()) %>%
-  arrange(-my.n)
+  dplyr::group_by(type.instrument) %>%
+  dplyr::summarise(my.n = n()) %>%
+  dplyr::arrange(-my.n)
 
 sol.q <- my.tab$type.instrument[1]
 

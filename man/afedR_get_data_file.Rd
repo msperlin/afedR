@@ -10,13 +10,12 @@ afedR_get_data_file(name_dataset)
 \item{name_dataset}{Name of the dataset filename (see \link{afedR_list_available_data} for more details)}
 }
 \value{
-A dataframe with the data
+A path to the data file
 }
 \description{
 This is a helper function of book "Analyzing Financial and Economic Data with R" by Marcelo S. Perlin.
-With this function you'll be able to read the tables used in the book. Every table is located by its names.
-In order to fin available tables, use function \link{afedR_list_available_data}.
+With this function you'll be able to read the tables used in the book using only the filenames.
 }
 \examples{
-df <- afedR_get_data_file('grunfeld.csv')
+path_to_file <- afedR_get_data_file('grunfeld.csv')
 }

@@ -1,6 +1,8 @@
 <<echo=FALSE, results=hide>>=
 
-my.tab <- temp.df %>% group_by(asset.code) %>% summarise(dist= max(price.bid)-min(price.bid))
+my.tab <- temp.df %>%
+  dplyr::group_by(asset.code) %>%
+  dplyr::summarise(dist= max(price.bid)-min(price.bid))
 
 sol.q <- sum(my.tab$dist)
 

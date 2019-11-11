@@ -6,18 +6,21 @@ n.oper <- 50
 traded.assets = sample(unique(df_br_stocks$ticker),
                        n.oper, replace = F)
 
-temp <- filter(df_br_stocks, ticker %in% traded.assets)
+temp <- dplyr::filter(df_br_stocks,
+                      ticker %in% traded.assets)
 
-df.oper <- temp %>% group_by(ticker) %>%
-  summarise(buy.date = sample(ref.date[1:floor(n()/2)],1),
-            sell.date = sample(ref.date[ (floor(n()/2)+1):n()],1),
-            n.contracts = sample(seq(10,50),1))
+df.oper <- temp %>%
+  dplyr::group_by(ticker) %>%
+  dplyr::summarise(buy.date = sample(ref.date[1:floor(n()/2)],1),
+                   sell.date = sample(ref.date[ (floor(n()/2)+1):n()],1),
+                   n.contracts = sample(seq(10,50),1))
 
 profit <- 0
 my.c <- c()
 for (i in seq(1,n.oper)){
 
-  temp <- filter(df_br_stocks, ticker==df.oper$ticker[i])
+  temp <- dplyr::filter(df_br_stocks,
+                        ticker==df.oper$ticker[i])
 
   buy.price <- temp$price.adjusted[temp$ref.date==df.oper$buy.date[i]]
   sell.price <- temp$price.adjusted[temp$ref.date==df.oper$sell.date[i]]
@@ -36,7 +39,7 @@ my.answers <- format(round(sol.q*rnd.vec,digits = 2), digits = 8)
 
 \begin{question}
 
-Consider the raw table from file \Sexpr{basename(br_stocks_file)}. Based on it, assume that a investor realized the following trade operations:
+Consider the raw table from file \verb|\Sexpr{basename(br_stocks_file)}|. Based on it, assume that a investor realized the following trade operations:
 
 <<echo=FALSE, results=tex>>=
 df.oper$buy.date <- as.character(df.oper$buy.date)
@@ -45,7 +48,7 @@ df.oper$sell.date <- as.character(df.oper$sell.date)
 df.to.print <- df.oper
 my.align <- paste0(c('|',rep('c|',ncol(df.to.print)+1)), collapse = '')
 print(xtable::xtable(df.to.print ,auto = TRUE,
-             align = my.align,digits = 2), include.rownames=FALSE,include.colnames = T)
+                     align = my.align,digits = 2), include.rownames=FALSE,include.colnames = T)
 @
 
 Based on this information, what is the total gross profit of the investor?

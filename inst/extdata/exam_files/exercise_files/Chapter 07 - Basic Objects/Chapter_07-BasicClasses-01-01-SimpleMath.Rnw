@@ -5,7 +5,7 @@ z <- sample(1:5,1)
 
 sol.q <- x*y+z
 
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 my.answers <- round(sol.q*rnd.vec,digits = 0)
 
 if (lan == 'en') {

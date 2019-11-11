@@ -5,8 +5,8 @@ my.sp500.f <- afedR::afedR_get_data_file('SP500_comp_YEARLY_long_2014-10-03_2019
 df.sp500 <- readr::read_rds(my.sp500.f)
 
 tab <- df.sp500 %>%
-  group_by(ticker) %>%
-  summarise(mean.ret = mean(ret.adjusted.prices, na.rm = TRUE),
+  dplyr::group_by(ticker) %>%
+  dplyr::summarise(mean.ret = mean(ret.adjusted.prices, na.rm = TRUE),
             sd.ret = sd(ret.adjusted.prices, na.rm = TRUE))
 
 sol.q.1 <- tab$ticker[which.min(tab$sd.ret)]

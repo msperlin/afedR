@@ -1,0 +1,157 @@
+---
+title: "Analyzing Financial and Economic Data with R"
+author: "Marcelo S. Perlin"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+subtitle: Solution of chapter's exercises
+---
+
+```{r setup, include=FALSE}
+book.site <- 'https://www.msperlin.com/blog/publication/2017_book-pafdr-en/'
+book.site.zip <- 'https://www.msperlin.com/blog/files/pafdr%20files/Code_Data_pafdR.zip'
+
+knitr::opts_chunk$set(message = FALSE)
+```
+
+
+# Chapter 02: Basic Operations
+
+**01. Create a new R script, save it to a personal folder in your computer, and define two objects: one containing a number between 1 and 100 and another with the text of your name (eg `'John'`). Run the scripts with the mentioned RStudio keyboard shortcuts (_control + enter_ and _control + shift + enter_).**
+
+```{r}
+x <- 36
+y <- 'John Adams'
+
+# press control+enter to run the chunk of code
+```
+
+**02. Within the previous script, use the created text object and, with functions `cat` and `paste0`, display the following phrase in the _prompt_ of R: `"My name is .... "`. **
+
+```{r}
+x <- 36
+y <- 'John Adams'
+
+cat(paste0('My name is ', y))
+
+# press control+enter to run the chunk of code
+```
+
+**03. Check the current working directory of your R session. Modify the working directory to your _Desktop_ area and display the following message: `'My desktop address is ....'`.**
+
+```{r}
+current_dir <- getwd()
+print(current_dir)
+
+new_dir <- '~/Desktop/' # this is probably C:/Users/USERNAME/Desktop for Windows
+setwd(new_dir)
+
+cat(paste0('My desktop address is ', getwd()))
+```
+
+
+**04. Use R to download the compressed file with the book material, available at [`r book.site.zip`](`r book.site.zip`). Save it as a file in the temporary session folder (see `tempdir` function).**
+
+```{r, cache = TRUE}
+local_file <- tempfile(fileext = '.zip')
+my_url <- 'https://www.msperlin.com/blog/files/pafdr%20files/Code_Data_pafdR.zip'
+
+download.file(url = my_url, destfile = local_file)
+
+# check if exists
+file.exists(local_file)
+```
+
+**05. Use the `unzip` function to unzip the downloaded file from the  previous exercise to a desktop folder called `'Book files`'. How many files are available in the zipped file? **
+
+```{r}
+my_folder <- '~/Desktop/Book files'
+unzip(local_file, exdir = my_folder)
+
+files <- list.files(my_folder, 
+                    full.names = TRUE, 
+                    recursive = TRUE)
+
+n_files <- length(files)
+
+cat(paste0('There are ', n_files, ' files available at folder "', my_folder, '".'))
+```
+
+**06. Every time the user installs an R package, the new code is stored locally in a specific folder on the computer. Using command `Sys.getenv('R_LIBS_USER')` and `list.dirs`, list all directories in this folder. How many packages are available in this folder? **
+
+```{r}
+r_pkg_folder <- Sys.getenv ('R_LIBS_USER')
+
+available_dirs <- list.dirs(r_pkg_folder, recursive = FALSE)
+n_dirs <- length(available_dirs)
+
+cat(paste0('There are ', n_dirs, ' folders available  at "', r_pkg_folder, '".'))
+```
+
+**07. On the same subject as in the previous exercise, create a variable called `pkg_files` that contains all files in all subdirectories of the directory containing the files of the different packages. On average, how many files are needed for each package? **
+
+```{r}
+r_pkg_folder <- Sys.getenv ('R_LIBS_USER')
+
+pkg_files <- list.files(r_pkg_folder, recursive = TRUE)
+my_dirs <- list.dirs(r_pkg_folder, recursive = FALSE)
+
+n_files <- length(pkg_files)
+n_dirs <- length(my_dirs)
+
+my_msg <- paste0('We have ', length(pkg_files), ' ',
+                 'files for ', length(my_dirs), ' packages. \n',
+                 'An average of ', n_files/n_dirs, ' files per dir,')
+
+cat(my_msg)
+```
+
+
+**08. Install package `BatchGetSymbols` on your computer. Read the package manual and use function `BatchGetSymbols::BatchGetSymbols` function to download price data for the IBM stock for the previous 15 days. Tip: You can use function `Sys.Date()` to find out the current date and use `Sys.Date() - 15` to figure out the start of the previous 15 days from today.**
+
+```{r}
+if (!require(BatchGetSymbols)) install.packages('BatchGetSymbols')
+
+df_prices <- BatchGetSymbols(tickers = 'IBM',
+                             first.date = Sys.Date() - 15,
+                             last.date = Sys.Date())
+```
+
+**09. Using the `devtools` package, install the development version of the `ggplot2` package in the [Hadley Hickman repository](https://github.com/hadley). Load the package using `library` and create a simple figure with code `qplot(y = rnorm (10), x = 1:10)`. **
+
+```{r, cache = TRUE}
+devtools::install_github('hadley/ggplot2')
+
+library(ggplot2)
+qplot(y = rnorm (10), x = 1:10)
+```
+
+
+**10. CHALLENGE - Using your programming ability with R, check which folder from the "Documents" directory has the highest number of files. Display the five folders with the largest number of files in the prompt. **
+
+```{r, eval = TRUE}
+doc_folder <- '~' # 'C:/Users/USERNAME/Documents' in Windows
+# '/home/USERNAME/  in Linux
+
+fct_count_files <- function(dir_in) {
+  n_files <- list.files(dir_in, recursive = FALSE)
+  return(length(n_files))
+}
+
+# be aware this might take lots of time...
+all_folders <- fs::dir_ls(path = doc_folder, 
+                          type = 'directory', 
+                          recurse = TRUE)
+
+cat(paste0(all_folders, collapse = '\n'), file = '~/Desktop/asdf.txt')
+
+counter_files <- sapply(all_folders, fct_count_files)
+sorted <- sort(counter_files, decreasing = TRUE)
+
+cat('\nThe five folders with highest number of files are:\n\n')
+cat(paste0(names(sorted[1:5]), collapse = '\n'))
+
+```
+

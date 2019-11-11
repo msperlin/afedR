@@ -11,37 +11,34 @@
 #' df_data <- afedR_list_available_data()
 afedR_list_available_data <- function(be_silent = FALSE) {
 
-  desc_file <- system.file('description_data.csv', package = 'afedR')
+  path_data <- system.file('extdata/data', package = 'afedR')
 
-  df_desc <- readr::read_csv(desc_file, col_types = readr::cols())
+  my_files <- list.files(path_data)
 
-  if (!be_silent) print(df_desc)
+  if (!be_silent) print(my_files)
 
-  return(invisible(df_desc))
+  return(invisible(my_files))
 }
 
 #' Get path to data file
 #'
 #' This is a helper function of book "Analyzing Financial and Economic Data with R" by Marcelo S. Perlin.
-#' With this function you'll be able to read the tables used in the book. Every table is located by its names.
-#' In order to fin available tables, use function \link{afedR_list_available_data}.
+#' With this function you'll be able to read the tables used in the book using only the filenames.
 #'
 #' @param name_dataset Name of the dataset filename (see \link{afedR_list_available_data} for more details)
 #'
-#' @return A dataframe with the data
+#' @return A path to the data file
 #' @export
 #'
 #' @examples
-#' df <- afedR_get_data_file('grunfeld.csv')
+#' path_to_file <- afedR_get_data_file('grunfeld.csv')
 afedR_get_data_file <- function(name_dataset) {
-
-  df_available <- afedR_list_available_data(be_silent = TRUE)
 
   #if (!(name_dataset %in% df_available$file_name)) {
     #stop('Cant find name ', name_dataset, ' in list of available tables.')
   #}
 
-  path_out <- system.file(paste0('extdata/', name_dataset),
+  path_out <- system.file(paste0('extdata/data/', name_dataset),
                           package = 'afedR')
 
   if (path_out == '') {

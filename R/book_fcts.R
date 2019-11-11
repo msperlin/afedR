@@ -1,5 +1,7 @@
 #' Gets official links from book
 #'
+#' Use this function in the book so that all links are updated in a single location.
+#'
 #' @return A list with links
 #' @export
 #'
@@ -8,44 +10,98 @@
 #' print(afedR_get_links_book())
 afedR_get_links_book <- function() {
 
-  my_l <- list(book_site = 'https://www.msperlin.com/blog/publication/2017_book-pafdr-en/',
-               book_site_zip = 'https://github.com/msperlin/afedR/raw/master/inst/extdata/afedR_files.zip',
+  my_l <- list(book_site = 'https://www.msperlin.com/blog/publication/2020_book-afedr-en/',
+               book_site_zip = 'TODO',
                blog_site = 'https://www.msperlin.com/blog')
 
   return(my_l)
 
 }
 
-#' Donwload and unzip book file
+#' Copy all book files to local folder
 #'
-#' @param path_to_unzip Path to unzip the book files
+#' This function will grab files from the afedR package and copy all of it to a local folder,
+#' separated by directories including R code, data, slides and end-chapter exercises.
+#'
+#' @param path_to_copy Path to copy all the book files
 #'
 #' @return TRUE, if sucessful
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' flag <- afedR_unzip_book_file()
+#' flag <- afedR_get_book_files()
 #' }
-afedR_unzip_book_file <- function(path_to_unzip = '~') {
+afedR_get_book_files <- function(path_to_copy = '~') {
 
-  zip_file <- system.file('extdata/afedR_files.zip', package = 'afedR')
+  if (!dir.exists(path_to_copy)) {
+    stop(paste0('Path ', path_to_copy, ' does not exists. Perhaps create it ?'))
+  }
 
-  message('Unzipping files to ', path_to_unzip)
+  # data files
+  data_path_files <- system.file('extdata/data', package = 'afedR')
+  data_path_to_copy <- file.path(path_to_copy, 'afedR files/data')
 
-  utils::unzip(zip_file, exdir = path_to_unzip)
+  message('Copying data files files to ', data_path_to_copy)
 
-  files <- list.files(path_to_unzip,
-                      full.names = TRUE,
-                      recursive = TRUE)
+  if (!dir.exists(data_path_to_copy)) dir.create(data_path_to_copy,
+                                                 recursive = TRUE)
 
-  name_in_zip <- 'afedR files'
-  message(paste0('Unzipped ', length(files), ' files at ',
-                 file.path(path_to_unzip, name_in_zip)))
-  message(paste0('\tR code available at ', file.path(path_to_unzip, name_in_zip, 'r-code')))
-  message(paste0('\tData files available at ', file.path(path_to_unzip, name_in_zip, 'data')))
-  message(paste0('\tSlides available at ', file.path(path_to_unzip, name_in_zip, 'slides')))
-  message(paste0('\tSolution to exercises at ', file.path(path_to_unzip, name_in_zip, 'exercises')))
+  files_to_copy <- list.files(data_path_files, full.names = TRUE)
 
-  return(invisible())
+  flag <- file.copy(from = files_to_copy, to = data_path_to_copy,
+                    overwrite = TRUE)
+
+  if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
+
+  # Slides
+  slides_path_files <- system.file('extdata/slides', package = 'afedR')
+  slides_path_to_copy <- file.path(path_to_copy, 'afedR files/slides')
+
+  message('Copying slides files files to ', slides_path_to_copy)
+  if (!dir.exists(slides_path_to_copy)) dir.create(slides_path_to_copy,
+                                                   recursive = TRUE)
+
+  files_to_copy <- list.files(slides_path_files, full.names = TRUE)
+
+  flag <- file.copy(from = files_to_copy, to = slides_path_to_copy,
+                    overwrite = TRUE)
+
+  if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
+
+  # EOC exercises
+  eoc_exerc_path_files <- system.file('extdata/eoc-exercises', package = 'afedR')
+  eoc_exerc_path_to_copy <- file.path(path_to_copy, 'afedR files/eoc-exercises')
+
+  message('Copying end-of-chapter (eoc) exercises with solutions to ',
+          eoc_exerc_path_to_copy)
+  if (!dir.exists(eoc_exerc_path_to_copy)) dir.create(eoc_exerc_path_to_copy,
+                                                      recursive = TRUE)
+
+  files_to_copy <- list.files(eoc_exerc_path_files, full.names = TRUE)
+
+  flag <- file.copy(from = files_to_copy,
+                    to = eoc_exerc_path_to_copy,
+                    overwrite = TRUE)
+
+  if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
+
+  # R code
+  r_code_path_files <- system.file('extdata/R-code', package = 'afedR')
+  r_code_exerc_path_to_copy <- file.path(path_to_copy, 'afedR files/R-code')
+
+  message('Copying end-of-chapter (eoc) exercises with solutions to ',
+          r_code_exerc_path_to_copy)
+  if (!dir.exists(r_code_exerc_path_to_copy)) dir.create(r_code_exerc_path_to_copy,
+                                                         recursive = TRUE)
+
+  files_to_copy <- list.files(r_code_path_files, full.names = TRUE)
+
+  flag <- file.copy(from = files_to_copy,
+                    to = r_code_exerc_path_to_copy,
+                    overwrite = TRUE)
+
+  if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
+
+  return(invisible(TRUE))
 }

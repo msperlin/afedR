@@ -10,7 +10,7 @@ afedR_get_links_book()
 A list with links
 }
 \description{
-Gets official links from book
+Use this function in the book so that all links are updated in a single location.
 }
 \examples{
 

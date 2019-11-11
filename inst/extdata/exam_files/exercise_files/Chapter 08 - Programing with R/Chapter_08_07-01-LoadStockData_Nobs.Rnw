@@ -9,7 +9,7 @@ my.assets <- sample(unique(df.stocks$ticker), n.stocks)
 temp.stocks <- df.stocks[df.stocks$ticker %in% my.assets, ]
 
 sol.q <- nrow(temp.stocks)
-rnd.vec <- gen.rnd.vec()
+rnd.vec <- afedR::afedR_gen_rnd_vec()
 
 my.answers <- format(floor(sol.q*rnd.vec))
 @

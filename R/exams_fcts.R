@@ -1,17 +1,55 @@
-
+#' Creates exams in html using exercises from the book
+#'
+#' This function uses the \link{exam} package to create exercises in the html format with
+#' random selections. This means that each student will receive a different version of the same
+#' exercise. All exercise files are taken from book "Analysing Financial and Economic Data with R".
+#'
+#' @param students_names Names of students (a vector)
+#' @param students_ids Ids of students (a vector)
+#' @param class_name The name of the class
+#' @param exercise_name The name of the exercises
+#' @param links_in_html A dataframe with links to be added in the html page. This can
+#'     be anything that helps the students. The dataframe must have two columns: "text" with the text to
+#'     appear in the html and "url" with the actual link (see default options for details).
+#' @param chapters_to_include Chapter to include in exercise (1-13)
+#' @param dir_out Folder to copy exercise html files
+#' @param language Selection of language ("en" only so far)
+#'
+#' @return TRUE, if sucessfull
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' afedR_build_exam(students_names = 'George', chapters_to_include = 2,
+#'                  dir_out = tempdir())
+#'  }
 afedR_build_exam <- function(students_names,
                              students_ids = paste0('Exam ', 1:length(students_names)),
-                             class_name = 'My Class',
+                             class_name = 'Sample class',
                              exercise_name = paste0('Sample Exercise'),
                              links_in_html = dplyr::tibble(text = 'Analyzing Financial and Economic Data with R',
                                                            url = 'https://www.msperlin.com/blog/publication/2020_book-afedr-en/'),
-                             chapters_to_include = 1:16,
+                             chapters_to_include = 1:13,
                              dir_out = 'html exams',
                              language = 'en') {
 
+  # check args
+  if (length(students_names) != length(students_ids)) {
+    stop('Length of students_names does no match the length of studends_ids. Check your inputs..')
+  }
+
+  if (!is.numeric(chapters_to_include)) {
+    stop('Arg chapters_to_include should be of numeric type.')
+  }
+
+  if ( (chapters_to_include < 0)|(chapters_to_include > 13 ) ) {
+    stop('Arg chapters_to_include should be between 1 and 13.')
+  }
+
   path_exercises <- system.file('extdata/exam_files/exercise_files', package = 'afedR')
-  available_exercises <- list.files(path_exercises, full.names = TRUE,
-                                    recursive = TRUE)
+  available_exercises <- list.files(path_exercises,
+                                    full.names = TRUE,
+                                    recursive = TRUE, pattern = '.Rmd|.Rnw')
 
   if (!dir.exists(dir_out)) dir.create(dir_out)
 
@@ -108,6 +146,29 @@ afedR_build_exam <- function(students_names,
 
 }
 
+#' Replaces content in html template file
+#'
+#' Used for replacing names, id, version and so on on html exercise files.
+#'
+#' @param f_in File with html code
+#' @param dir_out Folder out
+#' @param student_name Name of student
+#' @param student_version Version of student
+#' @param n_q Number of questions in exercise
+#' @param class_name Name of class
+#' @param exercise_name Name of exercise
+#' @param exam_links Links to add
+#'
+#' @return TRUE, if sucessfull
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' afedR_add_html_content(f_in = 'example.html', dir_out = tempdir(),
+#'                        student_name = 'George', student_version = 1,
+#'                        n_q = 10, class_name = 'example class', exercise_name = 'sample',
+#'                        exam_links = NA)
+#' }
 afedR_add_html_content <- function(f_in,
                                    dir_out,
                                    student_name,
@@ -158,6 +219,7 @@ afedR_add_html_content <- function(f_in,
 
   cat(html_content, file = my_new_name, append = FALSE)
 
+  return(invisible(TRUE))
 }
 
 
@@ -166,12 +228,18 @@ afedR_grade_exam <- function(l_in) {
 }
 
 
-#' Title
+#' Generate random vectors for answers
 #'
-#' @return
+#' This function generates random vectors with first element equal to 1 and rest
+#' equal to proportions. It is mostly used for building alternatives in numerical questions:
+#' solution*afedR_gen_rnd_vec().
+#'
+#' @return A vector
 #' @export
+#' @import stats
 #'
 #' @examples
+#' print(afedR_gen_rnd_vec())
 afedR_gen_rnd_vec <- function(){
   rnd.vec.1 <- c(1, seq(runif(1,0.1,0.2), runif(1,0.7,0.8), length.out = 4))
   rnd.vec.2 <- c(1, seq(runif(1,1.1,1.2), runif(1,1.7, 1.8), length.out = 4))

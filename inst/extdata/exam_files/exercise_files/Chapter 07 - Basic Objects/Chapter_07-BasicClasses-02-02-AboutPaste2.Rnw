@@ -7,18 +7,18 @@ sol.q <- sum(nchar(my.vec))
 
 if (lan == 'en') {
   question.1 <- paste0('Use function \\lstinline|paste| and \\lstinline|seq| to create the following atomic vector of characters of size', my.n, ':')
-  
+
   question.2 <- paste0('What is the sum of characters for all elements of the created vector?')
-  
+
 }
 
 if (lan == 'pt-br') {
   question.1 <- paste0('Use a função \\lstinline|paste| e \\lstinline|seq| para criar o seguinte vetor atômico de caracteres de tamanho ', my.n, ':')
-  
+
   question.2 <- paste0('Qual é a soma do número de characteres para todos os elementos do vetor criado?')
 }
 
-my.answers <- floor(sol.q*gen.rnd.vec())
+my.answers <- floor(sol.q*afedR::afedR_gen_rnd_vec())
 
 
 @
@@ -49,7 +49,7 @@ exams::answerlist(my.answers,markup = 'latex')
   \item False.
   \item False.
   \item False.
-  \item False. 
+  \item False.
 \end{answerlist}
 \end{solution}
 

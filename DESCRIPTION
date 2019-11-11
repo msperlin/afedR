@@ -17,5 +17,6 @@ Imports:
   utils,
   readr,
   purrr,
-  dplyr
+  dplyr,
+  stats
   

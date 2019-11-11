@@ -2,10 +2,11 @@
 
 library(dplyr)
 
-t.out<- temp.stocks %>% group_by(ticker) %>%
-  summarise(my.n = n(),
-            my.max = max(price.adjusted),
-            date.max = ref.date[which.max(price.adjusted)])
+t.out<- temp.stocks %>%
+  dplyr::group_by(ticker) %>%
+  dplyr::summarise(my.n = n(),
+                   my.max = max(price.adjusted),
+                   date.max = ref.date[which.max(price.adjusted)])
 
 sol.q <- max(t.out$date.max, na.rm = T)
 rnd.vec.1 <- sample(10:50,4,replace =  F)
@@ -22,22 +23,22 @@ my.answers <- format(sol.q+rnd.vec)
 For the same filtered dataframe from previous exercises, check which dates each stock presented its highest price. Among those, what is the most recent date?
 
 \begin{answerlist}
-  \item \Sexpr{my.answers[1]}
-  \item \Sexpr{my.answers[2]}
-  \item \Sexpr{my.answers[3]}
-  \item \Sexpr{my.answers[4]}
-  \item \Sexpr{my.answers[5]}
+\item \Sexpr{my.answers[1]}
+\item \Sexpr{my.answers[2]}
+\item \Sexpr{my.answers[3]}
+\item \Sexpr{my.answers[4]}
+\item \Sexpr{my.answers[5]}
 \end{answerlist}
 
 \end{question}
 
 \begin{solution}
 \begin{answerlist}
-  \item True.
-  \item False.
-  \item False.
-  \item False.
-  \item False.
+\item True.
+\item False.
+\item False.
+\item False.
+\item False.
 \end{answerlist}
 \end{solution}
 

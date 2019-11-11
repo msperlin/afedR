@@ -21,7 +21,7 @@ if (lan == 'pt-br') {
 
 sol.q <- sum(x)
 
-my.answers <- sol.q*gen.rnd.vec()
+my.answers <- sol.q*afedR::afedR_gen_rnd_vec()
 
 @
 

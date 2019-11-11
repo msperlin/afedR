@@ -23,7 +23,7 @@ my.answers <- format(sol.q*rnd.vec)
 
 \begin{question}
 
-Load the data from files \Sexpr{basename(br_stocks_file)} and \Sexpr{basename(f_ibov_name)}. Now, using the Ibovespa returns (ticker = BVSP), add a new column in the stock data dataframe with the returns of the index. For each asset, calculate the excessive return of each stock for each date, that is, the difference of the stock return and the index return.
+Load the data from files \verb|\Sexpr{basename(br_stocks_file)}| and \verb|\Sexpr{basename(f_ibov_name)}|. Now, using the Ibovespa returns (ticker = BVSP), add a new column in the stock data dataframe with the returns of the index. For each asset, calculate the excessive return of each stock for each date, that is, the difference of the stock return and the index return.
 
 Based on the excessive return column, what is the sum of it when  ignoring the NA values?
 

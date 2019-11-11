@@ -6,7 +6,7 @@ temp.stocks$ret <- unlist(tapply(temp.stocks$price.adjusted,
                                  temp.stocks$ticker, my.fct))
 
 sol.q <- min(temp.stocks$ret, na.rm = T)
-rnd.vec <- gen.rnd.vec()
+rnd.vec <-  afedR::afedR_gen_rnd_vec()
 
 my.answers <- format(sol.q*rnd.vec)
 @

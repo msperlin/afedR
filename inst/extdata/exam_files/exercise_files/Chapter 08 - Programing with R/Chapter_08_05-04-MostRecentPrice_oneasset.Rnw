@@ -2,7 +2,7 @@
 
 my.asset <- sample(my.rnd.assets,1)
 
-temp1 <- filter(temp.df,asset.code==my.asset)
+temp1 <- dplyr::filter(temp.df,asset.code==my.asset)
 
 sol.q <- temp1$price.bid[which.max(temp1$ref.date)]
 

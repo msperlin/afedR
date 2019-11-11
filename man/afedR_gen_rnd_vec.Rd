@@ -2,10 +2,18 @@
 % Please edit documentation in R/exams_fcts.R
 \name{afedR_gen_rnd_vec}
 \alias{afedR_gen_rnd_vec}
-\title{Title}
+\title{Generate random vectors for answers}
 \usage{
 afedR_gen_rnd_vec()
 }
+\value{
+A vector
+}
 \description{
-Title
+This function generates random vectors with first element equal to 1 and rest
+equal to proportions. It is mostly used for building alternatives in numerical questions:
+solution*afedR_gen_rnd_vec().
+}
+\examples{
+print(afedR_gen_rnd_vec())
 }

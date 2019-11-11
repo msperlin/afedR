@@ -2,7 +2,9 @@
 
 temp.df$weekday <- weekdays(temp.df$ref.date)
 
-my.tab <- temp.df %>% group_by(weekday,asset.code) %>% summarise(mean.price = mean(price.bid))
+my.tab <- temp.df %>%
+  dplyr::group_by(weekday,asset.code) %>%
+  dplyr::summarise(mean.price = mean(price.bid))
 
 sol.q <- sum(my.tab$mean.price)
 

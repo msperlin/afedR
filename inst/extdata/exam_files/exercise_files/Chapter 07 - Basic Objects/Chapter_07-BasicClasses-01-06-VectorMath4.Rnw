@@ -11,7 +11,7 @@ if (lan == 'pt-br') {
 
 sol.q <- sum((x>0)&(y>0))
 
-my.answers <- floor(sol.q*gen.rnd.vec())
+my.answers <- floor(sol.q*afedR::afedR_gen_rnd_vec())
 
 @
 

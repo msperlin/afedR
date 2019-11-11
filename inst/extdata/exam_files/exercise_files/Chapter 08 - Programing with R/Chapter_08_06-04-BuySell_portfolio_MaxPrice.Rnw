@@ -2,10 +2,11 @@
 
 n.buy <- sample(10:100,1)
 
-my.tab <- temp.df %>% group_by(asset.code) %>%
-  summarise(buy.price = price.bid[which.min(ref.date)],
-            sell.price= price.bid[which.max(price.bid)]) %>%
-  mutate(profit=sell.price-buy.price)
+my.tab <- temp.df %>%
+  dplyr::group_by(asset.code) %>%
+  dplyr::summarise(buy.price = price.bid[which.min(ref.date)],
+                   sell.price= price.bid[which.max(price.bid)]) %>%
+  dplyr::mutate(profit=sell.price-buy.price)
 
 sol.q <- sum(n.buy*my.tab$profit)
 

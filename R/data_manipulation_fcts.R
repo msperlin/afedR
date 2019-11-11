@@ -46,6 +46,16 @@ afedR_replace_outliers_df <- function(df_in, my_prob = 0.05) {
 }
 
 
+#' Calculates a return vector
+#'
+#' @param P Vector of prices
+#' @param tickers Vector of tickers
+#'
+#' @return A vector of returns
+#' @export
+#'
+#' @examples
+#' print(afedR_calc_ret(1:10))
 afedR_calc_ret <- function(P,
                      tickers = rep('ticker', length(P))) {
   # calculates arithmetic returns from a vector of prices

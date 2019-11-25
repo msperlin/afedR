@@ -4,14 +4,17 @@
 \alias{afedR_build_exam}
 \title{Creates exams in html using exercises from the book}
 \usage{
-afedR_build_exam(students_names, students_ids = paste0("Exam ",
-  1:length(students_names)), class_name = "Sample class",
+afedR_build_exam(
+  students_names,
+  students_ids = paste0("Exam ", 1:length(students_names)),
+  class_name = "Sample class",
   exercise_name = paste0("Sample Exercise"),
-  links_in_html = dplyr::tibble(text =
-  "Analyzing Financial and Economic Data with R", url =
-  "https://www.msperlin.com/blog/publication/2020_book-afedr-en/"),
-  chapters_to_include = 1:13, dir_out = "html exams",
-  language = "en")
+  links_in_html = dplyr::tibble(text = "Analyzing Financial and Economic Data with R",
+    url = "https://www.msperlin.com/blog/publication/2020_book-afedr-en/"),
+  chapters_to_include = 1:13,
+  dir_out = "html exams",
+  language = "en"
+)
 }
 \arguments{
 \item{students_names}{Names of students (a vector)}

@@ -4,8 +4,16 @@
 \alias{afedR_add_html_content}
 \title{Replaces content in html template file}
 \usage{
-afedR_add_html_content(f_in, dir_out, student_name, student_version, n_q,
-  class_name, exercise_name, exam_links)
+afedR_add_html_content(
+  f_in,
+  dir_out,
+  student_name,
+  student_version,
+  n_q,
+  class_name,
+  exercise_name,
+  exam_links
+)
 }
 \arguments{
 \item{f_in}{File with html code}

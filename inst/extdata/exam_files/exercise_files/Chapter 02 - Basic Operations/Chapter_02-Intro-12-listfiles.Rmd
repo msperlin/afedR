@@ -36,7 +36,7 @@ my.f <- list.files(path = 'data', pattern = '*.csv',full.names = TRUE)
 </code></pre>
 
 
-```{r, echo=FALSE, eval=FALSE}
+```{r body2, echo=FALSE, eval=FALSE}
 my.f <- list.files(path = 'data', pattern = '*.csv',full.names = TRUE)
 ```
 

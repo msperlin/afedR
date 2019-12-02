@@ -34,7 +34,7 @@ Question
 cat(paste(question.1,collapse = ""))
 ```
 
-```{r, echo=FALSE}
+```{r tab, echo=FALSE}
 print(x)
 ```
 

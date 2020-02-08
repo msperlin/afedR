@@ -1,12 +1,12 @@
 #' # Creating and Saving Figures with `ggplot2` {#
 #' 
-## ---- include=FALSE------------------------------------------------------
+## ---- include=FALSE------------------------------------------------------------------------------------------
 source('Scripts/preamble_chapters.R')
 
 #' 
-## ---- include=FALSE------------------------------------------------------
-my_fig_height <- 5
-my_fig_width <- 6
+## ---- include=FALSE------------------------------------------------------------------------------------------
+my_fig_height <- 6
+my_fig_width <- 7
 
 knitr::opts_chunk$set(fig.align='center',
                       prompt = FALSE, 
@@ -14,18 +14,18 @@ knitr::opts_chunk$set(fig.align='center',
                       tidy=FALSE)
 
 #' 
-#' Communication is one of the most important aspe
+#' It is a well-known fact that communication is o
 #' 
 #' The easiness of which you can create and presen
 #' 
 #' Visual attractiveness
-#' : Always facilitate the analysis to your audien
+#' : Always facilitate the analysis of your audien
 #' 
 #' A figure must be self-contained
 #' : Any technical information such as origin and 
 #' 
 #' The graphical analysis should help your analysi
-#' : A graphic should contribute to your story. Ju
+#' : Just because you can make a plot, doesn't mea
 #' 
 #' Check your references
 #' : Science and data analysis evolves as building
@@ -45,7 +45,7 @@ knitr::opts_chunk$set(fig.align='center',
 #' 
 #' First, let's load the data and check its conten
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # set file and load data
@@ -59,13 +59,13 @@ glimpse(df_sp500)
 #' It is a fairly common table used in previous ch
 #' 
 #' 
-#' ## Using Graphic Windows
+#' ## Using Graphics Windows
 #' 
 #' Before studying the use of `ggplot2`, we need t
 #' 
 #' A more intelligent approach to managing figures
 #' 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
 ## x11()
 ## plot(1:10)
 
@@ -85,7 +85,7 @@ glimpse(df_sp500)
 #' 
 #' To build a time series plot with the prices of 
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
 library(ggplot2)
 
 # filter stock data
@@ -101,7 +101,7 @@ qplot(data = temp_df,
 #' 
 #' In the previous example, the name of the axis c
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
 qplot(data = temp_df, 
       x = ref.date, 
       y = price.adjusted, 
@@ -124,7 +124,7 @@ qplot(data = temp_df,
 #' 
 #' Look at the syntax of the following example tha
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width----
+## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width--------------------------------
 p <- ggplot(data = temp_df, 
             mapping = aes(x = ref.date, 
                           y = price.adjusted))
@@ -143,7 +143,7 @@ print(p)
 #' 
 #' Once the data and axis are defined, we save it 
 #' 
-## ----eval=TRUE-----------------------------------------------------------
+## ----eval=TRUE-----------------------------------------------------------------------------------------------
 library(ggplot2)
 library(stringr)
 
@@ -158,26 +158,26 @@ fcts <- fcts[idx]
 print(fcts)
 
 #' 
-#' As you can see, package `ggplot2` offers a sign
+#' As you can see, the `ggplot2` package offers a 
 #' 
 #' Going back to our example, the third line of th
 #' 
-#' The use of the **pipeline operator** is also po
+#' Using the **pipeline operator** is also possibl
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 p <- temp_df %>%
   ggplot(aes(x = ref.date, y = price.adjusted)) +
   geom_line() +
   labs(x = 'Dates', 
        y = 'Adjusted Closing Prices', 
-      title = 'Prices of MMM')
+       title = 'Prices of MMM')
 
 #' 
-#' Note that we use symbol `+` and not `%>%` to in
+#' We advise that you make a note to show we have 
 #' 
 #' One of the great advantages of using `ggplot` i
 #' 
-## ----eval=TRUE-----------------------------------------------------------
+## ----eval=TRUE-----------------------------------------------------------------------------------------------
 # fix seed
 set.seed(10)
 
@@ -191,9 +191,11 @@ temp_df <- df_sp500 %>%
 #' 
 #' In this code, we use operator `%in%` to find ou
 #' 
-## ----fig.height=my_fig_height, fig.width=my_fig_width--------------------
+## ----fig.height=my_fig_height, fig.width=my_fig_width--------------------------------------------------------
 p <- temp_df %>%
-  ggplot(aes(x = ref.date, y = price.adjusted, color=ticker)) +
+  ggplot(aes(x = ref.date, 
+             y = price.adjusted, 
+             color = ticker)) +
   geom_line() +
   labs(x = 'Dates', 
        y = 'Adjusted closing prices', 
@@ -216,12 +218,11 @@ print(p)
 #' 
 #' In the following code, we will first download t
 #' 
-## ---- include=FALSE------------------------------------------------------
+## ---- include=FALSE------------------------------------------------------------------------------------------
 my_api_key <- 'Esv7Ac7zuZzJSCGxynyF'
 
 #' 
-#' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(Quandl)
 library(tidyverse)
 
@@ -238,12 +239,12 @@ df_yc <- Quandl(code = my.symbol,
                 start_date = first.date,
                 end_date = last_date)
 
-glimpse(df_yc)
+print(head(df_yc))
 
 #' 
 #' The result is a dataframe in the wide format: y
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # change to long format and convert to factor
 df_yc <- gather(data = df_yc,
                 key = 'maturity',
@@ -267,7 +268,7 @@ glimpse(df_yc)
 #' 
 #' We have a dataframe in the long format with thr
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # keep only last date of each
 last_date <- max(df_yc$Date)
 df_yc_lastdate <- df_yc[df_yc$Date == last_date, ]
@@ -286,7 +287,7 @@ print(p)
 #' 
 #' As expected, the current yield curve is upward 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set number of periods 
 n_periods <- 5
 my_year <- 2019
@@ -318,7 +319,8 @@ p <- ggplot(df_yc_periods, aes(x=maturity,
        y='Yield Rate (%)',
        title = paste0('US Yield Curve for ', my_year),
        color = 'Dates',
-       caption = paste0('Data from Quandl table ', my.symbol, '\n',
+       caption = paste0('Data from Quandl table ', 
+                        my.symbol, '\n',
                         'Access at ', Sys.time()))
 
 print(p)
@@ -327,13 +329,16 @@ print(p)
 #' The yield curve is not static and will change o
 #' 
 #' 
-#' ### Using Themes
+#' ## Using Themes
 #' 
 #' One way of customizing graphics in `ggplot2` is
 #' 
+
+#' 
+#' 
 #' Package `ggplot` has a pre-packaged collection 
 #' 
-## ----eval=TRUE-----------------------------------------------------------
+## ----eval=TRUE-----------------------------------------------------------------------------------------------
 library(ggplot2)
 library(stringr)
 
@@ -348,9 +353,9 @@ fcts <- fcts[idx]
 print(fcts)
 
 #' 
-#' Let's try it with the theme of function `theme_
+#' Let's try it with the theme from function `them
 #' 
-## ----fig.height=my_fig_height, fig.width=my_fig_width--------------------
+## ----fig.height=my_fig_height, fig.width=my_fig_width--------------------------------------------------------
 p <- temp_df %>%
   ggplot(aes(x = ref.date, y = price.adjusted, color=ticker)) +
   geom_line() +
@@ -367,7 +372,7 @@ print(p)
 #' 
 #' Let's now use package `gridExtra` to create a g
 #' 
-## ---- fig.height=9 , fig.width = 9---------------------------------------
+## ---- fig.height=9 , fig.width = 9---------------------------------------------------------------------------
 require(gridExtra)
 
 p1 <- p + 
@@ -404,9 +409,9 @@ grid.arrange(p1, p2, p3,
 #' 
 #' In the previous example, notice how the structu
 #' 
-#' Digging deeper, the selection of the colours fo
+#' Digging deeper, the selection of the colors fol
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width----
+## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width--------------------------------
 p <- p + 
   theme_bw() + 
   scale_colour_grey(start = 0.0, end = 0.6)
@@ -417,13 +422,13 @@ print(p)
 #' The lines of the plot are now in grey. The inpu
 #' 
 #' 
-#' ### Creating Panels with `facet_wrap`
+#' ## Creating Panels with `facet_wrap`
 #' 
-#' Another possibility in creating graphics for di
+#' Another possibility of creating graphics for di
 #' 
 #' Facets are possible with function `facet_wrap`,
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
 library(dplyr)
 # fix seed
 set.seed(10)
@@ -439,14 +444,15 @@ p <- df_sp500 %>%
        y = 'Adjusted closing prices',
        title = 'Prices of four random stocks',
        caption = 'Data from Yahoo Finance') + 
-  facet_wrap(facets = ~ticker)
+  facet_wrap(facets = ~ticker) + 
+  theme_bw()
 
 print(p)
 
 #' 
 #' Using panels is recommended when the data of th
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
 # fix seed
 set.seed(25)
 
@@ -469,24 +475,29 @@ print(p)
 #' 
 #' Notice how the vertical axis of the panels is f
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
 p <- p + 
   facet_wrap(facets = ~ticker, scales = 'free_y')
 
 print(p)
 
 #' 
+#' Here, both axis, x and y, have their own scale 
+#' 
 #' 
 #' ## Using the Pipeline
 #' 
 #' We previously saw that `ggplot2` is a friend of
 #' 
-## ---- eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width----
+## ---- eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width---------------------------------
 library(tidyverse)
 library(ggplot2)
 
 # calculated mean and sd of returns, plot result
-my_f <- afedR::afedR_get_data_file('SP500_Stocks_long_by_year.rds')
+my_f <- afedR::afedR_get_data_file(
+  'SP500_Stocks_long_by_year.rds'
+  )
+
 df_sp500 <- read_rds(my_f)
 
 p <- df_sp500 %>%
@@ -500,7 +511,8 @@ p <- df_sp500 %>%
        y = 'Average Yearly Returns',
        title = 'Expected Return and Risk for SP500 Stocks',
        subtitle = paste0('Annual price data from 2010 to 2019, ',
-                        length(unique(df_sp500$ticker)), ' stocks included'),
+                         length(unique(df_sp500$ticker)), 
+                         ' stocks included'),
        caption = 'Data imported from Yahoo Finance') + 
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(labels = scales::percent) + 
@@ -511,7 +523,7 @@ print(p)
 #' 
 #' The previous code is self-contained, easy to re
 #' 
-#' This is another example of elegant code produci
+#' This is another example of an elegant code prod
 #' 
 #' 
 #' ## Creating Statistical Graphics
@@ -523,25 +535,29 @@ print(p)
 #' 
 #' A histogram shows the empirical distribution of
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
 # set file and load data
 my_f  <- afedR::afedR_get_data_file('SP500-Stocks-WithRet.rds')
 df_sp500 <- read_rds(my_f )
 
 # remove outliers
 my_prob_outliers <- 0.01
-df_sp500$ret <- afedR::afedR_replace_outliers(df_sp500$ret, my_prob = my_prob_outliers)
+df_sp500$ret <- afedR::afedR_replace_outliers(
+  df_sp500$ret, 
+  my_prob = my_prob_outliers
+  )
 
 # plot the data
 p <- ggplot(data = df_sp500, aes(x = ret)) + 
   geom_histogram(bins = 100) + 
   labs(y = 'Frequency', 
        x = 'Returns',
-       title = 'Distribution of returns for all stocks in the SP500 index',
+       title = paste0('Distribution of returns for ', 
+                      'all stocks in the SP500 index'),
        subtitle = paste0('Data from 2010 to 2019\n',
-                         'Quantiles at the ', 
+                         'Distribution based quantiles at the ', 
                          scales::percent(my_prob_outliers), 
-                         ' of both sides of the distribution were removed'),
+                         ' were removed'),
        caption = 'Data from Yahoo Finance'
   ) + 
   scale_x_continuous(labels = scales::percent) + 
@@ -554,7 +570,7 @@ print(p)
 #' 
 #' We can also use groups and facets as we did for
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
 # fix seed
 set.seed(30)
 
@@ -571,7 +587,7 @@ p <- df_sp500 %>%
        subtitle = paste0('Data from 2010 to 2019\n',
                          'Quantiles at the ', 
                          scales::percent(my_prob_outliers), 
-                         ' of both sides of the distribution were removed'),
+                         ' of the distribution were removed'),
        caption = 'Data from Yahoo Finance'
   ) + 
   scale_x_continuous(labels = scales::percent) + 
@@ -583,7 +599,7 @@ print(p)
 #' 
 #' A histogram with the empirical densities of the
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
 p <- df_sp500 %>%
   filter(ticker %in% tickers) %>%
   ggplot(aes(x = ret)) + 
@@ -591,11 +607,13 @@ p <- df_sp500 %>%
   facet_wrap(facets = ~ticker) + 
   labs(y = 'Interpolated Frequency', 
        x = 'Returns',
-       title = 'Interpolated distribution of returns for all stocks in the SP500 index',
+       title = paste0('Interpolated distribution of returns',
+                      'for all stocks in the SP500 index'),
        subtitle = paste0('Data from 2010 to 2019\n',
                          'Quantiles at the ', 
                          scales::percent(my_prob_outliers), 
-                         ' of both sides of the distribution were removed'),
+                         ' of both sides of the distribution', 
+                         'were removed'),
        caption = 'Data from Yahoo Finance'
   ) + 
   scale_x_continuous(labels = scales::percent) + 
@@ -609,9 +627,9 @@ print(p)
 #' 
 #' ### Creating _boxplot_ Figures
 #' 
-#' Figures of type _boxplot_ (or box and whisker d
+#' Figures of type _boxplot_, or box and whisker d
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
 # fix seed
 set.seed(30)
 
@@ -624,9 +642,12 @@ p <- df_sp500 %>%
   geom_boxplot() + 
   labs(y = 'Adjusted Price',
        x = 'Ticker',
-       title = 'Distribution of daily prices of four random stocks',
-       caption = 'Data imported from Yahoo Finance (2010 - 2019)'
-       )
+       title = paste0('Distribution of daily prices', 
+                      ' of four random stocks'),
+       caption = paste0('Data imported from Yahoo Finance', 
+                        ' (2010 - 2019)')
+       ) + 
+  theme_bw()
 
 print(p)
 
@@ -635,14 +656,15 @@ print(p)
 #' 
 #' Another interesting application of boxplot figu
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 p <- ggplot(df_yc, aes(x = factor(maturity), y = rate)) + 
   geom_boxplot() + 
   labs(title = 'Distribution of Yield Rates over Maturities',
        x = 'Maturity (years)', 
        y = 'Yield Rate (% per year)',
        caption = paste0('Data from Quandl \n',
-                        'Created at ', Sys.time()) )
+                        'Created at ', Sys.time()) ) + 
+  theme_bw()
 
 print(p)
 
@@ -656,7 +678,7 @@ print(p)
 #' 
 #' Let's try an example with some simulated data.
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
 # fix seed
 set.seed(40)
 
@@ -684,7 +706,7 @@ print(p)
 #' Now, let's try it for our table of stock's retu
 #' 
 #' 
-## ----eval=TRUE,fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----
+## ----eval=TRUE,fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------
 # fix seed
 set.seed(10)
 
@@ -744,7 +766,7 @@ print(p)
 #' 
 #' Consider the following example, where we create
 #' 
-## ----eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width----
+## ----eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width----------------------------------
 library(tidyverse)
 
 # fix seed
@@ -755,7 +777,9 @@ tickers <- sample(unique(df_sp500$ticker), 4)
 
 p <- df_sp500 %>%
   filter(ticker %in% tickers) %>%
-  ggplot(aes(x = ref.date, y = price.adjusted, color = ticker)) + 
+  ggplot(aes(x = ref.date, 
+             y = price.adjusted, 
+             color = ticker)) + 
   geom_line() + 
   labs(x = 'Date', 
        y = 'Adjusted closing prices',
@@ -771,7 +795,7 @@ ggsave(filename = my_fig_file,
 #' 
 #' You can verify the creation of the file with fu
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 print(list.files('fig_ggplot'))
 
 #' 
@@ -780,9 +804,9 @@ print(list.files('fig_ggplot'))
 #' 
 #' ## Exercises 
 #' 
-#' 01. Download Facebook (FB) stock data  with the
+#' 01. Download Facebook (FB) stock data with the 
 #' 
-#' - The x and y axis are correctly named;
+#' - The x and y-axis is correctly named;
 #' - The plot has a title ("Prices for 1 stock"), 
 #' 
 #' 02. Download Google (GOOG), Facebook (FB) and D
@@ -791,7 +815,7 @@ print(list.files('fig_ggplot'))
 #' 
 #' 04. For the same chart, separate stock prices i
 #' 
-#' 05. Modify the previous chart theme to a grey s
+#' 05. Modify the previous chart theme to greyscal
 #' 
 #' 06. For the previous data, create the histogram
 #' 

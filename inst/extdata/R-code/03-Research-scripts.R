@@ -2,12 +2,12 @@
 #' 
 #' So far we learned how to use R for basic tasks 
 #' 
-#' This is important because an organized code fac
+#' An organized code facilitates sharing and futur
 #' 
 #' 
 #' ## Stages of Research
 #' 
-#' A data-based script can be organized in four co
+#' Unlike other software designs, every research s
 #' 
 #' 1. **Importation of data**: Raw (original) data
 #' 
@@ -26,7 +26,7 @@
 #' 
 #' ## Folder Structure {#directories}
 #' 
-#' A proper, thought out, folder structure also be
+#' A proper folder structure also benefits the rep
 #' 
 #' A suggestion for an effective folder structure 
 #' 
@@ -52,7 +52,7 @@
 #' 
 #' An example for the content of file `0-run-it-al
 #' 
-## ----eval=FALSE, tidy=FALSE----------------------------------------------
+## ----eval=FALSE, tidy=FALSE----------------------------------------------------------------------------------
 ## # clean up workspace
 ## rm(list=ls())
 ## 
@@ -89,20 +89,20 @@
 #' 
 #' Another way of setting up directories in a rese
 #' 
-#' The benefits of this approach is that it is not
+#' The benefit of this approach is that it is unne
 #' 
 #' 
 #' ## Important Aspects of a Research Script
 #' 
-#' Here I'll make some suggestions for conducting 
+#' In this section I'll be making some suggestions
 #' 
-#' First of all, **know your data!**. I can't stre
+#' Firstly, **know your data!**. I can't stress en
 #' 
 #' - How was the data collected? To what purpose?
 #' - How do the available data compare with data u
 #' - Is there any possibility of bias within the d
 #' 
-#' Remember that the ultimate goal of any research
+#' Furthermore, you need to remember that the ulti
 #' 
 #' As an example, consider the case of analyzing t
 #' 
@@ -117,11 +117,11 @@
 #' - Do the main findings of the research make sen
 #' - Is it possible that a _bug_ in the code has p
 #' 
-#' I'm constantly surprised of how many studies su
+#' I'm constantly surprised by how many studies su
 #' 
 #' All of the research work is, to some extent, ba
 #' 
-#' I make it clear that it is possible that the re
+#' I clarify that it is possible that the results 
 #' 
 #' 
 #' ## Exercises

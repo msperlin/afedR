@@ -1,19 +1,19 @@
-#' # Programming and Data Analysis with R {#progra
+#' # Programming and Data Analysis {#programming}
 #' 
 
 #' 
-#' In previous chapters we learned about the most 
+#' In previous chapters, we have learned what the 
 #' 
 #' 
-#' ## Creating Functions
+#' ## R Functions
 #' 
 #' **The use of functions is in the heart of R**. 
 #' 
-#' With time, the usability of the function only g
+#' Moreover, the usability of the function only ge
 #' 
 #' A function always has three parts: input, proce
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 example_fct <- function(arg1 = 1, arg2 = 'abc'){
   
   msg1 <- paste0('\nValue of arg1: ', arg1)
@@ -30,19 +30,19 @@ example_fct <- function(arg1 = 1, arg2 = 'abc'){
 }
 
 #' 
+#' The definition of a function is similar to the 
+#' 
+#' Using the equality symbol in this setting, as i
+#' 
 #' After registering the function in the environme
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # first call
 out1 <- example_fct(arg1 = 2, arg2 = 'bcd')
 
 # second call
 out2 <- example_fct(arg1 = 10, arg2 = 'dab')
 
-#' 
-#' The definition of a function is similar to the 
-#' 
-#' Using the equality symbol in this setting, as i
 #' 
 #' Every function will return an object with the `
 #' 
@@ -52,7 +52,7 @@ out2 <- example_fct(arg1 = 10, arg2 = 'dab')
 #' 
 #' Now, let's create a function that does somethin
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 my_mean_fct <- function(x = c(1, 1, 1, 1)){
   # Calculates the average of input x
   #
@@ -77,7 +77,7 @@ my_mean_fct <- function(x = c(1, 1, 1, 1)){
 #' 
 #' After writing the function down, register it by
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # testing function my_mean_fct
 my_mean <- my_mean_fct(x = 1:100)
 
@@ -89,7 +89,7 @@ print(my_mean)
 #' 
 #' If function `my_mean_fct` is called without any
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # calling my_mean_fct without input
 my_mean <- my_mean_fct()
 
@@ -103,9 +103,9 @@ print(my_mean)
 #' 
 #' Although simple, the previous example can be fu
 #' 
-#' Correcting this problem is simple: just use a l
+#' Correcting this problem is simple: you just nee
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 my_mean_fct <- function(x = c(1, 1, 1, 1)){
   # Calculates the average of input x
   #
@@ -127,16 +127,19 @@ my_mean_fct <- function(x = c(1, 1, 1, 1)){
 #' 
 #' In the previous code, we use the `class` functi
 #' 
-## ---- error=TRUE---------------------------------------------------------
-# using wrong inputs (ERROR)
-my_mean_fct(x = c('a', 'b'))
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## # using wrong inputs (ERROR)
+## my_mean_fct(x = c('a', 'b'))
 
 #' 
-#' Going further in developing our function, notic
+
+#' 
+#' 
+#' Another problem with our custom function is tha
 #' 
 #' To handle `NA` values in function `my_mean_fct`
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 my_mean_fct <- function(x = c(1, 1, 1, 1)){
   # Calculates the average of input x
   #
@@ -163,7 +166,7 @@ my_mean_fct <- function(x = c(1, 1, 1, 1)){
 #' 
 #' We used function `warning` to issue a message i
 #' 
-## ----warning=TRUE--------------------------------------------------------
+## ----warning=TRUE--------------------------------------------------------------------------------------------
 # set vector with NA
 y <- c(1, 2, 3, NA, 1)
 
@@ -173,9 +176,9 @@ print(my_mean_fct(y))
 #' 
 #' As we can see, the function acknowledged the ex
 #' 
-#' Using comments and input testing is good progra
+#' Using comments and input testing is a good prog
 #' 
-#' Now, lets move to a more complete example of us
+#' Now, let's move to a more complete example of u
 #' 
 
 #' 
@@ -185,9 +188,9 @@ print(my_mean_fct(y))
 #' 
 #' First, let's register a function for calculatin
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 calc_ret <- function(P) {
-  # calculates arithmetic returns from a vector of prices
+  # Calculates arithmetic returns from a vector of prices
   #
   # Args:
   #   P - vector of prices (numeric)
@@ -209,10 +212,10 @@ calc_ret <- function(P) {
 #' 
 #' To solve this issue is straightforward: we need
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 calc_ret <- function(P, 
                      tickers = rep('ticker', length(P))) {
-  # calculates arithmetic returns from a vector of prices
+  # Calculates arithmetic returns from a vector of prices
   #
   # Args:
   #   P - vector of prices (numeric)
@@ -255,7 +258,7 @@ calc_ret <- function(P,
 #' 
 #' Now, let's use the function with the data for t
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 my_f <- afedR::afedR_get_data_file('SP500-Stocks_long.csv')
@@ -272,7 +275,7 @@ df_sp500 <- df_sp500 %>%
 #' 
 #' Let's look at the result:
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 glimpse(df_sp500)
 
 summary(df_sp500)
@@ -282,7 +285,7 @@ summary(df_sp500)
 #' 
 #' Going further, let's remove all `NA` rows with 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 df_sp500 <- df_sp500 %>%
   filter(complete.cases(.))
 
@@ -293,21 +296,23 @@ summary(df_sp500)
 #' 
 #' Finally, we save the resulting dataset as a _.r
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 write_rds(x = df_sp500,
           path = 'data/SP500-Stocks-WithRet.rds')
 
+#' 
+#' As a final word on using functions, don't hesit
 #' 
 #' 
 #' ## Using `for` Loops 
 #' 
 #' A _loop_ command is the most basic computer ins
 #' 
-#' The great thing about _loops_ is its length, th
+#' The great thing about _loops_ is its length. Th
 #' 
 #' Back to the code, the structure of a _loop_ in 
 #' 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE----------------------------------------------------------------------------------------------
 ## for (i in i_vec) {
 ##   ...
 ## }
@@ -315,7 +320,7 @@ write_rds(x = df_sp500,
 #' 
 #' Command `for` indicates the beginning of a _loo
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set seq
 my_seq <- seq(-5, 5)
 
@@ -327,28 +332,9 @@ for (i in my_seq){
 #' 
 #' We created a sequence from -5 to 5 and presente
 #' 
-## ------------------------------------------------------------------------
-i <- 1
-cat(paste('\nThe value of 1 is', i))
-
-i <- 2
-cat(paste('\nThe value of 1 is', i))
-
-i <- 3
-cat(paste('\nThe value of 1 is', i))
-
-i <- 4
-cat(paste('\nThe value of 1 is', i))
-
-i <- 5
-cat(paste('\nThe value of 1 is', i))
-
-#' 
-#' Needless to say that the a loop results in far 
-#' 
 #' The iterated sequence in the _loop_ is not excl
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set char vec
 my_char_vec <- letters[1:5]
 
@@ -361,7 +347,7 @@ for (i_char in my_char_vec){
 #' 
 #' The same goes for `lists`:
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # set list
 my_l <- list(x = 1:5, 
              y = c('abc', 'dfg'), 
@@ -378,7 +364,7 @@ for (i_l in my_l){
 #' 
 #' In the definition of _loops_, the iterator does
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # set vec and iterators
 my_vec <- seq(1:5)
 my_x <- 5
@@ -397,7 +383,7 @@ for (i in my_vec){
 #' 
 #' Using nested _loops_, that is, a _loop_ inside 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set matrix
 my_mat <- matrix(1:9, nrow = 3)
 
@@ -412,13 +398,13 @@ for (i in seq(1, nrow(my_mat))){
 #' 
 #' Let's do a more complex example using data file
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # set number of files to create
 n_files <- 10
 
-# set first part of saved files
+# set the first part of saved files
 pattern_name <- 'myfiles_'
 
 # set dir
@@ -449,19 +435,18 @@ for (i_file in file_names){
 
 #' 
 #' In the previous example, we used function `if` 
-#' 
 #' In the _loop_, we used function `runif` to crea
 #' 
 #' Now, let's check if the files are in the folder
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # check files
 print(list.files(out_dir))
 
 #' 
 #' As expected, the files are there. To complete t
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set empty df
 df_agg <- tibble()
 for (i_file in file_names){
@@ -479,7 +464,7 @@ glimpse(df_agg)
 #' 
 #' Another practical example of using _loops_ is p
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # read data
@@ -512,14 +497,14 @@ for (i_ticker in unique_tickers){
 print(head(tab_out))
 
 #' 
-#' We used function `unique` to find out the names
+#' We used the function `unique` to discover the n
 #' 
 #' 
 #' ## Conditional Statements (`if`, `else`, `switc
 #' 
 #' Making binary decisions of type _yes_ or _no_ i
 #' 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE----------------------------------------------------------------------------------------------
 ## # skeleton for if statement
 ## if (cond){
 ## 
@@ -532,9 +517,9 @@ print(head(tab_out))
 ## }
 
 #' 
-#' The place holder `cond` is the condition to be 
+#' The placeholder `cond` is the condition to be e
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set vec and threshold
 my_x <- 1:10
 my_thresh <- 5
@@ -555,7 +540,7 @@ for (i in my_x) {
 #' 
 #' If we want to apply more than one logical condi
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 for (i in my_x){
   if (i > my_thresh){
     cat('\nValue of ', i, ' is higher than ', my_thresh)
@@ -567,9 +552,9 @@ for (i in my_x){
 }
 
 #' 
-#' Another possibility for using conditional execu
+#' Another possibility of using conditional execut
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set vec
 my_vec <- c('A', 'D', 'B', 'A', 'C', 'B')
 
@@ -588,8 +573,7 @@ for (i_vec in my_vec){
 #' 
 #' While the previous code works, using several `e
 #' 
-#' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set vec
 my.vec <- c('A', 'D', 'B', 'A', 'C', 'B')
 
@@ -612,16 +596,16 @@ for (i_vec in my.vec){
 #' 
 #' An alternative way of using _loops_ in R is to 
 #' 
-#' Its worth pointing out that all procedures usin
+#' It is worth pointing out that all procedures us
 #' 
-#' The opposite can be true in other scenarios. Wh
+#' Whenever it is possible, give preference to a f
 #' 
 #' 
 #' ### Using `lapply`
 #' 
 #' Function `base::lapply` takes as input a `list`
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list(c(1, 2, 2), 
              c(2:5, NA), 
@@ -637,7 +621,7 @@ print(my_mean_vec)
 #' 
 #' The result shows the means of each vector in `m
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list(c(1, 2, 2), c(2:5, NA), 10:-20)
 
@@ -652,9 +636,9 @@ print(my_mean_vec)
 #' 
 #' As we can see, the extra argument `na.rm = TRUE
 #' 
-#' Using `lapply` is particularly useful when util
+#' In particular, using `lapply` is useful when us
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # function to generate files
 create_rnd_file <- function(name_file, N = 100){
   # Generates a csv file with random content
@@ -688,9 +672,9 @@ create_rnd_file <- function(name_file, N = 100){
 }
 
 #' 
-#' Now, we use function  it with `lapply`: 
+#' Now, we use the function with `lapply`: 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set options
 n_files <- 5
 pattern_name <- 'myfiles_with_lapply_'
@@ -721,16 +705,16 @@ print(out_l)
 #' 
 
 #' 
-#' Everything worked well, as expected. The creati
+#' As you can see, everything worked well, as expe
 #' 
-#' Notice the return of `lapply` is always a `list
+#' Notice the returned object of function `lapply`
 #' 
 #' 
 #' ### Using `sapply`
 #' 
 #' Function `base::sapply` works similarly to `lap
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # create list
 my_l <- list(1:10, 2:5, 10:-20)
 
@@ -745,7 +729,7 @@ print(my_mean_vec)
 #' 
 #' An important aspect of using `sapply` is the un
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # set list
 my_l <- list(x1 = runif(10), 
              x2 = runif(15), 
@@ -783,7 +767,7 @@ print(my_vec)
 #' 
 #' A practical use of function `sapply` in data an
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 describe_vec <- function(x){
   # Describe numerical vector with mean and other stats
   #
@@ -809,9 +793,9 @@ describe_vec <- function(x){
 }
 
 #' 
-#' Now, let's load the data and apply function `de
+#' Now, let's load the data and apply the function
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # set file and read it
@@ -837,7 +821,7 @@ print(head(t(my_tab)))
 #' 
 #' Function `tapply` is designed to perform group 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set numeric vec and factor
 my_x <- 1:150
 my_factor <- factor(c(rep('C',50), 
@@ -855,7 +839,7 @@ print(my_mean_vec)
 #' 
 #' Going back to the previous example using stock 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # use tapply for descriptive stats
 my_l_out <- tapply(X = df_sp500$price.adjusted, 
                    INDEX = df_sp500$ticker, 
@@ -867,8 +851,8 @@ print(my_l_out[1:5])
 #' 
 #' The output of `tapply` is a `list` of values. E
 #' 
-## ------------------------------------------------------------------------
-# convert list to dataframe
+## ------------------------------------------------------------------------------------------------------------
+# convert list to the dataframe
 my_tab <- do.call(what = bind_rows, 
                   args = my_l_out)
 
@@ -880,9 +864,9 @@ my_tab <- my_tab %>%
 print(head(my_tab))
 
 #' 
-#' This is the first appearance of `do.call`. This
+#' It is the first time that command `do.call` is 
 #' 
-#' Back to the example, we can see the result in `
+#' Reverting to the example, we can see the result
 #' 
 #' 
 #' ### Using `mapply`
@@ -891,7 +875,7 @@ print(head(my_tab))
 #' 
 #' Assume we are interested in creating a `list` w
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set size
 N <- 10
 
@@ -908,7 +892,7 @@ print(my_l)
 #' 
 #' Another, less verbose and more elegant solution
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # use mapply for creating list
 my_l <- mapply(FUN = seq, 
                rep(1, N), 
@@ -922,9 +906,9 @@ print(my_l)
 #' 
 #' ### Using `apply`
 #' 
-#' Function `apply` follows the same logic as the 
+#' The `apply` function follows the same logic as 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set matrix and print it
 my_mat <- matrix(1:15, nrow = 5)
 print(my_mat)
@@ -942,7 +926,7 @@ print(sum_cols)
 #' 
 #' Expanding the example, we can use `apply` to fi
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # print max by row
 print(apply(X = my_mat, MARGIN = 1, FUN = max))
 
@@ -953,13 +937,15 @@ print(apply(X = my_mat, MARGIN = 2, FUN = max))
 #' 
 #' ### Using `by`
 #' 
-#' Function `by` differentiate itself due to its `
+#' The `by` function differentiates itself because
 #' 
 #' Look at the next example, where we create a mor
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # load data 
-df_sp500 <- afedR::afedR_get_data_file('SP500-Stocks-WithRet.rds')
+df_sp500 <- read_rds(afedR::afedR_get_data_file(
+  'SP500-Stocks-WithRet.rds')
+  )
 
 # set function for processing df
 describe_vec_with_ret <- function(df_in){
@@ -992,14 +978,14 @@ print(head(my_tab))
 
 
 #' 
-#' Function `describe_vec_with_ret` needed to be c
+#' Function `describe_vec_with_ret` was a requirem
 #' 
 #' 
 #' ## Using package `purrr`
 #' 
 #' The `tidyverse` universe also offers functions 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(purrr)
 
 # set list
@@ -1021,7 +1007,7 @@ res_out <- my_l %>%
 #' 
 #' Another interesting point about the `purrr` fun
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 
 # set list
 my_l <- list(vec1 = c(elem1 = 10, elem2 = 20, elem3 = 5),
@@ -1042,8 +1028,7 @@ print(res_out)
 #' 
 #' Using function `safely` is simple. It encapsula
 #' 
-#' 
-## ---- error=TRUE---------------------------------------------------------
+## ---- error=TRUE---------------------------------------------------------------------------------------------
 library(purrr)
 
 example_fct <- function(x) {
@@ -1051,22 +1036,21 @@ example_fct <- function(x) {
 }
 
 # ERROR
-print(example_fct('a'))
+example_fct('a')
 
 #' 
 #' Now, let's use `safely` to enclose `example_fct
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # with safely
 example_fct_safely <- safely(example_fct)
 
-print(example_fct_safely('a'))
+class(example_fct_safely('a'))
 
 #' 
 #' The code `print(example_fct_safely('a'))` resul
 #' 
-#' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_l <- list(1:5,
              'a',
              1:4)
@@ -1079,30 +1063,21 @@ print(res_out)
 #' 
 #' We can easily see that the function had an erro
 #' 
-## ------------------------------------------------------------------------
-# only print results 
+## ------------------------------------------------------------------------------------------------------------
+# only print results without errors
 print(res_out %>% map('result'))
 
 #' 
 #' Or just the error messages:
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # only print error messages
 print(res_out %>% map('error'))
 
 #' 
-#' Or just the cases with errors:
-#' 
-## ------------------------------------------------------------------------
-print(res_out %>% 
-        map('error') %>%
-        compact())
-
-
-#' 
 #' An interesting option of `safely` is the choice
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_l <- list(1,
              'a',
              4)
@@ -1122,11 +1097,11 @@ print(res_out)
 #' 
 #' ### The `purrr::pmap` function
 #' 
-#' The `purrr::pmap` is one of the best alternativ
+#' The `purrr::pmap` is one of the best functional
 #' 
 #' As an example, let's consider a function that b
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 build_phrase <- function(name_in, fruit_in, verb_in) {
   my_msg <- paste0('My name is ', name_in,
                    ' and I like to eat ', fruit_in,
@@ -1135,15 +1110,15 @@ build_phrase <- function(name_in, fruit_in, verb_in) {
   return(my_msg)
 }
 
-build_phrase('Marcelo', 'apple', 'studying')
+build_phrase('Joe', 'apple', 'studying')
 
 #' 
-#' Notice that function `build_phrase` has three a
+#' Function `build_phrase` has three text inputs: 
 #' 
-## ------------------------------------------------------------------------
-names_vec <- c('John', 'Mark', 'Natasha')
-fruits_vec <- c('banana', 'apple')
-verb_vec <- c('running', 'studying')
+## ------------------------------------------------------------------------------------------------------------
+names_vec <- c('Joe', 'Kate')
+fruits_vec <- c('kiwi', 'apple')
+verb_vec <- c('rowing', 'studying')
 
 my_phrases <- character()
 for (i_name in names_vec) {
@@ -1155,13 +1130,13 @@ for (i_name in names_vec) {
   }
 }
 
-print(my_phrases[1:5])
+print(my_phrases)
 
 #' 
 #' While the code works as expected, a better appr
 #' 
-## ------------------------------------------------------------------------
-df_grid <- expand_grid(names_vec = names_vec,
+## ------------------------------------------------------------------------------------------------------------
+df_grid <- expand.grid(names_vec = names_vec,
                        fruits_vec = fruits_vec,
                        verb_vec = verb_vec)
 
@@ -1172,18 +1147,18 @@ l_args <- list(name_in = df_grid$names_vec,
 my_phrases <- purrr::pmap(.l = l_args, 
                           .f = build_phrase)
 
-print(my_phrases[1:5])
+print(my_phrases)
 
 #' 
 #' Do notice that the names in `l_args` match the 
 #' 
-## ------------------------------------------------------------------------
-print(do.call(c, my_phrases))
+## ------------------------------------------------------------------------------------------------------------
+print(as.character(my_phrases))
 
 #' 
-#' If necessary, we can also set a fixed argument 
+#' If necessary, we can also set fixed arguments i
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 l_args <- list(name_in = names_vec,
                fruit_in = 'orange',
                verb_in = 'studying')
@@ -1194,22 +1169,17 @@ my_phrases <- purrr::pmap(.l = l_args,
 print(my_phrases)
 
 #' 
-#' If you have a function that you need to call wi
+#' Whenever you have a situtation where a nested l
 #' 
 #' 
 #' ## Data Manipulation with Package `dplyr`
 #' 
 #' Package `dplyr` [@dplyr] is very handy for data
 #' 
-#' Before describing functions and examples, let's
-#' 
-## ---- message=TRUE, warning=TRUE-----------------------------------------
-library('dplyr')
 
 #' 
-
 #' 
-#' The loading screen of `dplyr` warns the user th
+#' In its current version, `r my_ver`, `dplyr` has
 #' 
 #' 
 #' ### Group Operations with `dplyr`
@@ -1218,7 +1188,7 @@ library('dplyr')
 #' 
 #' To illustrate the use of the functions `group_b
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # load data
@@ -1231,20 +1201,20 @@ my_tab <- df_sp500 %>%
   summarise(mean_price = mean(price.adjusted),
             max_price = max(price.adjusted),
             min_price = min(price.adjusted),
-            max.ret = max(ret),
-            min.ret = min(ret))
+            max_ret = max(ret),
+            min_ret = min(ret))
 
 # check result
 print(my_tab)
 
 #' 
-#' Explaining it, the first step in using `dplyr` 
+#' The first step in using `dplyr` is to group the
 #' 
 #' After we group the data in line `group_by(ticke
 #' 
 #' Using `dplyr` is highly recommended when you ha
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set new col week.day
 df_sp500 <- df_sp500 %>%
   mutate(week_day = weekdays(ref.date))
@@ -1255,7 +1225,7 @@ glimpse(df_sp500)
 #' 
 #' Now, we proceed by adding column `week_day` in 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # group by ticker and weekday, calculate stats
 my_tab <- df_sp500 %>%
   group_by(ticker, week_day) %>%
@@ -1280,7 +1250,7 @@ print(my_tab)
 #' 
 #' Let’s look at the following example, where we u
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # simulated vector of returns
 ret <- c(0, rnorm(4, sd= 0.05))
 
@@ -1291,7 +1261,7 @@ print(acum_ret)
 #' 
 #' Vector `acum_ret` represents a multiplier of an
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(dplyr)
 
 # get acum ret of stocks
@@ -1308,23 +1278,23 @@ print(head(my_tab))
 #' 
 #' The greatest advantage of using complex group o
 #' 
-#' In short, `dplyr` package was a very significan
+#' In sum, the `dplyr` package was a very signific
 #' 
 #' 
 #' ## Exercises
 #' 
-#' 01. Create a function called `say_my_name` that
+#' 1.  Create a function called `say_my_name` that
 #' 
-#' 02. Considering the previous `say_my_name` func
+#' 2.  Considering the previous `say_my_name` func
 #' 
-#' 03. Download a database of popular canadian bab
+#' 3.  Download a database of popular Canadian bab
 #' 
-#' 04. Redo the previous exercise 3 using `sapply`
+#' 4.  Redo the previous exercise 3 using `sapply`
 #' 
-#' 05. Use package `BatchGetSymbols` to download v
+#' 5.  Use package `BatchGetSymbols` to download v
 #' 
-#' 06. Redo the previous exercise using the `dplyr
+#' 6.  Redo the previous exercise using the `dplyr
 #' 
-#' 07. With the dataset of names from exercise 3, 
+#' 7.  With the dataset of names from exercise 3, 
 #' 
-#' 08. CHALLENGE - In [Rstudio CRAN logs](http://c
+#' 8.  CHALLENGE - In [Rstudio CRAN logs](http://c

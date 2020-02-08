@@ -3,20 +3,19 @@
 
 #' 
 #' **In the digital era, information is abundant a
+#' 
 #' In particular, datasets related to Economics an
 #' 
 #' Not surprisingly, fields with abundant access t
-#' 
-#' In this setup, the role and contribution of R s
 #' 
 #' 
 #' ## What is R
 #' 
 #' R is a programming language specially designed 
 #' 
-#' Today, R is almost synonymous to data analysis,
+#' Today, R is almost synonymous with data analysi
 #' 
-#' In the business side, large and established com
+#' On the business side, large and established com
 #' 
 #' 
 #' ## Why Choose R
@@ -32,7 +31,6 @@
 #' **CRAN Packages allow the user to do many diffe
 #' 
 #' **R is compatible with different operating syst
-#'  for its superior speed in numerical tasks. Fro
 #' 
 #' **R is free!** The main software and all its pa
 #' 
@@ -41,15 +39,13 @@
 #' 
 #' R is a fairly complete programming language and
 #' 
-#' - Import, export, and store data based on local
-#' 
-#' - Substitute and improve data intensive tasks f
+#' - Substitute and improve data-intensive tasks f
 #' 
 #' - Develop routines for managing and controlling
 #' 
 #' - Creating tools for calculating and reporting 
 #' 
-#' - Performing an empirical data research using s
+#' - Performing empirical data research using stat
 #' 
 #' - Create dynamic _websites_ with the `shiny` pa
 #' 
@@ -58,13 +54,13 @@
 #' Moreover, public access to packages developed b
 #' 
 #' 
-#' ## Installing R
+#' ## Installing R {#installing}
 #' 
 #' Before going any further, let's install the req
 #' 
 
 #' 
-#' The next screen gives you a choice of mirror to
+#' The next screen gives you a choice of the mirro
 #' 
 
 #' 
@@ -101,13 +97,13 @@
 #' 
 #' ## Structure and Organization
 #' 
-#' This book presents a practical approach to the 
+#' This book presents a practical approach to usin
 #' 
 #' Learning to program in a new platform is like l
 #' 
 #' Throughout the book, every demonstration of cod
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # create a list
 L <- list('abc', 1:5, 'dec')
 
@@ -117,9 +113,9 @@ print(L)
 #' 
 #' For the previous chunk of code, lines `L <- lis
 #' 
-#' Code can also be spatially organized using new 
+#' The code can also be spatially organized using 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # create a list
 L <- list('abc', 
           1:5, 
@@ -138,4 +134,7 @@ print(L)
 #' 
 #' 02. Once you have R and RStudio installed, head
 #' 
-#' 03. Head over to the [RBloggers](https://www.r-
+#' 03. If you work in an institution with data inf
+#' 
+#' 04. Head over to the [RBloggers](https://www.r-
+#' 

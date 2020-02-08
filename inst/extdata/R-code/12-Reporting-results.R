@@ -2,7 +2,7 @@
 #' 
 
 #' 
-#' In previous chapters we learned how to use R to
+#' In previous chapters, we learned how to use R t
 #' 
 #' Quality relates to the visual attractiveness of
 #' 
@@ -17,7 +17,7 @@
 #' 
 #' Simple tables, such as descriptive statistics o
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 library(tidyverse)
 library(BatchGetSymbols)
 library(DistributionUtils) 
@@ -41,15 +41,15 @@ my_desc_table <- df_stocks %>%
             'StDev Ret' = sd(ret.adjusted.prices, na.rm = TRUE),
             'Max Ret' = max(ret.adjusted.prices, na.rm = TRUE),
             'Min Ret' = min(ret.adjusted.prices, na.rm = TRUE),
-            'Assimetry' = skewness(ret.adjusted.prices, na.rm = TRUE),
-            'Kurtosis' = kurtosis(ret.adjusted.prices, na.rm = TRUE))
+            Assimetry = skewness(ret.adjusted.prices, na.rm = TRUE),
+            Kurtosis = kurtosis(ret.adjusted.prices, na.rm = TRUE))
 
 print(my_desc_table)
 
 #' 
-#' In creating the dataframe, notice how we define
+#' In creating the `dataframe`, notice how we defi
 #' 
-## ---- message=FALSE------------------------------------------------------
+## ---- message=FALSE------------------------------------------------------------------------------------------
 library(xtable)
 
 # set xtable object
@@ -79,7 +79,7 @@ print(my_xtable,
 #' 
 #' As for exporting tables to _Word_ (_Microsoft_)
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set html file for output
 my_html_file <- 'tabs/MyTable.html'
 
@@ -99,11 +99,11 @@ print(x = my_xtable,
 #' 
 #' ## Reporting Models {#reporting-models}
 #' 
-#' Reporting the estimation of models relate to a 
+#' Reporting the estimation of models requires a s
 #' 
 #' As an example, let's use the `texreg` package t
 #' 
-## ---- tidy=FALSE, message=FALSE------------------------------------------
+## ---- tidy=FALSE, message=FALSE------------------------------------------------------------------------------
 library(texreg)
 library(dplyr)
 library(BatchGetSymbols)
@@ -118,7 +118,7 @@ df_sp500 <- BatchGetSymbols(tickers = my_tickers,
                              first.date = first_date,
                              last.date = last_date)[[2]]
 
-# set ibov ret column
+# set sp500 ret column
 idx <- match(df_stocks$ref.date, df_sp500$ref.date)
 df_stocks$ret_mkt <- df_sp500$ret.adjusted.prices[idx]
 
@@ -143,7 +143,7 @@ print(est_table)
 #' 
 #' The following chunk is an example of using `tex
 #' 
-## ---- tidy=FALSE, message=FALSE------------------------------------------
+## ---- tidy=FALSE, message=FALSE------------------------------------------------------------------------------
 # report result
 est_table <- texreg(l = beta_tab$beta_model,
                     file = 'tabs/Example_texreg.tex',
@@ -169,7 +169,7 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 
 #' 
-#' The next choices refer to the type of output wh
+#' The next choices relate to the output when comp
 #' 
 #' After pressing _OK_, a file will appear in the 
 #' 
@@ -177,7 +177,7 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 #' The document header is identified using the `--
 #' 
-#' Moving forward, the next piece of text is ident
+#' The next piece of text is identified in Figure 
 #' 
 #' The `include = FALSE` item is a specific option
 #' 
@@ -191,11 +191,11 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 
 #' 
-#' The second part in \@ref(fig:rmarkdown-text) is
+#' The second part of \@ref(fig:rmarkdown-text) is
 #' 
 #' An important point here is the use of code (or 
 #' 
-#'     "The estimated value of beta is X_1, with a
+#' > "The estimated value of beta is X_1, with a T
 #'     
 #' where _X*_ are numerical results from the code 
 #' 
@@ -217,7 +217,7 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 
 #' 
-#' Its important to know that the table export pro
+#' It's important to know that the table export pr
 #' 
 #' This section showed a small portion of the univ
 #' 
@@ -230,4 +230,4 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 #' 03. Create a new report in _Rmarkdown_ covering
 #' 
-#' 04. [CHALLENGE] - Download SP500 components dat
+#' 04. [**CHALLENGE**] - Download SP500 components

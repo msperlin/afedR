@@ -11,9 +11,9 @@
 #' 
 #' ## `Dataframes`
 #' 
-#' Without a doubt, `dataframe` are the most used 
+#' Without a doubt, the `dataframe` class is the m
 #' 
-#' **A `dataframe` can organize our work**. The ta
+#' **A `dataframe` can organize our work significa
 #' 
 #' Another positive aspect of using the `dataframe
 #' 
@@ -22,10 +22,10 @@
 #' 
 #' The `dataframe` object is one of R's native cla
 #' 
-#' We use function `tibble::tibble` to create a `d
+#' We call function `tibble::tibble` to create a `
 #' 
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # set tickers
@@ -51,11 +51,11 @@ my_df <- tibble(tickers, dates, prices)
 print(head(my_df))
 
 #' 
-#' We used function `rep` to replicate and facilit
+#' We used the function `rep` to replicate and fac
 #' 
 
 #' 
-#' The advantages of using the viewer is that you 
+#' The advantage of using the viewer is that you c
 #' 
 #' 
 #' ### Inspecting a Dataframe
@@ -64,33 +64,33 @@ print(head(my_df))
 #' 
 #' - Properly defined column's names and classes;
 #' - Correct number of rows and columns;
-#' - Existence (or not) of missing data (`NA`).
+#' - The existence (or not) of missing data (`NA`)
 #' 
-#' We often have no control of how we get our data
+#' We often have no control over how we get our da
 #' 
 #' It is also very important to make sure that the
 #' 
-#' We should also check for the amount of `NA` val
+#' We should also check for the number of `NA` val
 #' 
 #' Back to the code, one of the most recommended f
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # check content of my_df
 glimpse(my_df)
 
 #' 
-#' In most cases, the use of `glimpse` is sufficie
+#' Usually, the use of `glimpse` is sufficient to 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # check variation my_df
 summary(my_df)
 
 #' 
 #' The objective of `summary` is to provide a gras
 #' 
-#' A more visual way  of inspecting `dataframes` i
+#' A more visual way of inspecting `dataframes` is
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(inspectdf)
 
 # inspect categories of columns
@@ -110,9 +110,9 @@ show_plot(inspect_mem(my_df))
 #' 
 #' An important feature of the `tidyverse` univers
 #' 
-#' Let's make this point clear. Imagine a situatio
+#' Imagine a situation where we have three functio
 #' 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
 ## my_tab <- my_df %>%
 ##   fct1(arg1) %>%
 ##   fct2(arg2) %>%
@@ -121,7 +121,7 @@ show_plot(inspect_mem(my_df))
 #' 
 #' We use symbol `%>%` at the end of each line to 
 #' 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
 ## # version 1
 ## my_tab <- fct3(fct2(fct1(my_df,
 ##                          arg1),
@@ -139,17 +139,17 @@ show_plot(inspect_mem(my_df))
 #' 
 #' ### Accessing Columns
 #' 
-#' To find out the names of the columns of a `data
+#' To discover the names of the columns of a `data
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # get names of columns with names
 names(my_df)
 colnames(my_df)
 
 #' 
-#' Both can also be used to modify column names:
+#' Both can also modify column names:
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set temp df
 temp_df <- my_df
 
@@ -160,13 +160,13 @@ names(temp_df) <- paste('Col', 1:ncol(temp_df))
 names(temp_df)
 
 #' 
-#' In this example, the way we use `names` is quit
+#' In this example, the way we use `names` differs
 #' 
 #' To access a particular column of a `dataframe`,
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # isolate columns of df
-my_tickers <- my_df$ticker
+my_tickers <- my_df$tickers
 my_prices <- my_df['prices']
 my_dates <- my_df[ ,2]
 
@@ -176,16 +176,16 @@ print(head(my_prices))
 print(head(my_dates))
 
 #' 
-#' Its worth knowing that, internally, dataframes 
+#' It's worth knowing that, internally, dataframes
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # select column in dataframe with list notation
 print(my_df[[2]])
 
 #' 
 #' To access specific rows and columns of a `dataf
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # accessing rows 1:5, column 2
 print(my_df[1:5, 2])
 
@@ -198,14 +198,14 @@ print(my_df[1:5, ])
 #' 
 #' Column selection can also be performed using na
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # selecting rows 1 to 3, columns 'ticker' and 'prices'
 print(my_df[1:3, c('tickers', 'prices')])
 
 #' 
 #' Or, using the pipeline operator and function  `
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my.temp <- my_df %>%
   select(tickers, prices) %>%
   slice(1:3) %>%
@@ -217,7 +217,7 @@ my.temp <- my_df %>%
 #' 
 #' To create new columns in a dataframe, simply us
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # add columns with mutate
 my_df <- my_df %>%
   mutate(ret = prices/lag(prices) -1,
@@ -230,7 +230,7 @@ my_df <- my_df %>%
 #' 
 #' Another, more traditional way of creating new c
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # add new column with base R
 my_df$seq_3 <- 1:nrow(my_df)
 
@@ -242,27 +242,27 @@ glimpse(my_df)
 #' 
 #' Going further, if we try to create a column wit
 #' 
-## ---- eval=FALSE, error=TRUE---------------------------------------------
+## ---- eval=FALSE, error=TRUE---------------------------------------------------------------------------------
 ## my_df <- my_df %>%
 ##   mutate(seq_3 =  1:100) %>%
 ##   glimpse()
 
 #' 
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------------------------------------------
 cat('Error: Column `seq_3` must be length 20 (the number of rows) ...')
 
 #' 
 #' However, due to the simplified recycling rule, 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_df <- my_df %>%
   mutate(seq_3 =  1) %>%
   glimpse()
 
 #' 
-#' In order to remove columns from a `dataframe`, 
+#' To remove columns from a `dataframe`, use funct
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # removing columns
 my_df.temp <- my_df %>%
   select(-seq_1, -seq_2, -seq_3) %>%
@@ -271,7 +271,7 @@ my_df.temp <- my_df %>%
 #' 
 #' Using base R, the traditional way of removing c
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set temp df
 temp_df <- my_df
 
@@ -290,7 +290,7 @@ glimpse(temp_df)
 #' 
 #' A fairly common `dataframe` operation in R is t
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # filter df for single stock
 my_df.temp <- my_df %>%
   filter(tickers == 'COG') %>%
@@ -299,7 +299,7 @@ my_df.temp <- my_df %>%
 #' 
 #' We can go further and also filter data for `'CO
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # filter df for single stock and date
 my_df.temp <- my_df %>%
   filter(tickers == 'COG',
@@ -307,16 +307,16 @@ my_df.temp <- my_df %>%
   glimpse()
 
 #' 
-#' Here we used symbol `==` to test for an equalit
+#' Here we used symbol `==` to test for equality i
 #' 
 #' 
 #' ### Sorting a `dataframe`
 #' 
 #' After creating or importing a `dataframe`, we c
 #' 
-#' Consider creating a `dataframe` with the follow
+#' As an example, consider creating a `dataframe` 
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # set new df
 my_df <- tibble(col1 = c(4, 1, 2), 
                 col2 = c(1, 1, 3), 
@@ -328,7 +328,7 @@ print(my_df)
 #' 
 #' We use function  `dplyr::arrange` and the _pipe
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # sort ascending, by col1 
 my_df <- my_df %>%
   arrange(col1) %>%
@@ -337,7 +337,7 @@ my_df <- my_df %>%
 #' 
 #' We can also sort by descending values using `de
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # sort descending, col1 and col2
 my_df <- my_df %>%
   arrange(desc(col1)) %>%
@@ -346,7 +346,7 @@ my_df <- my_df %>%
 #' 
 #' And, for multiple columns, using extra argument
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # sort ascending, by col2 and col1
 my_df <- my_df %>%
   arrange(col2, col1) %>%
@@ -355,7 +355,7 @@ my_df <- my_df %>%
 #' 
 #' As for base R, function `order` returns the pos
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set index with positions of ascending order in col1
 idx <- order(my_df$col1)
 
@@ -365,7 +365,7 @@ print(idx)
 #' 
 #' Therefore, when using the output of function `o
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # order my_df by col1
 my_df.2 <- my_df[order(my_df$col1), ]
 
@@ -375,7 +375,7 @@ print(my_df.2)
 #' 
 #' This operation may also be performed considerin
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # sort df with col2 and col1
 my_df.3 <- my_df[order(my_df$col2, my_df$col1), ]
 
@@ -388,7 +388,7 @@ print(my_df.3)
 #' 
 #' In the practice of manipulating data, often you
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set two dfs with same colnames
 my_df_1 <- tibble(col1 = 1:5, 
                   col2 = rep('a', 5))
@@ -406,7 +406,7 @@ print(my_df)
 #' 
 #' Another interesting aspect of `dplyr::bind_rows
 #' 
-## ---- eval=TRUE, tidy=FALSE----------------------------------------------
+## ---- eval=TRUE, tidy=FALSE----------------------------------------------------------------------------------
 # set two df with different colnames
 my_df_1 <- tibble(col1 = 1:5, 
                   col2 = rep('a', 5))
@@ -423,7 +423,7 @@ print(my_df)
 #' 
 #' For the case of column bind with function `dply
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set two dfs
 my_df_1 <- tibble(col1 = 1:5, 
                   col2 = rep('a', 5))
@@ -441,7 +441,7 @@ print(my_df)
 #' 
 #' For that, you can use functions `dplyr::join*` 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set df
 my_df_1 <- tibble(date = as.Date('2016-01-01')+0:10,
                   x = 1:11)
@@ -451,9 +451,9 @@ my_df_2 <- tibble(date = as.Date('2016-01-05')+0:10,
 
 
 #' 
-#' Do notice that both dataframes share a column c
+#' Please do notice that both dataframes share a c
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # aggregate tables
 my_df <- inner_join(my_df_1, 
                     my_df_2)
@@ -463,7 +463,7 @@ glimpse(my_df)
 #' 
 #' Now with `dplyr::full_join`:
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # aggregate tables
 my_df <- full_join(my_df_1, 
                    my_df_2)
@@ -475,7 +475,7 @@ glimpse(my_df)
 #' 
 #' If we had `dataframes` with different column na
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set df
 my_df_3 <- tibble(ref_date = as.Date('2016-01-01')+0:10,
                   x = 1:11)
@@ -490,16 +490,18 @@ my_df <- inner_join(my_df_3, my_df_4,
 glimpse(my_df)
 
 #' 
+#' Whenever you need to combine tables that share 
+#' 
 #' 
 #' ### Extensions of the `dataframe` Class
 #' 
-#' As mentioned in previous chapter, one of the be
+#' As mentioned in the previous chapter, one benef
 #' 
 #' For example, it is common in economic and finan
 #' 
 #' See the following example, where we represent t
 #' 
-## ---- tidy=FALSE, message=FALSE------------------------------------------
+## ---- tidy=FALSE, message=FALSE------------------------------------------------------------------------------
 # load pkg
 library(xts)
 
@@ -534,7 +536,7 @@ class(my_xts)
 #' 
 #' The previous code can give the impression that 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set number of time periods
 N <- 500
 
@@ -560,7 +562,7 @@ print(head(my_xts_weekly_mean))
 #' 
 #' **head** Returns the first `n` rows of a `dataf
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set df
 my_df <- tibble(col1 = 1:5000, 
                 col2 = rep('a', 5000))
@@ -571,14 +573,14 @@ print(head(my_df, 5))
 #' 
 #' **tail** - Returns the last `n` rows of a `data
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # print its last 5 rows
 print(tail(my_df, 5))
 
 #' 
 #' **complete.cases** - Returns a logical vector w
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # create df
 my_df <- tibble(x = c(1:5, NA, 10),
                 y = c(5:10, NA))
@@ -595,13 +597,13 @@ print(which(!complete.cases(my_df)))
 #' 
 #' **na.omit** - Returns a `dataframe` without the
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 print(na.omit(my_df))
 
 #' 
 #' **unique** - Returns a `dataframe` where all du
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set df with repeating rows
 my_df <- data.frame(col1 = c(1, 1, 2, 3, 3, 4, 5), 
                     col2 = c('A', 'A', 'A', 'C', 'C', 'B', 'D'))
@@ -621,14 +623,14 @@ print(unique(my_df))
 #' 
 #' ### Creating `lists`
 #' 
-#' A list can be created with the `base::list` com
+#' A `list` can be created with the `base::list` c
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # create list
 my_l <- list(c(1, 2, 3),
              c('a', 'b'),
              factor('A', 'B', 'C'),
-             tibble(col1 = 1:5))
+             data.frame(col1 = 1:5))
 
 # use base::print
 print(my_l)
@@ -641,12 +643,12 @@ glimpse(my_l)
 #' 
 #' Following other objects, the elements of a `lis
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set named list
 my_named_l <- list(tickers = 'CMPY',
                    markets = 'NYSE',
-                   df_prices = tibble(P = c(1,1.5,2,2.3),
-                                      ref_date = Sys.Date()+0:3))
+                   df_prices = data.frame(P = c(1,1.5,2,2.3),
+                                          ref_date = Sys.Date()+0:3))
 
 # check content
 glimpse(my_named_l)
@@ -659,7 +661,7 @@ glimpse(my_named_l)
 #' 
 #' As mentioned, the individual elements of a `lis
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # accessing elements from list
 print(my_named_l[[2]])
 print(my_named_l[[3]])
@@ -667,7 +669,7 @@ print(my_named_l[[3]])
 #' 
 #' You can also access the elements of a `list` wi
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list('a',
              c(1, 2, 3),
@@ -680,26 +682,26 @@ class(my_l[2])
 #' 
 #' If we try to add an element to `my_l[2]`, we wi
 #' 
-## ----error=TRUE----------------------------------------------------------
+## ----error=TRUE----------------------------------------------------------------------------------------------
 # adding an element to a list (WRONG)
 my_l[2] + 1
 
 #' 
 #' An error is returned because a `list` object ca
 #' 
-## ------------------------------------------------------------------------
-# set new list with first and second element of my_l
+## ------------------------------------------------------------------------------------------------------------
+# set new list with the first and second element of my_l
 my_new_l <- my_l[c(1,2)]
 
 # print result
 print(my_new_l)
 
 #' 
-#' In the case of named lists, we can access its e
+#' With the named lists, we can access its element
 #' 
 #' Next, we provide several examples of how to acc
 #' 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
 ## # different ways to access a list
 ## my_named_l$tickers
 ## my_named_l$markets
@@ -709,7 +711,7 @@ print(my_new_l)
 #' 
 #' Another useful trick for working with lists is 
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 my_l <- list(slot1 = c(num1 = 1, 
                        num2 = 2, 
                        num3 = 3), 
@@ -725,14 +727,14 @@ print(my_l[[2]][1])
 print(my_l[['slot1']]['num3'])
 
 #' 
-#' This operation is very useful when we are inter
+#' This operation is very useful when interested i
 #' 
 #' 
 #' ### Adding and Removing Elements from a `list`
 #' 
 #' To add or replace elements in a `list`, just se
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list('a', 1, 3)
 glimpse(my_l)
@@ -747,7 +749,7 @@ glimpse(my_l)
 #' 
 #' This operation is also possible with the use of
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list(elem1 = 'a', 
              name1=5)
@@ -761,7 +763,7 @@ glimpse(my_l)
 #' 
 #' To remove elements from a `list`, set the eleme
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list(text = 'b', num1 = 2, num2 = 4)
 glimpse(my_l)
@@ -777,7 +779,7 @@ glimpse(my_l)
 #' 
 #' Another way of removing elements from a `list` 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list(a = 1, 
              b = 'text')
@@ -788,7 +790,7 @@ glimpse(my_l[[-2]])
 #' 
 #' As with atomic vectors, removing elements of a 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set list
 my_l <- list(1, 2, 3, 4)
 
@@ -804,7 +806,7 @@ glimpse(my_l)
 #' 
 #' A very important point about working with `list
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # set list with different numerical vectors.
 my_l_num <- list(c(1,2,3), 
                  seq(1:50), 
@@ -813,7 +815,7 @@ my_l_num <- list(c(1,2,3),
 #' 
 #' Let's assume we need to calculate the average o
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # calculate means
 mean_1 <- mean(my_l_num[[1]])
 mean_2 <- mean(my_l_num[[2]])
@@ -823,9 +825,9 @@ mean_3 <- mean(my_l_num[[3]])
 print(c(mean_1, mean_2, mean_3))
 
 #' 
-#' But, the code looks bad and it took three lines
+#' However, the code looks bad and it took three l
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # using sapply
 my_mean <- sapply(my_l_num, mean)
 
@@ -837,14 +839,14 @@ print(my_mean)
 #' 
 #' Intelligently, function `sapply` works the same
 #' 
-#' The use of generic procedures is one of the pre
+#' Using generic procedures is one premise of good
 #' 
 #' 
 #' ### Other Useful Functions
 #' 
 #' **unlist** - Returns the elements of a `list` i
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_named_l <- list(ticker = 'XXXX4',
                    price = c(1,1.5,2,3),
                    market = 'Be')
@@ -855,7 +857,7 @@ class(my_unlisted)
 #' 
 #' **as.list** - Converts an object to the `list` 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_x <- 10:13
 my_x_as_list <- as.list(my_x)
 print(my_x_as_list)
@@ -863,7 +865,7 @@ print(my_x_as_list)
 #' 
 #' **names** - Returns or defines the names of the
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_l <- list(value1 = 1, value2 = 2, value3 = 3)
 print(names(my_l))
 my_l <- list(1,2,3)
@@ -876,7 +878,7 @@ print(my_l)
 #' 
 #' A matrix is a two-dimensional representation of
 #' 
-#' In R, matrix are objects with two dimensions, w
+#' In R, matrices are objects with two dimensions,
 #' 
 #' A simple example of using matrices in finance i
 #' 
@@ -884,7 +886,7 @@ print(my_l)
 #' 
 #' The above matrix could be created in R with the
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # set raw data with prices 
 raw_data <- c(40.38,  40.14,  40.49,  40.48,  40.64,
               46.23,  46.17,  45.97,  45.56,  45.46,
@@ -903,7 +905,7 @@ print(my_mat)
 #' 
 #' We set the number of rows and columns explicitl
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # print the names of columns 
 print(colnames(my_mat))
 
@@ -919,7 +921,7 @@ print(rownames(my_mat))
 #' 
 #' In this formula, `r if (my.engine!='epub3') {'$
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set vector with shares purchased
 my_stocks <- as.matrix(c(200, 300, 100, 50), nrow = 4)
 
@@ -934,7 +936,7 @@ print(my_port)
 #' 
 #' A `matrix` object is also flexible with its con
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # create matrix with character
 my_mat_char <- matrix(rep(c('a','b','c'), 3), 
                       nrow = 3, 
@@ -946,7 +948,7 @@ print(my_mat_char)
 #' 
 #' Now with a `logic` type:
 #' 
-## ---- tidy=FALSE---------------------------------------------------------
+## ---- tidy=FALSE---------------------------------------------------------------------------------------------
 # create matrix with logical
 my_mat_logical <- matrix(sample(c(TRUE,FALSE), 
                                 size = 3*3,
@@ -963,11 +965,11 @@ print(my_mat_logical)
 #' 
 #' ### Selecting Elements from a `matrix`
 #' 
-#' Following the same notation of atomic vector, y
+#' Following the same notation as the atomic vecto
 #' 
 #' [^1]: To avoid confusion, atomic vectors in R h
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # create matrix
 my_mat <- matrix(1:9, nrow = 3)
 
@@ -980,7 +982,7 @@ print(my_mat[1,2])
 #' 
 #' To select an entire row or column, simply leave
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # select all rows from column 2
 print(my_mat[, 2])
 
@@ -990,7 +992,7 @@ print(my_mat[1, ])
 #' 
 #' Notice the result of indexing is an atomic vect
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # force matrix conversion and print result
 print(as.matrix(my_mat[ ,2]))
 
@@ -1000,14 +1002,14 @@ print(matrix(my_mat[1, ], nrow=1))
 #' 
 #' Pieces of the `matrix` can also be selected usi
 #' 
-## ------------------------------------------------------------------------
-# select some elements and print it
+## ------------------------------------------------------------------------------------------------------------
+# select some elements and print them
 print(my_mat[2:3, 1:2])
 
 #' 
 #' Finally, using logical tests to select elements
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # set matrix
 my_mat <- matrix(1:9, nrow = 3)
 
@@ -1023,14 +1025,14 @@ print(my_mat[my_mat >5])
 #' 
 #' **as.matrix** - Transforms raw data to a `matri
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_mat <- as.matrix(1:5)
 print(my_mat)
 
 #' 
 #' **t** - Returns a transposed  `matrix`. \index{
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_mat <- matrix(seq(10,20, 
                      length.out = 6), 
                  nrow = 3)
@@ -1041,7 +1043,7 @@ print(t(my_mat))
 #' 
 #' **rbind** - Returns the merger (bind) of matric
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_mat_1 <- matrix(1:5, nrow = 1)
 print(my_mat_1)
 my_mat_2 <- matrix(10:14, nrow = 1)
@@ -1054,7 +1056,7 @@ print(my_rbind_mat)
 #' 
 #' **cbind** - Returns the merger (bind) of matric
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_mat_1 <- matrix(1:4, nrow = 2)
 print(my_mat_1)
 my_mat_2 <- matrix(10:13, nrow = 2)
@@ -1066,14 +1068,14 @@ print(my_cbind_mat)
 #' 
 #' **rowMeans** - Returns the mean of a matrix, ro
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_mat <- matrix(1:9, nrow=3)
 print(rowMeans(my_mat))
 
 #' 
 #' **colMeans** - Returns the mean of a matrix, co
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_mat <- matrix(1:9, nrow=3)
 print(colMeans(my_mat))
 
@@ -1090,7 +1092,7 @@ print(colMeans(my_mat))
 #' 
 #' 05. Use package `BatchGetSymbols` to download F
 #' 
-#' 06. Download and unzip the book data file using
+#' 06. Use function `afedR::afedR_get_data_file` t
 #' 
 #' 07. Create a list object with three dataframes 
 #' 

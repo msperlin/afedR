@@ -4,66 +4,55 @@
 #' 
 #' Since you are reading this book, you are likely
 #' 
-#' The material in this book first started as clas
+#' The material in this book started out as class 
 #' 
 #' Another motivation for writing this book is my 
 #' 
 #' In this book, we will not work on the advanced 
 #' 
-#' The book includes the following chapters:
+#' This is what you'll learn from this book:
 #' 
-#' **[Chapter 01 - Introduction](#introduction)** 
+#' Using R and RStudio
+#' : In chapter 01 we will discuss the use of R as
 #' 
-#' **[Chapter 02 - Basic Operations](#basicoperati
+#' Importing financial and economic data
+#' : In chapters 04 and 05 we will learn to import
 #' 
-#' **[Chapter 03 - Writing Research Scripts](#rese
+#' Cleaning, structuring and analyzing the data wi
+#' : In chapters 06 and 07 we will concentrate our
+#' Creating a visual analysis of data
+#' : In chapter 10 we'll learn to use functions fr
 #' 
-#' **[Chapter 04 - Importing and Exporting Data fr
+#' Reporting your results
+#' : In chapter 12 we will see how to report our d
 #' 
-#' **[Chapter 05 - Importing Data from the Interne
-#' 
-#' **[Chapter 06 - Dataframes and other objects](#
-#' 
-#' **[Chapter 07 - Basic Object Classes](#basic-cl
-#' 
-#' **[Chapter 08 - Programming and Data Analysis w
-#' 
-#' **[Chapter 09 - Cleaning and Structuring Data](
-#' 
-#' **[Chapter 10 - Creating and Saving Figures wit
-#' 
-#' **[Chapter 11 - Financial Econometrics with R](
-#' 
-#' **[Chapter 12 - Reporting Results](#reporting)*
-#' 
-#' **[Chapter 13 - Optimizing Code](#optimizing)**
+#' Writing better and faster code
+#' : In the last chapter of the book we discuss be
 #' 
 #' 
 #' ## Supplement Material {-}
 #' 
 #' All the material used in the book, including co
 #' 
-#' In order to use the internet to install the pac
+#' If you want to use the internet to install the 
 #' 
-## ---- eval=FALSE---------------------------------------------------------
-## # install dependency
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## # install devtools dependency
 ## install.packages('devtools')
 ## 
 ## # install book package
 ## devtools::install_github('msperlin/afedR')
 
 #' 
-#' What this code will do is install package `devt
+#' What this code will do is to install package `d
 #' 
 #' After installing the book package `afedR`, you 
 #' 
-## ---- eval=FALSE---------------------------------------------------------
-## afedR::afedR_unzip_book_file(path_to_unzip = '~')
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## afedR::afedR_get_book_files(path_to_copy = '~')
 
 #' 
-#' Previous code will unzip the book file into you
-#' 
-#' If you preefer the old fashion way of using an 
+#' The previous code will unzip the book file into
 #' 
 #' A suggestion, before you read the rest of the b
 #' 
@@ -72,13 +61,18 @@
 #' 
 #' If you are an R instructor, you'll find plenty 
 #' 
-#' - End of chapter exercises, with solutions avai
-#' - Rmarkdown slides (source code and compiled) f
-#' - Collection of dynamic exercises in the `exams
+#' Static end of chapter exercises
+#' : Every chapter in this book includes exercises
+#' 
+#' RMarkdown slides
+#' : Slides from the book are also available in so
+#' 
+#' Dynamic R exercises
+#' : Collection of dynamic R exercises built on to
 #' 
 #' All of this content is released with the [MIT l
 #' 
-#' I hope you enjoy this book and find it useful. 
+#' I hope you enjoy this book and find it useful f
 #' 
 #' Good reading!
 #' 

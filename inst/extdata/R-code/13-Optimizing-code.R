@@ -2,9 +2,9 @@
 #' 
 
 #' 
-#' In this chapter we will study how to be more ef
+#' In this chapter, we will study how to be more e
 #' 
-#' A alert before we start. Code optimization is a
+#' However, before we start you need to understand
 #' 
 #' 
 #' ## Optimizing your Programming Time
@@ -28,7 +28,7 @@
 #' 
 #' **Filenames and paths:** Names and paths of fil
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # GOOD
 my_f <- '01_Run_Research.R'
 my_f <- '02_Import_and_Clean_Data.R'
@@ -45,7 +45,7 @@ my_f <- 'New folder/script_ver_05_with_clean_data.R'
 #' 
 #' **Sections of code**: Use dashes within the scr
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # Import data ----
 
 
@@ -54,36 +54,39 @@ my_f <- 'New folder/script_ver_05_with_clean_data.R'
 
 # Estimate models ----
 
-
 #' 
-#' **Variable and function names**: Use the follow
+#' **Variable and function names**: Use these guid
 #' 
-#' - Give preference to the lowercase when naming 
+#' - Give preference to lowercase characters when 
 #' - Keep names short, concise and intuitive (easi
 #' - Use the first few words to identify the class
 #' - Avoid the use of dots (`.`) when connecting w
 #' 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
 ## # GOOD
 ## my_seq <- 1:100 # simple and clean
 ## df_prices <- tibble()  # for sure it is a dataframe with prices!
 ## fct_plot_prices <- function() # I know what it does before executing it!
-## l_args <- list() # also nice and clean
+##   l_args <- list() # also nice and clean
 ## 
 ## # BAD
-## DF <- tibble() # all uppercase
+## DF <- tibble() # all uppercase and generic
 ## DataFrame <- tibble() # camel case and same name as object
-## list <- list() # Same name as constructor. Does it even work? It does..
-## Prices_of_Facebook <- tibble() # informative but too long!
-## MY_SPECIAL_DATAFRAME_WITH_SPECIAL_DATA <- tibble() # too dawn long and with caps! Also, please no shouting in code unless really necessary!
+## list <- list() # Same name as constructor. Does it even work?
+## # It does..
+## Prices_of_Facebook <- tibble() # very informative,
+## # but too long!
+## DATAFRAME_WITH_SPECIAL_DATA <- tibble() # too long!
+## # Why SHOUT in code?
+## # be nice
 ## df.prices <- tibble() # use of dots
 
 #' 
 #' **Other code conventions**:
-#'   
+#' 
 #' - Always put a space around operators (`=`, `>`
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # GOOD
 x <- 10
 flag <- (x > 0)
@@ -93,9 +96,9 @@ x<-0
 flag<-x>0
 
 #' 
-#' - Always set a space after the use of comma, ju
+#' - Always set a space after using comma, just li
 #' 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE-------------------------------------------------------------------------------------------
 ## # GOOD
 ## my_fct(1, 2, 3)
 ## my_x <- c(1, 2, 3)
@@ -121,11 +124,11 @@ flag<-x>0
 #' 
 #' ### Profiling Code
 #' 
-#' There are different routes to profile a R code.
+#' There are different routes to profile an R code
 #' 
 #' As an example, I'll first write a function that
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 my_bench_fct <- function() {
   
   require(tictoc)
@@ -151,13 +154,13 @@ my_bench_fct <- function() {
 out <- my_bench_fct()
 
 #' 
-#' Whenever you call function `my_bench_fct` you'l
+#' Whenever you make a call to function `my_bench_
 #' 
 #' For complex and extensive code, however, using 
 #' 
-#' Function  `base::Rprof` works by first calling 
+#' Function `base::Rprof` works by first calling i
 #' 
-## ---- results='hold'-----------------------------------------------------
+## ---- results='hold'-----------------------------------------------------------------------------------------
 # set temporary file for results
 profiling_file <-  tempfile(pattern = 'profiling_example', 
                             fileext = '.out')
@@ -165,7 +168,19 @@ profiling_file <-  tempfile(pattern = 'profiling_example',
 # initialize profiling
 Rprof(filename = profiling_file)
 
-out <- my_bench_fct()
+cat('01-Set parameters\n')
+my_n <- 1000000
+
+cat('02-Build variables\n')
+x <- runif(my_n)
+y <- x + rnorm(my_n)
+
+cat('03-Pause for a while -- the bottleneck\n')
+profvis::pause(1)
+
+cat('04-Estimate a linear model\n')
+lm_model <- lm(data = tibble(x = x, y = y), 
+               formula = y ~ x)
 
 # stop profiling
 Rprof(NULL)
@@ -173,7 +188,7 @@ Rprof(NULL)
 #' 
 #' The actual results can be imported with `base::
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 # check results
 df_res <- summaryRprof(profiling_file)$by.total
 
@@ -185,7 +200,7 @@ print(head(df_res))
 #' 
 #' Another solution for profiling is package `prof
 #' 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------------------------------------------
 ## library(profvis)
 ## 
 ## # use profvis
@@ -223,7 +238,7 @@ print(head(df_res))
 #' Again we find the same result -- line 13 (`prof
 #' 
 #' 
-#' ### Improving code speed
+#' ### Simple Strategies to Improve Code Speed
 #' 
 #' Once you identify the bottleneck in your code, 
 #' 
@@ -234,13 +249,13 @@ print(head(df_res))
 #' 
 #' As an example, let's look at the case of buildi
 #' 
-## ---- results='hold'-----------------------------------------------------
+## ---- results='hold'-----------------------------------------------------------------------------------------
 library(tictoc)
 
 N <- 10000000
 x <- 1:N
 
-tic('Using loops without prealocation') # start timer
+tic('Using loops without preallocation') # start timer
 y <- numeric()
 for (i in seq_along(x)) {
   y[i] <- x[i] + 1
@@ -248,7 +263,7 @@ for (i in seq_along(x)) {
 toc() # end timer
 
 
-tic('Using loops with prealocation') # start timer
+tic('Using loops with preallocation') # start timer
 y <- numeric(length = N)
 for (i in seq_along(x)) {
   y[i] <- x[i] + 1
@@ -260,7 +275,7 @@ y <- x + 10
 toc() # end timer
 
 #' 
-#' In the first version with loop we set `y <- num
+#' In the first version with loop, we set `y <- nu
 #' 
 #' The lesson here is: **always seek vectorized ve
 #' 
@@ -271,7 +286,7 @@ toc() # end timer
 #' 
 #' For that, let's explore an example with some ra
 #' 
-## ---- results='hold'-----------------------------------------------------
+## ---- results='hold'-----------------------------------------------------------------------------------------
 library(tidyverse)
 
 n_dfs <- 1000 # number of dataframes to bind
@@ -288,7 +303,7 @@ for (i in 1:n_dfs) {
 }
 toc()
 
-tic('Using lists within the loop, bind it afterwards')
+tic('Using lists within the loop, bind it later')
 my_l <- list()
 for (i in 1:n_dfs) {
   temp_df <- tibble(x = runif(n_obs),
@@ -301,7 +316,7 @@ my_df <- bind_rows(my_l)
 toc()
 
 #' 
-#' As you can see, the difference is significative
+#' As you can see, the difference is significant. 
 #' 
 #' 
 #' ### Using C++ code (package `Rcpp`)
@@ -310,7 +325,7 @@ toc()
 #' 
 #' Have a look in the next example, where we write
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(Rcpp)
 library(tictoc)
 
@@ -337,12 +352,12 @@ cppFunction('double sum_C(NumericVector x) {
 }')
 
 #' 
-#' The use of `cppFunction` is straightforward. It
+#' Using `cppFunction` is straightforward. Its inp
 #' 
 #' Now, let's test all three functions with a larg
 #' 
-## ---- results='hold'-----------------------------------------------------
-  x <- 1:5000000
+## ---- results='hold'-----------------------------------------------------------------------------------------
+x <- 1:5000000
 
 tic('Sum with R loops')
 out1 <- sum_R_looped(x)
@@ -366,13 +381,13 @@ toc()
 #' 
 #' A very underestimated feature of R is the use o
 #' 
-#' Caching works perfectly with deterministic func
+#' Moreover, caching works perfectly with determin
 #' 
-#' In the case of finance and economics, caching w
+#' Particularly, caching works very well in the im
 #' 
 #' While you can write your own caching system by 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 sleeping_beauty <- function(arg1, arg2) {
   # Simple example function that will sleep for one second
   #
@@ -388,13 +403,12 @@ sleeping_beauty <- function(arg1, arg2) {
 #' 
 #' The first step in using `memoise` is setting th
 #' 
-## ---- include=FALSE------------------------------------------------------
+## ---- include=FALSE------------------------------------------------------------------------------------------
 my_dir <- 'mem_cache'
 if (dir.exists(my_dir)) fs::dir_delete(my_dir)
 
 #' 
-#' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(memoise)
 
 my_cache_folder <- cache_filesystem(path = 'mem_cache')
@@ -402,30 +416,30 @@ my_cache_folder <- cache_filesystem(path = 'mem_cache')
 #' 
 #' The next step is telling `memoise` that we have
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 mem_sleeping_beauty <- memoise(f = sleeping_beauty, 
                                cache = my_cache_folder)
 
 #' 
 #' Now, let's call the function with different arg
 #' 
-## ---- results='hold'-----------------------------------------------------
+## ---- results='hold'-----------------------------------------------------------------------------------------
 library(memoise)
 library(tictoc)
 
-tic('sleeping_beauty:\t\t arg1 = 1, arg2 = 2')
+tic('    sleeping_beauty:\t arg1 = 1, arg2 = 2')
 out1 <- sleeping_beauty(1, 2)
 toc()
 
-tic('mem_sleeping_beauty:\t\t arg1 = 1, arg2 = 2')
+tic('mem_sleeping_beauty:\t arg1 = 1, arg2 = 2')
 out1 <- mem_sleeping_beauty(1, 2)
 toc()
 
-tic('sleeping_beauty:\t\t arg1 = 1, arg2 = 2')
+tic('    sleeping_beauty:\t arg1 = 1, arg2 = 2')
 out1 <- sleeping_beauty(1, 2)
 toc()
 
-tic('mem_sleeping_beauty (repeated):\t arg1 = 1, arg2 = 2')
+tic('mem_sleeping_beauty:\t arg1 = 1, arg2 = 2')
 out1 <- mem_sleeping_beauty(1, 2)
 toc()
 
@@ -434,23 +448,23 @@ toc()
 #' 
 #' Going further, if we change the arguments of `m
 #' 
-## ---- results='hold'-----------------------------------------------------
-tic('mem_sleeping_beauty:\t\t arg1 = 2, arg2 = 2')
+## ---- results='hold'-----------------------------------------------------------------------------------------
+tic('mem_sleeping_beauty:\t arg1 = 2, arg2 = 2')
 out1 <- mem_sleeping_beauty(2, 2)
 toc()
 
-tic('mem_sleeping_beauty (repeated):\t arg1 = 2, arg2 = 2')
+tic('mem_sleeping_beauty:\t arg1 = 2, arg2 = 2')
 out2 <- mem_sleeping_beauty(2, 2)
 toc()
 
-tic('mem_sleeping_beauty:\t\t arg1 = 5, arg2 = 1')
+tic('mem_sleeping_beauty:\t arg1 = 5, arg2 = 1')
 out3 <- mem_sleeping_beauty(5, 1)
 toc()
 
 #' 
 #' Looking at folder `mem_cache` we find the actua
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 mem_files <- list.files('mem_cache/')
 
 print(mem_files)
@@ -463,23 +477,23 @@ print(mem_files)
 #' 
 #' #### Using parallel processing (package `furrr`
 #' 
-#' Whenever you are running a R script, a single c
+#' Whenever you are running an R script, a single 
 #' 
-#' Parallel processing relates to the use of more 
+#' Parallel processing relates to using more than 
 #' 
-#' Before we start, we must understand that not ev
+#' Before we start, understand that not every prob
 #' 
 #' A typical case in data analysis is importing a 
 #' 
 #' First, let's write a function that will create 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 create_file <- function(n_obs, folder_to_save) {
   # Create files in the computer
   #
-  # ARGS: n_obs - Number of observations in each saved dataframe
-  #       folder_to_save - Where to save files (probably a temp folder)
-  # RETURNS: True, if sucessful
+  # ARGS: n_obs - Number of observations in dataframe
+  #       folder_to_save - Where to save files
+  # RETURNS: True, if successful
   
   require(tidyverse)
   
@@ -497,9 +511,9 @@ create_file <- function(n_obs, folder_to_save) {
 }
 
 #' 
-#' With the function in hand, its time to call it 
+#' So, with the function completed, its time to ca
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(purrr)
 
 n_files <- 1000
@@ -509,7 +523,8 @@ folder_to_save <- file.path(tempdir(), 'many files')
 dir.create(folder_to_save)
 
 pwalk(.l = list(n_obs = rep(n_obs, n_files), 
-                folder_to_save = rep(folder_to_save, n_files)), 
+                folder_to_save = rep(folder_to_save, 
+                                     n_files)), 
       create_file)
 
 #' 
@@ -517,7 +532,7 @@ pwalk(.l = list(n_obs = rep(n_obs, n_files),
 #' 
 #' Before we start, we need to set up our machine 
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 n_cores_available <- future::availableCores()
 
 print(n_cores_available)
@@ -525,9 +540,9 @@ print(n_cores_available)
 #' 
 #' The machine in which the book was compiled has 
 #' 
-#' The following code will run both versions of th
+#' This code will run both versions of the same op
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(furrr)
 library(tictoc)
 
@@ -542,32 +557,38 @@ n_cores <- 10
 plan(strategy = multisession, workers = n_cores)
 
 tic('Sequential with pmap (1 core)')
-l_out_1 <- pmap(.l = list(file = my_files, 
-                          col_types = rep(list(cols()), 
-                                          length(my_files)) ), 
-              .f = readr::read_csv)
+l_out_1 <- pmap(
+  .l = list(file = my_files, 
+            col_types = rep(list(cols()), 
+                            length(my_files)) ), 
+  .f = readr::read_csv
+)
 toc()
 
-tic(paste0('Parallel with future_pmap (', n_cores, ' cores)'))
-l_out_2 <- future_pmap(.l = list(file = my_files, 
-                                 col_types = rep(list(cols()), 
-                                                 length(my_files)) ), 
-                     .f = readr::read_csv)
+tic(paste0('Parallel with future_pmap (', 
+           n_cores, ' cores)'))
+l_out_2 <- future_pmap(
+  .l = list(file = my_files,
+            col_types = rep(list(cols()), 
+                            length(my_files)) ), 
+  
+  .f = readr::read_csv
+)
 toc()
 
 identical(l_out_1, l_out_2)
 
 #' 
-#' Notice the gain in speed is not ten fold. When 
+#' Notice the gain in speed is not tenfold. When c
 #' 
-#' Parallel computing works better when you have a
+#' In conclusion, parallel computing works better 
 #' 
 #' 
 #' ## Exercises
 #' 
-#' 01. Consider the following code:
+#' 01. Consider this code:
 #' 
-## ------------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(forecast)
 library(BatchGetSymbols)
@@ -580,13 +601,12 @@ my_arima <- auto.arima(df_prices$ret.adjusted.prices)
 summary(my_arima)
 
 #' 
-#' Use `Rprof` and `profvis` to identify the time 
+#' Use `Rprof` and `profvis` to identify the bottl
 #' 
 #' 02. Use package `Rcpp` to write and use a C++  
 #' 
 #' 03. Use package `tictoc` to compare the perform
 #' 
 #' 04. Use package `memoise` to create a memorized
-#' 
 #' 
 #' 

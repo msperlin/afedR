@@ -1,6 +1,6 @@
 Package: afedR
 Type: Package
-Title: Functions for Book "Analyzing Financial and Economical Data with R"
+Title: Data and Functions for Book "Analyzing Financial and Economical Data with R"
 Version: 0.1
 Date: 2019-11-01
 Author: Marcelo S. Perlin

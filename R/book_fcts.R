@@ -62,10 +62,11 @@ afedR_get_book_files <- function(path_to_copy = '~') {
   if (!dir.exists(slides_path_to_copy)) dir.create(slides_path_to_copy,
                                                    recursive = TRUE)
 
-  files_to_copy <- list.files(slides_path_files, full.names = TRUE)
+  files_to_copy <- list.files(slides_path_files, full.names = TRUE,
+                              include.dirs = TRUE)
 
   flag <- file.copy(from = files_to_copy, to = slides_path_to_copy,
-                    overwrite = TRUE)
+                    overwrite = TRUE, recursive = TRUE)
 
   if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
 

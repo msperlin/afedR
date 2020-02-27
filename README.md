@@ -1,8 +1,6 @@
 # Repository for R package afedR 
 
-Includes several functions related to book "Analyzing Financial and Economic Data with R", soon in Amazon as ebook and print. 
-
-I expect to finish it in early 2020. If you want to keep posted, just sign this [form](https://forms.gle/3x3mj2zzXqcqmT6x9).
+Includes several functions related to book "Analyzing Financial and Economic Data with R", available in [Amazon](https://www.amazon.com/dp/B084LSNXMN).
 
 ## Installation
 

@@ -41,18 +41,23 @@
 #' 
 #' - Substitute and improve data-intensive tasks f
 #' 
-#' - Develop routines for managing and controlling
+#' - Develop routines for managing investment port
 #' 
 #' - Creating tools for calculating and reporting 
 #' 
 #' - Performing empirical data research using stat
 #' 
-#' - Create dynamic _websites_ with the `shiny` pa
+#' - Create dynamic _websites_ with the `shiny` [@
 #' 
 #' - Automate the process of writing technical rep
 #' 
 #' Moreover, public access to packages developed b
 #' 
+## Be aware that R has a consistent release schedule. Every four months a new version of R is released, fixing _bugs_ and implementing new solutions. There are two main types of releases, _major_ and _minor_. For example, today, 2021-02-24, the latest version of R is 4.0.4. The first digit ("4") indicates the _major_ release while all others are of the _minor_ type. Generally, the _minor_ changes are very specific and, possibly, will have little impact on your work.
+
+## 
+## However, unlike _minor_ releases, **_major_ releases are fully reflected in the R package ecosystem**. Every time you install a new _major_ version of R, you will have to reinstall all packages. Particularly, the problem here is that it is not uncommon that a new major release comes with package incompatibility issues. My advice is: every time a new _major_ release of R comes out, **wait a few months** before installing it on your machine. Thus, the authors of the packages will have more time to update their codes, minimizing the possibility of compatibility problems.
+
 #' 
 #' ## Installing R {#installing}
 #' 
@@ -103,7 +108,7 @@
 #' 
 #' Throughout the book, every demonstration of cod
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # create a list
 L <- list('abc', 1:5, 'dec')
 
@@ -115,7 +120,7 @@ print(L)
 #' 
 #' The code can also be spatially organized using 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # create a list
 L <- list('abc', 
           1:5, 
@@ -130,11 +135,10 @@ print(L)
 #' 
 #' ## Exercises
 #' 
-#' 01. Use [Google](https://www.google.com/search?
-#' 
-#' 02. Once you have R and RStudio installed, head
-#' 
-#' 03. If you work in an institution with data inf
-#' 
-#' 04. Head over to the [RBloggers](https://www.r-
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter01-Introduction/', 
+                   full.names = TRUE)
+
+compile_eoc_exercises(f_in, type_doc = my_engine)
+
 #' 

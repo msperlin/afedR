@@ -1,17 +1,10 @@
 #' # Creating and Saving Figures with `ggplot2` {#
 #' 
-## ---- include=FALSE------------------------------------------------------------------------------------------
+## ---- include=FALSE-------------------------------------------------------------------------------------------------
 source('Scripts/preamble_chapters.R')
 
-#' 
-## ---- include=FALSE------------------------------------------------------------------------------------------
 my_fig_height <- 6
 my_fig_width <- 7
-
-knitr::opts_chunk$set(fig.align='center',
-                      prompt = FALSE, 
-                      warning=FALSE, 
-                      tidy=FALSE)
 
 #' 
 #' It is a well-known fact that communication is o
@@ -30,7 +23,7 @@ knitr::opts_chunk$set(fig.align='center',
 #' Check your references
 #' : Science and data analysis evolves as building
 #' 
-#' Previous guidelines will help you create impact
+#' Said that, let's go back to our R code.
 #' 
 #' 
 #' ## The `ggplot2` Package
@@ -45,11 +38,11 @@ knitr::opts_chunk$set(fig.align='center',
 #' 
 #' First, let's load the data and check its conten
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # set file and load data
-my_f  <- afedR::afedR_get_data_file('SP500-Stocks-WithRet.rds')
+my_f  <- afedR::get_data_file('SP500-Stocks-WithRet.rds')
 df_sp500 <- read_rds(my_f )
 
 # print first 5 rows
@@ -65,7 +58,7 @@ glimpse(df_sp500)
 #' 
 #' A more intelligent approach to managing figures
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## x11()
 ## plot(1:10)
 
@@ -85,7 +78,7 @@ glimpse(df_sp500)
 #' 
 #' To build a time series plot with the prices of 
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width----------------------------------------------------
 library(ggplot2)
 
 # filter stock data
@@ -101,7 +94,7 @@ qplot(data = temp_df,
 #' 
 #' In the previous example, the name of the axis c
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width----------------------------------------------------
 qplot(data = temp_df, 
       x = ref.date, 
       y = price.adjusted, 
@@ -124,7 +117,7 @@ qplot(data = temp_df,
 #' 
 #' Look at the syntax of the following example tha
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------
 p <- ggplot(data = temp_df, 
             mapping = aes(x = ref.date, 
                           y = price.adjusted))
@@ -143,7 +136,7 @@ print(p)
 #' 
 #' Once the data and axis are defined, we save it 
 #' 
-## ----eval=TRUE-----------------------------------------------------------------------------------------------
+## ----eval=TRUE------------------------------------------------------------------------------------------------------
 library(ggplot2)
 library(stringr)
 
@@ -164,7 +157,7 @@ print(fcts)
 #' 
 #' Using the **pipeline operator** is also possibl
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 p <- temp_df %>%
   ggplot(aes(x = ref.date, y = price.adjusted)) +
   geom_line() +
@@ -173,11 +166,11 @@ p <- temp_df %>%
        title = 'Prices of MMM')
 
 #' 
-#' We advise that you make a note to show we have 
+#' Do notice that we used symbol `+` and **not** `
 #' 
 #' One of the great advantages of using `ggplot` i
 #' 
-## ----eval=TRUE-----------------------------------------------------------------------------------------------
+## ----eval=TRUE------------------------------------------------------------------------------------------------------
 # fix seed
 set.seed(10)
 
@@ -191,7 +184,7 @@ temp_df <- df_sp500 %>%
 #' 
 #' In this code, we use operator `%in%` to find ou
 #' 
-## ----fig.height=my_fig_height, fig.width=my_fig_width--------------------------------------------------------
+## ----fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------------------------
 p <- temp_df %>%
   ggplot(aes(x = ref.date, 
              y = price.adjusted, 
@@ -209,6 +202,14 @@ print(p)
 #' 
 #' A difference from the previous examples is that
 #' 
+#' 
+## ----fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------------------------
+p <- p +
+  scale_color_brewer(palette = "RdYlBu")
+
+print(p)
+
+#' 
 #' Notice how easy and quick it was to adjust the 
 #' 
 #' 
@@ -218,60 +219,60 @@ print(p)
 #' 
 #' In the following code, we will first download t
 #' 
-## ---- include=FALSE------------------------------------------------------------------------------------------
+## ---- include=FALSE-------------------------------------------------------------------------------------------------
 my_api_key <- 'Esv7Ac7zuZzJSCGxynyF'
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
-library(Quandl)
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
+library(GetQuandlData)
 library(tidyverse)
 
-Quandl.api_key(my_api_key) # set yours api key here
-
 # set symbol and dates
-my.symbol <- 'USTREASURY/YIELD'
-first.date <- as.Date('2010-01-01')
+my_symbol <- 'USTREASURY/YIELD'
+first_date <- as.Date('2010-01-01')
 last_date <- Sys.Date()
 
 # get data!
-df_yc <- Quandl(code = my.symbol,
-                type = 'raw', 
-                start_date = first.date,
-                end_date = last_date)
+df_yc <- get_Quandl_series(id_in = my_symbol, 
+                           first_date = first_date,
+                           last_date = last_date,
+                           api_key = my_api_key)
 
 print(head(df_yc))
 
 #' 
-#' The result is a dataframe in the wide format: y
+#' The result is a dataframe in the **wide format*
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # change to long format and convert to factor
-df_yc <- gather(data = df_yc,
-                key = 'maturity',
-                value = 'rate',
-                -Date) %>%
-  mutate(maturity = factor(maturity))
+df_yc_long <- df_yc %>%
+  tidyr::pivot_longer(cols = !ref_date, 
+                      names_to = 'maturity', 
+                      values_to = 'rate'
+                      ) %>%
+  mutate(rate = as.numeric(rate))
 
+  
 # keep only longer term yields (names with YR)
-idx <- str_detect(df_yc$maturity, 'YR')
-df_yc <- df_yc[idx, ]
+idx <- str_detect(df_yc_long$maturity, 'YR')
+df_yc_long <- df_yc_long[idx, ]
 
 # change name to year number with regex
 # obs: regex ([0-9]+) extracts all numbers within a string
-out <- str_extract_all(string = df_yc$maturity,
+out <- str_extract_all(string = df_yc_long$maturity,
                        pattern = '([0-9]+)')
-df_yc$maturity <- as.numeric(out)
+df_yc_long$maturity <- as.numeric(out)
 
 # glimpse result
-glimpse(df_yc)
+glimpse(df_yc_long)
 
 #' 
 #' We have a dataframe in the long format with thr
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # keep only last date of each
-last_date <- max(df_yc$Date)
-df_yc_lastdate <- df_yc[df_yc$Date == last_date, ]
+last_date <- max(df_yc_long$ref_date)
+df_yc_lastdate <- df_yc_long[df_yc_long$ref_date == last_date, ]
 
 # plot it!
 p <- ggplot(df_yc_lastdate, aes(x=maturity, y=rate)) + 
@@ -279,7 +280,7 @@ p <- ggplot(df_yc_lastdate, aes(x=maturity, y=rate)) +
   labs(x = 'Maturity (years)', 
        y='Yield Rate (%)',
        title = paste0('US Yield Curve for ',last_date),
-       caption = paste0('Data from Quandl table ', my.symbol, '\n',
+       caption = paste0('Data from Quandl table ', my_symbol, '\n',
                         'Access at ', Sys.time()))
 
 print(p)
@@ -287,17 +288,17 @@ print(p)
 #' 
 #' As expected, the current yield curve is upward 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set number of periods 
 n_periods <- 5
-my_year <- 2019
+my_year <- 2020
 
 # filter for year 2019
-df_yc_my_year <- df_yc %>%
-  filter(lubridate::year(Date) == my_year )
+df_yc_my_year <- df_yc_long %>%
+  filter(lubridate::year(ref_date) == my_year )
 
 # get unique dates in data
-unique_dates <- unique(df_yc_my_year$Date)
+unique_dates <- unique(df_yc_my_year$ref_date)
 
 # set sequence of observations
 my_seq <- floor(seq(1, length(unique_dates), 
@@ -307,20 +308,21 @@ my_seq <- floor(seq(1, length(unique_dates),
 my_dates <- unique_dates[my_seq]
 
 # find rows for dates in df
-idx <- df_yc_my_year$Date %in% my_dates
+idx <- df_yc_my_year$ref_date %in% my_dates
 df_yc_periods <- df_yc_my_year[idx, ]
 
 # plot it!
 p <- ggplot(df_yc_periods, aes(x=maturity, 
                                y=rate, 
-                               color= factor(Date))) + 
-  geom_point(size = 2.5) + geom_line(size = 1) + 
+                               color= factor(ref_date))) + 
+  geom_point(size = 2.5) + 
+  geom_line(size = 1) + 
   labs(x = 'Maturity (years)', 
        y='Yield Rate (%)',
        title = paste0('US Yield Curve for ', my_year),
        color = 'Dates',
        caption = paste0('Data from Quandl table ', 
-                        my.symbol, '\n',
+                        my_symbol, '\n',
                         'Access at ', Sys.time()))
 
 print(p)
@@ -335,10 +337,9 @@ print(p)
 #' 
 
 #' 
-#' 
 #' Package `ggplot` has a pre-packaged collection 
 #' 
-## ----eval=TRUE-----------------------------------------------------------------------------------------------
+## ----eval=TRUE------------------------------------------------------------------------------------------------------
 library(ggplot2)
 library(stringr)
 
@@ -355,7 +356,7 @@ print(fcts)
 #' 
 #' Let's try it with the theme from function `them
 #' 
-## ----fig.height=my_fig_height, fig.width=my_fig_width--------------------------------------------------------
+## ----fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------------------------
 p <- temp_df %>%
   ggplot(aes(x = ref.date, y = price.adjusted, color=ticker)) +
   geom_line() +
@@ -372,7 +373,7 @@ print(p)
 #' 
 #' Let's now use package `gridExtra` to create a g
 #' 
-## ---- fig.height=9 , fig.width = 9---------------------------------------------------------------------------
+## ---- fig.height=9 , fig.width = 9----------------------------------------------------------------------------------
 require(gridExtra)
 
 p1 <- p + 
@@ -411,7 +412,7 @@ grid.arrange(p1, p2, p3,
 #' 
 #' Digging deeper, the selection of the colors fol
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------
 p <- p + 
   theme_bw() + 
   scale_colour_grey(start = 0.0, end = 0.6)
@@ -428,7 +429,7 @@ print(p)
 #' 
 #' Facets are possible with function `facet_wrap`,
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------------
 library(dplyr)
 # fix seed
 set.seed(10)
@@ -452,9 +453,9 @@ print(p)
 #' 
 #' Using panels is recommended when the data of th
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------------
 # fix seed
-set.seed(25)
+set.seed(5)
 
 # select 4 stocks randomly
 tickers <- sample(unique(df_sp500$ticker), 4)
@@ -475,7 +476,7 @@ print(p)
 #' 
 #' Notice how the vertical axis of the panels is f
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width----------------------------------------------------
 p <- p + 
   facet_wrap(facets = ~ticker, scales = 'free_y')
 
@@ -489,12 +490,12 @@ print(p)
 #' 
 #' We previously saw that `ggplot2` is a friend of
 #' 
-## ---- eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width---------------------------------
+## ---- eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width----------------------------------------
 library(tidyverse)
 library(ggplot2)
 
 # calculated mean and sd of returns, plot result
-my_f <- afedR::afedR_get_data_file(
+my_f <- afedR::get_data_file(
   'SP500_Stocks_long_by_year.rds'
   )
 
@@ -525,6 +526,9 @@ print(p)
 #' 
 #' This is another example of an elegant code prod
 #' 
+## Be careful when mixing operators in the `tidyverse`. Whenever passing tables between `dplyr` commands, use the operator `%>%`. In the case of sequencing layers of a `ggplot` chart, always use the sum symbol (`+`).
+
+#' 
 #' 
 #' ## Creating Statistical Graphics
 #' 
@@ -535,9 +539,9 @@ print(p)
 #' 
 #' A histogram shows the empirical distribution of
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width---------------------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width----------------------------------------------------
 # set file and load data
-my_f  <- afedR::afedR_get_data_file('SP500-Stocks-WithRet.rds')
+my_f  <- afedR::get_data_file('SP500-Stocks-WithRet.rds')
 df_sp500 <- read_rds(my_f )
 
 # remove outliers
@@ -570,7 +574,7 @@ print(p)
 #' 
 #' We can also use groups and facets as we did for
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------------
 # fix seed
 set.seed(30)
 
@@ -599,7 +603,7 @@ print(p)
 #' 
 #' A histogram with the empirical densities of the
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------------
 p <- df_sp500 %>%
   filter(ticker %in% tickers) %>%
   ggplot(aes(x = ret)) + 
@@ -629,7 +633,7 @@ print(p)
 #' 
 #' Figures of type _boxplot_, or box and whisker d
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------------
 # fix seed
 set.seed(30)
 
@@ -656,8 +660,8 @@ print(p)
 #' 
 #' Another interesting application of boxplot figu
 #' 
-## ------------------------------------------------------------------------------------------------------------
-p <- ggplot(df_yc, aes(x = factor(maturity), y = rate)) + 
+## -------------------------------------------------------------------------------------------------------------------
+p <- ggplot(df_yc_long, aes(x = factor(maturity), y = rate)) + 
   geom_boxplot() + 
   labs(title = 'Distribution of Yield Rates over Maturities',
        x = 'Maturity (years)', 
@@ -678,7 +682,7 @@ print(p)
 #' 
 #' Let's try an example with some simulated data.
 #' 
-## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE---------------------------------
+## ----eval=TRUE, fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------------
 # fix seed
 set.seed(40)
 
@@ -705,8 +709,7 @@ print(p)
 #' 
 #' Now, let's try it for our table of stock's retu
 #' 
-#' 
-## ----eval=TRUE,fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE----------------------------------
+## ----eval=TRUE,fig.height=my_fig_height, fig.width=my_fig_width, tidy=FALSE-----------------------------------------
 # fix seed
 set.seed(10)
 
@@ -766,7 +769,7 @@ print(p)
 #' 
 #' Consider the following example, where we create
 #' 
-## ----eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width----------------------------------
+## ----eval=TRUE, tidy=FALSE,fig.height=my_fig_height, fig.width=my_fig_width-----------------------------------------
 library(tidyverse)
 
 # fix seed
@@ -795,7 +798,7 @@ ggsave(filename = my_fig_file,
 #' 
 #' You can verify the creation of the file with fu
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 print(list.files('fig_ggplot'))
 
 #' 
@@ -804,21 +807,11 @@ print(list.files('fig_ggplot'))
 #' 
 #' ## Exercises 
 #' 
-#' 01. Download Facebook (FB) stock data with the 
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter10-Figures/', 
+                   full.names = TRUE)
+
+compile_eoc_exercises(f_in, type_doc = my_engine)
+
 #' 
-#' - The x and y-axis is correctly named;
-#' - The plot has a title ("Prices for 1 stock"), 
 #' 
-#' 02. Download Google (GOOG), Facebook (FB) and D
-#' 
-#' 03. For the previous chart, add points to the l
-#' 
-#' 04. For the same chart, separate stock prices i
-#' 
-#' 05. Modify the previous chart theme to greyscal
-#' 
-#' 06. For the previous data, create the histogram
-#' 
-#' 07. Use function `tidyquant::tq_exchange` to fi
-#' 
-#' 08. Head over to the [Kaggle data website](http

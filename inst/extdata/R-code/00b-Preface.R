@@ -20,6 +20,7 @@
 #' 
 #' Cleaning, structuring and analyzing the data wi
 #' : In chapters 06 and 07 we will concentrate our
+#' 
 #' Creating a visual analysis of data
 #' : In chapter 10 we'll learn to use functions fr
 #' 
@@ -34,9 +35,9 @@
 #' 
 #' All the material used in the book, including co
 #' 
-#' If you want to use the internet to install the 
+#' In order to install the book package in your co
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## # install devtools dependency
 ## install.packages('devtools')
 ## 
@@ -48,7 +49,7 @@
 #' 
 #' After installing the book package `afedR`, you 
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## afedR::afedR_get_book_files(path_to_copy = '~')
 
 #' 
@@ -61,14 +62,11 @@
 #' 
 #' If you are an R instructor, you'll find plenty 
 #' 
-#' Static end of chapter exercises
+#' Over 100 exercises
 #' : Every chapter in this book includes exercises
 #' 
 #' RMarkdown slides
 #' : Slides from the book are also available in so
-#' 
-#' Dynamic R exercises
-#' : Collection of dynamic R exercises built on to
 #' 
 #' All of this content is released with the [MIT l
 #' 

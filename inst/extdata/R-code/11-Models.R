@@ -24,9 +24,7 @@
 #' 
 #' A linear model with _N_ explanatory variables c
 #' 
-
-#' 
-
+#' $$y _t = \alpha + \beta _1 x_{1,t} + \beta _2 x
 #' 
 #' The left side of the equation, (`r if (my.engin
 #' 
@@ -35,13 +33,11 @@
 #' 
 #' Consider the following equation:
 #' 
-
-#' 
-
+#' $$y _t = 0.5 + 2 x_{t} + \epsilon _t$$
 #' 
 #' We can use R to simulate _1.000_ observations f
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(50)
 
 # number of obs
@@ -58,9 +54,9 @@ my_beta <- 2
 y <- my_alpha + my_beta*x + rnorm(n_T)
 
 #' 
-#' Using `ggplot,` we can create a scatter plot to
+#' Using `ggplot`, we can create a scatter plot to
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width---------------------------------------
 library(tidyverse)
 
 # set temp df
@@ -83,7 +79,7 @@ print(p)
 #' 
 #' In R, the main function for estimating a linear
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set df
 lm_df <- tibble(x, y)
 
@@ -96,7 +92,7 @@ print(my_lm)
 #' 
 #' Argument `formula` allows other custom options,
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(15)
 
 # set simulated dataset
@@ -109,7 +105,7 @@ df <- tibble(x = runif(N),
                                 replace = TRUE ))
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # Vanilla formula
 #
 # example: y ~ x + z
@@ -119,7 +115,7 @@ print(lm(data = df,
          formula = my_formula))
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # vannila formula with dummies
 #
 # example: y ~ group + x + z
@@ -131,7 +127,7 @@ print(lm(data = df,
          formula = my_formula))
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # Without intercept
 #
 # example: y ~ -1 + x + z
@@ -141,7 +137,7 @@ print(lm(data = df,
          formula = my_formula))
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # Using combinations of variables
 # example: y ~ x*z
 # model: y(t) = alpha + beta(1)*x(t) + beta(2)*z(t) + 
@@ -151,7 +147,7 @@ print(lm(data = df,
          formula = my_formula))
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # Interacting variables
 # example: y ~ x:group + z
 # model: y(t) = alpha + beta(1)*z(t) + beta(2)*x(t)*D_1(t) + 
@@ -165,16 +161,16 @@ print(lm(data = df,
 #' 
 #' The different options in the `formula` input al
 #' 
-#' Moreover, when it comes to the output of `lm,` 
+#' The output of `lm` is an special type of `list`
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # print names in model
 print(names(my_lm))
 
 #' 
 #' As you can see, there is a slot called `coeffic
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 print(my_lm$coefficients)
 
 #' 
@@ -184,7 +180,7 @@ print(my_lm$coefficients)
 #' 
 #' Experienced researchers have probably noted tha
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 print(summary(my_lm))
 
 #' 
@@ -194,7 +190,7 @@ print(summary(my_lm))
 #' 
 #' Additional information is available in the resu
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 my_summary <- summary(my_lm)
 print(names(my_summary))
 
@@ -203,17 +199,15 @@ print(names(my_summary))
 #' 
 #' Now, let's move to an example with real data. F
 #' 
-
-#' 
-
+#' $$R _t = \alpha + \beta R_{M,t} + \epsilon _t$$
 #' 
 #' First, let's load the SP500 dataset. \index{cal
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # load stock data
-my_f <- afedR::afedR_get_data_file('SP500-Stocks-WithRet.rds')
+my_f <- afedR::get_data_file('SP500-Stocks-WithRet.rds')
 my_df <- read_rds(my_f)
 
 # select rnd asset and filter data 
@@ -241,7 +235,7 @@ print(nrow(df_sp500))
 #' 
 #' You can see the number of rows of the dataset f
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # find location of dates in df_sp500
 idx <- match(my_df_asset$ref.date, df_sp500$ref.date)
 
@@ -251,7 +245,7 @@ my_df_asset$ret_sp500 <- df_sp500$ret[idx]
 #' 
 #' As a start, let's create a scatter plot with th
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width---------------------------------------
 library(ggplot2)
 
 p <- ggplot(data = my_df_asset, 
@@ -269,7 +263,7 @@ print(p)
 #' 
 #' The figure shows a clear linear tendency;  the 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # estimate beta model
 my_beta_model <- lm(data = my_df_asset, 
                     formula = ret ~ ret_sp500)
@@ -285,9 +279,9 @@ print(summary(my_beta_model))
 #' 
 #' ### Statistical Inference in Linear Models {#te
 #' 
-#' After estimating a model with function `lm,` th
+#' After estimating a model with function `lm`, th
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 n_T <- 100
 df <- data.frame(y = runif(n_T),
                  x_1 = runif(n_T),
@@ -306,8 +300,7 @@ print(summary(my_lm))
 #' In the practice of research, it is likely that 
 #' 
 #' As a simple example, let's test a linear hypoth
-#' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(10)
 
 # number of time periods
@@ -331,13 +324,20 @@ my_lm <- lm(data = df,
 #' 
 #' After the estimation of the model, we use the f
 #' 
-
-#' 
-
+#' $$\underbrace{\begin{bmatrix}
+#' 1 & 0 \\ 
+#' 0 & 1
+#' \end{bmatrix}}_{hypothesis.matrix}\begin{bmatri
+#' \alpha \\
+#' \beta
+#' \end{bmatrix} = \underbrace{\begin{bmatrix}
+#' 0.5 \\ 
+#' 1.5  
+#' \end{bmatrix} }_{rhs} $$
 #' 
 #' With this matrix operation, we test the joint h
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(car)
 
 # set test matrix
@@ -361,9 +361,9 @@ print(my_waldtest)
 #' 
 #' Another family of tests commonly applied to lin
 #' 
-#' In R, we can use the package `lmtest` [@lmtest]
+#' In R, we can use the package `lmtest` [@R-lmtes
 #' 
-## ---- results='hold'-----------------------------------------------------------------------------------------
+## ---- results='hold'------------------------------------------------------------------------------------------------
 library(lmtest)
 
 # Breush Pagan test 1 - Serial correlation
@@ -388,7 +388,7 @@ print(shapiro.test(my_lm$residuals))
 #' 
 #' Another interesting approach for validating lin
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(gvlma)
 
 # global validation of model
@@ -407,30 +407,23 @@ summary(gvmodel)
 #' 
 #' We can write a general univariate GLM specifica
 #' 
-
-#' 
-
+#' $$E \left( y _t \right) = g \left(\alpha + \sum
 #' 
 #' The main difference of a GLM model and a OLS mo
 #' 
-
+#' $$g(x) = \frac{\exp(x)}{1+\exp(x)} $$
 #' 
-
-#' 
-#' Did you notice that function _g()_ ensures any 
+#' Do notice that function _g()_ ensures any value
 #' 
 #' 
 #' ### Simulating a GLM Model
 #' 
 #' As an example, let's simulate the following GLM
 #' 
-
-#' 
-
-#' 
+#' $$p _t  = \frac{\exp(2+5x_t)}{1+\exp(2+5x_t)}$$
 #' In R, we use the following code to build the re
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(15)
 
 # set number of obs
@@ -454,7 +447,7 @@ y = rbinom(n = n_T,
 #' 
 #' Function `rbinom` creates a vector of 1s and 0s
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width---------------------------------------
 summary(y)
 
 #' 
@@ -467,7 +460,7 @@ summary(y)
 #' 
 #' Let's use the previously simulated data to esti
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # estimate GLM
 df <- tibble(x, y)
 my_family <- binomial(link = "logit")
@@ -489,11 +482,11 @@ print(summary(my_glm))
 #' 
 #' As an example, with real data, we'll use a cred
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # read default data
-my_f <- afedR::afedR_get_data_file('UCI_Credit_Card.csv')
+my_f <- afedR::get_data_file('UCI_Credit_Card.csv')
 df_default <- read_csv(my_f, 
                        col_types = cols())
 
@@ -502,7 +495,7 @@ glimpse(df_default)
 #' 
 #' This is a comprehensive dataset with several pi
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # read credit card data 
@@ -536,7 +529,7 @@ glimpse(df_default)
 #' 
 #' Much better! Now we only have the columns of in
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # estimate glm model
 glm_credit <- glm(data=df_default, 
                    formula = default ~ D_male_gender +  age + 
@@ -558,18 +551,16 @@ summary(glm_credit)
 #' 
 #' We can represent the simplest case of a panel d
 #' 
-
+#' $$y_{i,t} = \alpha _i + \beta x_{i,t} + \epsilo
 #' 
-
-#' 
-#' Notice we now use index _i_ in the dependent an
+#' Do notice the use of index _i_ in the dependent
 #' 
 #' 
 #' ### Simulating Panel Data Models
 #' 
 #' Let's simulate a balanced panel data with fixed
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(25)
 
 # number of obs for each case
@@ -612,7 +603,7 @@ glimpse(sim_df)
 #' 
 #' The result is a `dataframe` object with `r nrow
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width---------------------------------------
 library(ggplot2)
 
 p <- ggplot(sim_df, aes(x = x, 
@@ -632,7 +623,7 @@ print(p)
 #' 
 #' With the artificial data simulated in the previ
 #' 
-## ---- message=FALSE------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(plm)
 
 # estimate panel data model with fixed effects
@@ -647,7 +638,7 @@ print(coef(my_pdm))
 #' 
 #' As expected, the slope parameter was correctly 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 print(fixef(my_pdm))
 
 #' 
@@ -655,23 +646,24 @@ print(fixef(my_pdm))
 #' 
 #' As an example with real data, let's use the dat
 #' 
-## ---- message=FALSE------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(plm)
 
 # data from Grunfeld
-data("Grunfeld")
+my_f <- afedR::get_data_file('grunfeld.csv')
+df_grunfeld <- read_csv(my_f, col_types = cols())
 
 # print it
-glimpse(Grunfeld)
+glimpse(df_grunfeld )
 
 #' 
-#' The `Grunfeld` dataset contains company informa
+#' The `df_grunfeld` dataset contains company info
 #' 
 #' A note here is important; given its high number
 #' 
 #' First, let's explore the raw data by estimating
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 est_lm <- function(df) {
   # Estimates a linear model from Grunfeld data
   #
@@ -688,8 +680,8 @@ est_lm <- function(df) {
 }
 
 # estimate model for each firm
-my_l <- by(Grunfeld, 
-           INDICES = Grunfeld$firm, 
+my_l <- by(df_grunfeld, 
+           INDICES = df_grunfeld$firm, 
            FUN = est_lm)
 
 # print result
@@ -701,10 +693,10 @@ print(my_coefs)
 #' 
 #' The results show a great discrepancy between th
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # test if all coef are the same across firms
 my_pooltest <- pooltest(inv ~ value + capital, 
-                        data = Grunfeld, 
+                        data = df_grunfeld, 
                         model = "pooling")
 
 # print result
@@ -717,14 +709,14 @@ print(my_pooltest)
 #' 
 #' We can test the model specification using the `
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set options for Hausman test
 my_formula <- inv ~ value + capital
 my_index <- c('firm','year')
 
 # do Hausman test
 my_hausman_test <- phtest(x = my_formula, 
-                          data = Grunfeld,
+                          data = df_grunfeld,
                           model = c('within', 'random'),
                           index = my_index)
 
@@ -736,14 +728,14 @@ print(my_hausman_test)
 #' 
 #' After identifying the model, let's estimate it 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set panel data model with random effects
 my_model <- 'random'
 my_formula <- inv ~ value + capital
 my_index <- c('firm','year')
 
 # estimate it
-my_pdm_random <- plm(data = Grunfeld, 
+my_pdm_random <- plm(data = df_grunfeld, 
                      formula = my_formula, 
                      model = my_model,
                      index = my_index)
@@ -760,11 +752,11 @@ print(summary(my_pdm_random))
 #' 
 #' The `systemfit` package offers a function with 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(systemfit)
 
 # set pdataframe
-p_Grunfeld <- pdata.frame(Grunfeld, c( "firm", "year" ))
+p_Grunfeld <- pdata.frame(df_grunfeld, c( "firm", "year" ))
 
 # estimate sur
 my_SUR <- systemfit(formula = inv ~ value + capital,
@@ -782,9 +774,7 @@ print(my_SUR)
 #' 
 #' A simple example of an Arima model is defined b
 #' 
-
-#' 
-
+#' $$y _t = 0.5 y_{t-1} - 0.2 \epsilon _{t-1} + \e
 #' 
 #' In this example, we have an ARIMA(AR = 1, D = 0
 #' 
@@ -793,7 +783,7 @@ print(my_SUR)
 #' 
 #' First, let's simulate an Arima model using func
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 set.seed(1)
 
 # set number of observations
@@ -812,7 +802,7 @@ my_ts <- arima.sim(n = my_T,
 #' 
 #' We can look at the result of the simulation by 
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 library(ggplot2)
 
 # set df
@@ -834,7 +824,7 @@ print(p)
 #' 
 #' To estimate an Arima model, we use function `ar
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # estimate arima model
 my_arima <- arima(my_ts, order = c(1,0,1))
 
@@ -844,8 +834,10 @@ print(coef(my_arima))
 #' 
 #' As expected, the estimated parameters are close
 #' 
-## ------------------------------------------------------------------------------------------------------------
-attributes(summary(my_arima))
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
+## # not evaluated due to large output
+## # please run it in your own R session for details
+## attributes(summary(my_arima))
 
 #' 
 #' We have the adjustment criteria in `aic`, resid
@@ -854,7 +846,7 @@ attributes(summary(my_arima))
 #' 
 #' In the next example, we use the function `auto.
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(BatchGetSymbols)
 
 df_SP500 <- BatchGetSymbols(tickers = '^GSPC', 
@@ -864,14 +856,14 @@ df_SP500 <- BatchGetSymbols(tickers = '^GSPC',
 #' 
 #' Before estimating the model, we need to check t
 #' 
-## ---- message=FALSE------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(tseries)
 print(adf.test(na.omit(df_SP500$ret.adjusted.prices)))
 
 #' 
 #' The result of the test shows a small p-value th
 #' 
-## ---- message=FALSE------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 print(adf.test(df_SP500$price.close))
 
 #' 
@@ -879,7 +871,7 @@ print(adf.test(df_SP500$price.close))
 #' 
 #' One issue in working with Arima models is with 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(forecast)
 
 # estimate arima model with automatic identification
@@ -896,7 +888,7 @@ print(my_autoarima)
 #' 
 #' We can obtain the forecasts of an Arima model w
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # forecast model
 print(forecast(my_autoarima, h = 5))
 
@@ -908,10 +900,14 @@ print(forecast(my_autoarima, h = 5))
 #' 
 #' A GARCH model is modular. In its simplest forma
 #' 
-
-#' 
-
-#' 
+#' $$
+#' \begin{aligned} 
+#' y _t &=  \mu + \theta y_{t-1} + \epsilon _t \\
+#' \epsilon _t &\sim N \left(0, h _t \right ) \\
+#' h _t &= \omega + \alpha \epsilon ^2 _{t-1}+ \be
+#' \end{aligned} 
+#' $$
+#'          
 #' The `r if (my.engine!='epub3') {'$y_t$'} else {
 #' 
 #' 
@@ -919,9 +915,9 @@ print(forecast(my_autoarima, h = 5))
 #' 
 #' In CRAN, we can find two main packages related 
 #' 
-#' In `fGarch,` we simulate a model using function
+#' In `fGarch`, we simulate a model using function
 #' 
-## ---- tidy=FALSE, message=FALSE------------------------------------------------------------------------------
+## ---- tidy=FALSE, message=FALSE-------------------------------------------------------------------------------------
 library(fGarch)
 
 # set list with model spec
@@ -940,13 +936,17 @@ print(spec)
 #' 
 #' The previous code defines a Garch model equival
 #' 
-
-#' 
-
-#' 
+#' $$
+#' \begin{aligned} 
+#' y _t &=  0.02 + 0.1 y_{t-1} + \epsilon _t \\
+#' \epsilon _t &\sim N \left(0, h _t \right ) \\
+#' h _t &= 0.001 + 0.15 \epsilon ^2 _{t-1}+ 0.8 h_
+#' \end{aligned}
+#' $$
+#'            
 #' To simulate _1000_ observations of this model, 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(20)
 # simulate garch model
 sim_garch = garchSim(spec, n = 1000)
@@ -954,13 +954,13 @@ sim_garch = garchSim(spec, n = 1000)
 #' 
 #' We can visualize the artificial time series gen
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width---------------------------------------
 # set df for ggplot
-temp_df <- tibble(sim.ret = sim_garch$garch, 
+temp_df <- tibble(sim_ret = sim_garch$garch, 
                   idx=seq_along(sim_garch$garch))
 
 p <- ggplot(temp_df, aes(x = idx, 
-                         y = sim.ret)) + 
+                         y = sim_ret)) + 
   geom_line() + 
   labs(title = 'Simulated time series of garch model',
        y = 'Value of Time Series',
@@ -979,9 +979,9 @@ print(p)
 #' 
 #' In the following example, we estimate a Garch m
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- message=FALSE, warning=FALSE----------------------------------------------------------------------------------
 # estimate garch model
-my_form <- formula('sim.ret ~ arma(1,0) + garch(1,1)')
+my_form <- sim_ret ~ arma(1,0) + garch(1,1)
 
 my_garchfit <- garchFit(
   data = sim_garch, 
@@ -991,15 +991,15 @@ my_garchfit <- garchFit(
 #' 
 #' To learn more about the estimated model, we can
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 print(my_garchfit) 
 
 #' 
 #' The resulting parameters from the estimation ar
 #' 
-#' Now, we will conduct another example using real
+#' Now, we will conduct another example of Garch m
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(MTS)
 
 # test for Arch effects
@@ -1008,7 +1008,7 @@ archTest(rt = na.omit(df_SP500$ret.adjusted.prices))
 #' 
 #' The evidence is strong for Arch effects in the 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- warning=FALSE-------------------------------------------------------------------------------------------------
 # set object for estimation
 df_est <- as.timeSeries(na.omit(df_SP500))
 
@@ -1032,9 +1032,10 @@ print(my_garchfit_SP500)
 #' 
 #' In package `fGarch`, both forecasts are calcula
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # static forecast for garch
-my_garch_forecast <- predict(my_garchfit_SP500, n.ahead = 3)
+my_garch_forecast <- fGarch::predict(my_garchfit_SP500, 
+                                     n.ahead = 3)
 
 # print df
 print(my_garch_forecast)
@@ -1049,23 +1050,27 @@ print(my_garch_forecast)
 #' 
 #' If we want to motivate the model, we need to co
 #' 
-
-#' 
-
+#' $$y_t=\mu_{S_t} + \epsilon_t $$
 #' 
 #' where `r if (my.engine!='epub3') {'$S_t=1..k$'}
 #' 
 #' Now, let's assume the previous model has two st
 #' 
-
-#' 
-
+#' $$
+#' \begin{aligned}
+#' y_t&=\mu_{1} + \epsilon_t \qquad \mbox{for Stat
+#' y_t&=\mu_{2} + \epsilon_t \qquad \mbox{for Stat
+#' \end{aligned}
+#' $$
 #' 
 #' where:
 #' 
-
-#' 
-
+#' $$
+#' \begin{aligned}
+#' \epsilon_t &\sim (0,\sigma^2_{1}) \qquad \mbox{
+#' \epsilon_t &\sim (0,\sigma^2_{2}) \qquad \mbox{
+#' \end{aligned}
+#' $$
 #' 
 #' This representation implies two processes for t
 #' 
@@ -1077,9 +1082,13 @@ print(my_garch_forecast)
 #' 
 #' Markov switching is a special type of model for
 #' 
-
-#' 
-
+#' $$
+#' P=\left[ \begin{array}{ccc}
+#' p_{11} & \ldots & p_{1k} \\
+#' \vdots & \ddots & \vdots \\
+#' p_{k1} & \ldots & p_{kk} \\
+#' \end{array} \right ]  		
+#' $$
 #' 
 #' In the previous matrix, row _i_, column _j_ con
 #' 
@@ -1088,23 +1097,16 @@ print(my_garch_forecast)
 #' 
 #' In R, two packages are available for handling u
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## install.packages("fMarkovSwitching",
 ##                  repos="http://R-Forge.R-project.org")
 
 #' 
-## ---- include = FALSE----------------------------------------------------------------------------------------
-
-if (!require('fMarkovSwitching')){
-  install.packages("fMarkovSwitching", 
-                   repos="http://R-Forge.R-project.org")
-}
-
 
 #' 
 #' Once it is installed, let's look at its functio
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(fMarkovSwitching)
 
 print(ls('package:fMarkovSwitching'))
@@ -1112,19 +1114,27 @@ print(ls('package:fMarkovSwitching'))
 #' 
 #' The package includes functions for simulating, 
 #' 
-
-#' 
-
+#' $$
+#' \begin{aligned}
+#' y_{t}&= +0.5x_t+\epsilon_{t} \qquad \mbox{State
+#' y_{t}&=-0.5x_t+\epsilon_{t} \qquad \mbox{State 
+#' \epsilon _t &\sim N(0,0.25) \qquad \mbox{State 
+#' \epsilon _t &\sim N(0,1) \qquad \mbox{State 2}
+#' \end{aligned}
+#' $$
 #' 
 #' The transition matrix will be given by:
 #' 
-
-#' 
-
+#' $$
+#' P=\left[ \begin{array}{ccc}
+#' 0.90 & 0.2 \\
+#' 0.10 & 0.8
+#' \end{array} \right ]
+#' $$
 #' 
 #' This model has two states with different volati
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(10)
 library(fMarkovSwitching)
 
@@ -1175,7 +1185,7 @@ my_ms_simul <- MS_Regress_Simul(nr = n_T,
 #' 
 #' Once the model is simulated and available, let'
 #' 
-## ---- fig.height=my.fig.height, fig.width=my.fig.width-------------------------------------------------------
+## ---- fig.height=my.fig.height, fig.width=my.fig.width--------------------------------------------------------------
 library(ggplot2)
 df_to_plot <- tibble(y = my_ms_simul@dep, 
                          x = Sys.Date()+1:my_ms_simul@nr,
@@ -1194,7 +1204,7 @@ print(p)
 #' 
 #' We can also look at the simulated states:
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width---------------------------------------
 library(ggplot2)
 df_to_plot <- tibble(y = my_ms_simul@dep, 
                          x = Sys.Date()+1:my_ms_simul@nr,
@@ -1212,11 +1222,11 @@ print(p)
 #' As expected, the model is switching from one st
 #' 
 #' 
-#' ### Estimating Regime Switching Models
+#' ### Estimating Regime Switching Models {#estima
 #' 
 #' We can estimate a univariate Markov switching m
 #' 
-## ---- message=FALSE, results='hide', cache=TRUE--------------------------------------------------------------
+## ---- message=FALSE, results='hide', cache=TRUE---------------------------------------------------------------------
 # set dep and indep 
 dep <- my_ms_simul@dep
 indep <- my_ms_simul@indep
@@ -1232,20 +1242,17 @@ my_ms_model <- MS_Regress_Fit(dep, indep, S, k)
 #' 
 #' Argument `dep` and `indep` sets the variables i
 #' 
-## ------------------------------------------------------------------------------------------------------------
-# print estimation output
-print(my_ms_model)
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
+## # print estimation output
+## # not evaluated due to large output (execute in your r session)
+## glimpse(my_ms_model)
 
 #' 
 #' The estimated coefficients are close to the one
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=6, fig.width=7-------------------------------------------------------
-plot(my_ms_model)	# plotting output
-
-#' 
 #' As an example with real data, let's estimate th
 #' 
-## ---- message=FALSE,results='hide', cache=TRUE---------------------------------------------------------------
+## ---- message=FALSE,results='hide', cache=TRUE----------------------------------------------------------------------
 library(BatchGetSymbols)
 
 df_SP500 <- BatchGetSymbols(tickers = '^GSPC', 
@@ -1268,9 +1275,9 @@ my_SP500_MS_model <- MS_Regress_Fit(dep, indep, S, k)
 #' 
 #' And now, we check the result.
 #' 
-## ------------------------------------------------------------------------------------------------------------
-# printing output
-print(my_SP500_MS_model)	
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
+## # printing output (not evaluated due to large output)
+## glimpse(my_SP500_MS_model)	
 
 #' 
 #' 
@@ -1281,7 +1288,7 @@ print(my_SP500_MS_model)
 #' A common figure in the analysis of Markov switc
 #' 
 #' 
-## ---- fig.height=my.fig.height, fig.width=my.fig.width-------------------------------------------------------
+## ---- fig.height=my.fig.height, fig.width=my.fig.width--------------------------------------------------------------
 # get variables for plot
 smooth.prob <- as.numeric(my_SP500_MS_model @smoothProb[ , 1])
 price <- df_SP500$price.close[2:nrow(df_SP500)]
@@ -1318,7 +1325,7 @@ print(p)
 #' 
 #' Package `MS_Regress` provides function `MS_Regr
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # make static forecast of regime switching model
 newIndep <- 1
 
@@ -1335,18 +1342,20 @@ print(my_for)
 #' 
 #' ## Dealing with Several Models
 #' 
-#' In the practice of research, we will likely est
+#' In practice, it is very unlikelly that the rese
+#' 
+#' ### Using `tapply` and `sapply`
 #' 
 #' In chapter \@ref(programming), we learned we co
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 set.seed(10)
 
 # set number of stocks
 n_stocks <- 4
 
 # load data from .rds
-my_f <- afedR::afedR_get_data_file('SP500-Stocks-WithRet.rds')
+my_f <- afedR::get_data_file('SP500-Stocks-WithRet.rds')
 df_stocks <- read_rds(my_f) 
   
 # select tickers
@@ -1362,7 +1371,7 @@ df_temp$ticker <- as.factor(as.character(df_temp$ticker))
 #' 
 #' Now, what we want to do with this data is separ
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 my_l <- tapply(X = df_temp$ret, 
                INDEX = df_temp$ticker, 
                FUN = arima, 
@@ -1371,20 +1380,21 @@ my_l <- tapply(X = df_temp$ret,
 #' 
 #' Each model is available in `my_l`. To retrieve 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # print all coefficients
 print(sapply(X = my_l, 
              FUN = coef))
 
 #' 
-#' A limitation is, by using `tapply`, we are rest
+#' ### Using `by`
+#' 
+#' A limitation of using `tapply` is that we are r
 #' 
 #' For an example, we are going to estimate severa
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # load SP500 data
-df_sp500 <- read.csv(file = 'data/SP500.csv', 
-                     colClasses = c('Date','numeric'))
+my_f <- afedR::get_data_file('SP500.csv')
 
 # calculate return
 df_sp500$ret <- calc.ret(df_sp500$price.close)
@@ -1400,7 +1410,7 @@ df_stocks$ret.sp500 <- df_sp500$ret[idx]
 #' 
 #' The next step is to create a function that will
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 estimate_beta <- function(df) {
   # Function to estimate beta from dataframe of stocks returns
   #
@@ -1417,9 +1427,9 @@ estimate_beta <- function(df) {
 }
 
 #' 
-#' Now, we can use the previous function with `by.
+#' Now, we can use the previous function with `by`
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # calculate beta for each stock
 my_betas <- by(data = df_stocks, 
                INDICES = df_stocks$ticker, 
@@ -1430,7 +1440,7 @@ glimpse(as.numeric(my_betas))
 #' 
 #' The values of the different `betas` are availab
 #' 
-## ---- eval=TRUE, tidy=FALSE, fig.height=my.fig.height, fig.width=my.fig.width--------------------------------
+## ---- eval=TRUE, message=FALSE, fig.height=my.fig.height, fig.width=my.fig.width, warning=FALSE---------------------
 library(ggplot2)
 
 df_to_plot <- tibble(betas = as.numeric(my_betas)) 
@@ -1454,9 +1464,12 @@ print(p)
 #' 
 #' For the SP500 data, we find no negative value o
 #' 
+#' 
+#' ### Using `dplyr::group_by`
+#' 
 #' Another way of storing and managing several mod
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 library(dplyr)
 
 my_tab <- df_stocks %>%
@@ -1468,7 +1481,7 @@ glimpse(my_tab)
 #' 
 #' We have a list-column, called `my_model`, stori
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 my_model_tab <- df_stocks %>%
   group_by(ticker) %>%
   do(my_model = arima(x = .$ret, order = c(1,0,0))) %>%
@@ -1478,67 +1491,11 @@ my_model_tab <- df_stocks %>%
 glimpse(my_model_tab)
 
 #' 
-#' Another trick in handling models with `dplyr` i
-#' 
-## ---- message=FALSE, tidy=FALSE------------------------------------------------------------------------------
-library(broom)
-
-# get coefs with tidy
-my_coef_tab <- my_model_tab %>% 
-  tidy(my_model)
-
-# print result
-print(head(my_coef_tab))
-
-#' 
-#' Notice how function `tidy` included the estimat
-#' 
-## ------------------------------------------------------------------------------------------------------------
-# get info on models
-my_info_models <- my_model_tab %>% 
-  glance(my_model)
-
-print(head(my_info_models))
-
-#' 
-#' It includes information about coefficients and 
-#' 
 #' 
 #' ## Exercises
 #' 
-#' 01. Simulate the following linear process in R:
-#' 
-## ------------------------------------------------------------------------------------------------------------
-set.seed (5)
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter11-FinEcon/', 
+                   full.names = TRUE)
 
-# number of obs
-nT <- 100
-
-# set x as Normal (0, 1)
-x <- rnorm (nT)
-
-# set coefficients
-my_alpha <- 1.5
-my_beta <- 0.5
-
-# build y
-y <- my_alpha + my_beta * x + rnorm (nT, sd = 5)
-
-#' 
-#' Using the simulated data, `x` and `y` estimate 
-#' 
-#' 02. Using package `car` and the data we previou
-#' 
-#' 03. Use package `gvlma` to test the OLS assumpt
-#' 
-#' 04. **CHALLENGE** - Using your programming skil
-#' 
-#' 05. From package `BatchGetSymbols,` use functio
-#' 
-#' 06. For the same stock data from the previous e
-#' 
-#' 07. Using the tidyverse functions `dplyr::group
-#' 
-#' 08. Using the same "pipeline" code as the previ
-#' 
-#' 09. For the same SP500 database, set `set.seed(
+compile_eoc_exercises(f_in, type_doc = my_engine)

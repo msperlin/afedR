@@ -71,18 +71,21 @@ copy_book_files <- function(path_to_copy = '~') {
   # if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
 
   # EOC exercises
-  eoc_exerc_path_files <- system.file('extdata/eoc-exercises', package = 'afedR')
-  eoc_exerc_path_to_copy <- file.path(path_to_copy, 'afedR files/eoc-exercises')
+  eoc_exerc_path_files <- system.file('extdata/exams_files/02-EOCE-Rmd/', package = 'afedR')
+  eoc_exerc_path_to_copy <- file.path(path_to_copy, 'afedR files/eoc-exercises/')
 
   message('Copying end-of-chapter (eoc) exercises with solutions to ',
           eoc_exerc_path_to_copy)
   if (!dir.exists(eoc_exerc_path_to_copy)) dir.create(eoc_exerc_path_to_copy,
                                                       recursive = TRUE)
 
-  files_to_copy <- list.files(eoc_exerc_path_files, full.names = TRUE)
+  files_to_copy <- list.files(eoc_exerc_path_files,
+                              full.names = TRUE,
+                              recursive = TRUE,
+                              pattern = '*.Rmd')
 
   flag <- file.copy(from = files_to_copy,
-                    to = eoc_exerc_path_to_copy,
+                    to = file.path(eoc_exerc_path_to_copy, basename(files_to_copy)),
                     overwrite = TRUE)
 
   if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
@@ -156,6 +159,4 @@ format_percent <- function(x) {
 
   return(x.formatted)
 }
-
-
 

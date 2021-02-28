@@ -8,7 +8,7 @@
 #' 
 #' The ease of change relates to how we edit and f
 #' 
-#' If you have many tables and figures in your rep
+#' Ideally, we should aim for a work cycle where t
 #' 
 #' There are two strategies for reporting research
 #' 
@@ -17,7 +17,7 @@
 #' 
 #' Simple tables, such as descriptive statistics o
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(BatchGetSymbols)
 library(DistributionUtils) 
@@ -49,7 +49,7 @@ print(my_desc_table)
 #' 
 #' In creating the `dataframe`, notice how we defi
 #' 
-## ---- message=FALSE------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(xtable)
 
 # set xtable object
@@ -79,7 +79,7 @@ print(my_xtable,
 #' 
 #' As for exporting tables to _Word_ (_Microsoft_)
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set html file for output
 my_html_file <- 'tabs/MyTable.html'
 
@@ -90,7 +90,7 @@ print(x = my_xtable,
       include.rownames = FALSE )
 
 #' 
-#' Once the file is available, we can open `r my_h
+#' Once the file is available, we can open `r base
 #' 
 
 #' 
@@ -103,7 +103,7 @@ print(x = my_xtable,
 #' 
 #' As an example, let's use the `texreg` package t
 #' 
-## ---- tidy=FALSE, message=FALSE------------------------------------------------------------------------------
+## ---- tidy=FALSE, message=FALSE-------------------------------------------------------------------------------------
 library(texreg)
 library(dplyr)
 library(BatchGetSymbols)
@@ -141,9 +141,9 @@ print(est_table)
 #' 
 #' The `texreg` package also offers several other 
 #' 
-#' The following chunk is an example of using `tex
+#' The following chunk of code is an example of us
 #' 
-## ---- tidy=FALSE, message=FALSE------------------------------------------------------------------------------
+## ---- tidy=FALSE, message=FALSE-------------------------------------------------------------------------------------
 # report result
 est_table <- texreg(l = beta_tab$beta_model,
                     file = 'tabs/Example_texreg.tex',
@@ -157,7 +157,7 @@ est_table <- texreg(l = beta_tab$beta_model,
 
 #' 
 #' 
-#' ## Creating Reports with _RMarkdown_
+#' ## Creating Reports with _RMarkdown_ {#creating
 #' 
 #' _RMarkdown_ innovates the process of writing re
 #' 
@@ -170,6 +170,13 @@ est_table <- texreg(l = beta_tab$beta_model,
 
 #' 
 #' The next choices relate to the output when comp
+#' 
+#' 
+## Be aware that any pdf compilation in R will require the installation of a LaTex compiler -- [miktex](https://miktex.org/)^[https://miktex.org/] in Windows, [TexLive](https://www.tug.org/texlive/)^[https://www.tug.org/texlive/] in Linux/Mac.
+
+## 
+## Fortunatelly, a simple trick for installing LaTeX in any operating system is calling function `tinytex::install_tinytex()` from R's prompt, which will automatically select and install a LaTeX flavour for your operating system.
+
 #' 
 #' After pressing _OK_, a file will appear in the 
 #' 
@@ -185,7 +192,8 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 #' For the first chunk of code, the `knitr::opts_c
 #' 
-#' An important point here is that, at the time of
+## Be aware that, when compiling a _Rmarkdown_ file, the working directory will always be the location of the source file. Therefore, unlike other R scripts, it is **unnecessary to change directories in code with the `setwd` function**.
+
 #' 
 #' Moving on, the `## R Markdown` text in Figure \
 #' 
@@ -224,10 +232,8 @@ est_table <- texreg(l = beta_tab$beta_model,
 #' 
 #' ## Exercises
 #' 
-#' 01. Consider the Grunfeld data available at lin
-#' 
-#' 02. Using `BatchGetSymbols::GetSP500Stocks` fun
-#' 
-#' 03. Create a new report in _Rmarkdown_ covering
-#' 
-#' 04. [**CHALLENGE**] - Download SP500 components
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter12-Reporting/', 
+                   full.names = TRUE)
+
+compile_eoc_exercises(f_in, type_doc = my_engine)

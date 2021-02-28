@@ -52,7 +52,7 @@
 #' 
 #' An example for the content of file `0-run-it-al
 #' 
-## ----eval=FALSE, tidy=FALSE----------------------------------------------------------------------------------
+## ----eval=FALSE, tidy=FALSE-----------------------------------------------------------------------------------------
 ## # clean up workspace
 ## rm(list=ls())
 ## 
@@ -126,6 +126,8 @@
 #' 
 #' ## Exercises
 #' 
-#' 01. Imagine a survey regarding your household b
-#' 
-#' 02. Based on the previous exercise, create a fo
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter03-Research-Scripts/', 
+                   full.names = TRUE)
+
+compile_eoc_exercises(f_in, type_doc = my_engine)

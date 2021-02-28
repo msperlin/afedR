@@ -1,12 +1,10 @@
 #' # Cleaning and Structuring Data {#cleaning}
 #' 
-## ---- include=FALSE------------------------------------------------------------------------------------------
+## ---- include=FALSE-------------------------------------------------------------------------------------------------
 source('Scripts/preamble_chapters.R')
 
 #' 
-
-#' 
-#' So, now that we learned the basics of programmi
+#' Now that we learned how to get data into R and 
 #' 
 #' - Changing the format of a dataframe (long/wide
 #' - Converting a `list` of `dataframes` into a si
@@ -17,17 +15,17 @@ source('Scripts/preamble_chapters.R')
 #' 
 #' ## The Format of a `dataframe`
 #' 
-#' The `dataframe` format discussion arose due to 
+#' A proper format of a `dataframe` is necessary f
 #' 
 #' **In the wide format**, the rows of the table a
 #' 
-## ---- echo=FALSE---------------------------------------------------------------------------------------------
+## ---- echo=FALSE----------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 set.seed(10)
 N <- 4
 
-temp_df <- tibble(refdate=Sys.Date()+1:N,
+temp_df <- tibble(ref_date=Sys.Date()+1:N,
                   STOCK1 = 10+cumsum(rnorm(N, sd = 1.25)),
                   STOCK2 = 3+ cumsum(rnorm(N, sd = 0.5)),
                   STOCK3 = 6+ cumsum(rnorm(N, sd = 0.5)))
@@ -39,14 +37,13 @@ knitr::kable(temp_df, digits = 2)
 #' 
 #' **In the long format**, each row of the `datafr
 #' 
-## ---- echo=FALSE---------------------------------------------------------------------------------------------
-wide_df <- tidyr::gather(data = temp_df,
-                         key = 'ticker',
-                         value = 'price',
-                         - refdate)
-colnames(wide_df) <- c('refdate', 'ticker', 'price')
+## ---- echo=FALSE----------------------------------------------------------------------------------------------------
+long_df <- tidyr::pivot_longer(data = temp_df,
+                               cols = !ref_date,
+                               names_to = 'Ticker',
+                               values_to = 'Price') 
 
-knitr::kable(wide_df, digits = 2)
+knitr::kable(long_df, digits = 2)
 
 #' 
 #' In comparison, the wide format is more intuitiv
@@ -60,39 +57,39 @@ knitr::kable(wide_df, digits = 2)
 #' 
 #' The conversion from one format to the other is 
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
-library(tidyr)
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 # set dates and stock vectors
-refdate <- as.Date('2015-01-01') + 0:3
+ref_date <- as.Date('2015-01-01') + 0:3
 STOCK1 <- c(10, 11, 10.5, 12)
 STOCK2 <- c(3, 3.1, 3.2, 3.5)
 STOCK3 <- c(6, 7, 7.5, 6)
 
 # create wide dataframe
-my_df_wide <- tibble(refdate, STOCK1, STOCK2, STOCK3)
+my_df_wide <- tibble(ref_date, STOCK1, STOCK2, STOCK3)
 
 # print it
 print(my_df_wide)
 
 # convert wide to long
-my_df_long <- gather(data = my_df_wide,
-                     key = 'ticker',
-                     value = 'price',
-                     - refdate)
+my_df_long <- tidyr::pivot_longer(data = my_df_wide,
+                                  cols = !ref_date,
+                                  names_to = 'Ticker',
+                                  values_to = 'Price') 
 
 # print result
 print(my_df_long)
 
 #' 
+#' The way to read function `tidyr::pivot_longer` 
+#' 
 #' To perform the reverse conversion, _long_ to _w
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 # convert from long to wide
-my_df_wide_converted <- spread(data = my_df_long, 
-                               key = 'ticker',
-                               value = 'price')
+my_df_wide_converted <- my_df_long %>%
+  tidyr::pivot_wider(names_from = 'Ticker', values_from = 'Price')
 
 # print result
 print(my_df_wide_converted)
@@ -100,43 +97,20 @@ print(my_df_wide_converted)
 #' 
 #' With more complex conversions, where it is nece
 #' 
-## ------------------------------------------------------------------------------------------------------------
-library(reshape2)
-
-# use melt to change from wide to long
-my_df_long <- melt(data = my_df_wide, 
-                   id.vars = 'refdate', 
-                   variable.name = 'ticker', 
-                   value.name = 'price')
-
-# print result				   
-print(my_df_long)
-
-#' 
-## ------------------------------------------------------------------------------------------------------------
-# use melt to change from long to wide
-my_df_wide_converted <- dcast(data = my_df_long, 
-                              formula = refdate ~ ticker, 
-                              value.var = 'price')
-print(my_df_wide_converted)
-
-#' 
-#' Although, it is worth noting that it is importa
-#' 
 #' 
 #' ## Converting `lists` into `dataframes`
 #' 
-#' Another important case in data structuring is t
+#' Another important case in data re-structuring i
 #' 
 #' For the first, let's use the `purrr` package as
 #' 
-## ---- include=FALSE------------------------------------------------------------------------------------------
+## ---- include=FALSE-------------------------------------------------------------------------------------------------
 # clean up files
 file.remove(list.files('many_datafiles_2/', 
                        full.names = TRUE) )
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 create_rnd_data <- function(n_obs = 100,
                             folder_out) {
   # function for creating random datasets
@@ -171,7 +145,7 @@ create_rnd_data <- function(n_obs = 100,
                     tmpdir = folder_out)
   
   write_csv(x = rnd_df, 
-            path = f_out)
+            file = f_out)
   
   return(TRUE)
 }
@@ -181,7 +155,7 @@ create_rnd_data <- function(n_obs = 100,
 #' 
 #' Going forward, let's use `purrr::pmap` to creat
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 n_files <- 50
 n_obs <- 100
 folder_out <- 'many_datafiles_2'
@@ -197,7 +171,7 @@ print(head(list.files(folder_out)))
 #' 
 #' The files are available, as expected. Now, let'
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 read_single_file <- function(f_in) {
   # Function for reading single csv file with random data
   #
@@ -213,9 +187,7 @@ read_single_file <- function(f_in) {
 }
 
 #' 
-## ------------------------------------------------------------------------------------------------------------
-library(purrr)
-
+## -------------------------------------------------------------------------------------------------------------------
 files_to_read <- list.files('many_datafiles_2/', 
                             full.names = TRUE)
 
@@ -224,7 +196,7 @@ l_out <- map(files_to_read, read_single_file)
 #' 
 #' And now we bind them all together with a simple
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 compiled_df <- bind_rows(l_out)
 
 glimpse(compiled_df)
@@ -234,7 +206,7 @@ glimpse(compiled_df)
 #' 
 #' For the second example, let's take a case of da
 #' 
-## ---- cache=TRUE---------------------------------------------------------------------------------------------
+## ---- cache=TRUE, message=FALSE-------------------------------------------------------------------------------------
 library(BETS)
 
 my_id <- 3785:3791
@@ -255,7 +227,7 @@ glimpse(l_out[[1]])
 #' 
 #' Now, if we want to structure all imported table
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 my_countries <- c("Germany", "Canada", "United States", 
                   "France",  "Italy", "Japan", 
                   "United Kingdom")
@@ -265,7 +237,7 @@ my_countries <- c("Germany", "Canada", "United States",
 #' 
 #' Going further, we now create a function that wi
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 clean_bets <- function(df_in, country_in) {
   # function for cleaning data from BETS
   #
@@ -284,7 +256,7 @@ clean_bets <- function(df_in, country_in) {
 #' 
 #' The next step is to use the previous function t
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(purrr)
 
 # set args
@@ -300,7 +272,7 @@ glimpse(l_out_formatted[[1]])
 #' 
 #' From the output of `glimpse` we see that the co
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # bind all rows of dataframes in list
 df_unemp <- bind_rows(l_out_formatted)
 
@@ -315,30 +287,30 @@ glimpse(df_unemp)
 #' 
 #' A recurrent issue in data analysis is handling 
 #' 
-#' So, because we want to visualize the destructiv
+#' Now, to visualize the destructive effect of an 
 #' 
 #' The next example might be challenging if it is 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set seed for reproducibility
-set.seed(100)
+set.seed(5)
 
 # set options
-nT <- 100
+nT <- 50
 sim_x <- rnorm(nT)
-my_beta <- 0.5
+my_beta <- 1
 
 # simulate x and y
 sim_y <- sim_x*my_beta + rnorm(nT)
 sim_y_with_outlier <- sim_y
 
 # simulate y with outlier
-sim_y_with_outlier[10] <- 50
+sim_y_with_outlier[10] <- 100
 
 #' 
 #' Objects `sim_y` and `sim_y_with_outlier` are ex
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(texreg)
 
 # estimate models
@@ -351,13 +323,11 @@ screenreg(list(model_no_outlier,
           custom.model.names = c('No Outlier', 'With Outlier'))
 
 #' 
-#' Here we report the models with the `texreg` pac
-#' 
 #' Notice from the estimation table that the slope
 #' 
 #' One way to accomplish this is to identify poten
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # find the value of vector that sets the 95% quantile
 quantile95 <- quantile(x = abs(sim_y_with_outlier),
                        probs = 0.95)
@@ -367,7 +337,7 @@ print(quantile95)
 #' 
 #' Here, the value of `r quantile95` is higher tha
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # find cases higher than 95% quantile
 idx <- which(sim_y_with_outlier > quantile95)
 print(sim_y_with_outlier[idx])
@@ -377,7 +347,7 @@ print(sim_y_with_outlier[idx])
 #' 
 #' Finally, we need to treat outliers. We can eith
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # copy content
 sim_y_without_outlier <- sim_y_with_outlier
 
@@ -390,7 +360,7 @@ sim_y_without_outlier <- sim_y_without_outlier[-idx]
 #' 
 #' An alternative for identifying extreme values i
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## library(outliers)
 ## 
 ## # find outlier
@@ -406,13 +376,13 @@ sim_y_without_outlier <- sim_y_without_outlier[-idx]
 #' As expected, it correctly identified the outlie
 #' 
 #' 
-#' ### Treating Outliers in `dataframes`
+#' ### Treating Outliers in `dataframes` {#outlier
 #' 
 #' Let's go a bit deeper. In a real data analysis 
 #' 
 #' The first step is to define a function that acc
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 replace_outliers <- function(col_in, my_prob = 0.05) {
   # Replaces outliers from a vector and returns a new
   # vector
@@ -441,17 +411,20 @@ replace_outliers <- function(col_in, my_prob = 0.05) {
 #' 
 #' Let's test it:
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set test vector
-my_x <- runif(25)
+my_x <- runif(15)
+
+# artificially set outliers
+my_x[5] <- max(my_x)*5
 
 # find and replace outliers
 print(replace_outliers(my_x, my_prob = 0.05))
 
 #' 
-#' As we can see, it performed correctly. The outp
+#' As we can see, it performed correctly, replacin
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(wakefield)
 library(tidyverse)
 
@@ -472,7 +445,7 @@ glimpse(my_df)
 #' 
 #' Now, let's use `purrr::map` to iterate all elem
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(purrr)
 
 # remove outlivers from vectors
@@ -481,9 +454,9 @@ l_out <- map(my_df, replace_outliers)
 #' 
 #' Next, we regroup all vectors into a single data
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # rebuild dataframe
-my_df_no_outlier <- as_tibble(l_out)
+my_df_no_outlier <- bind_rows(l_out)
 
 # check it
 glimpse(my_df_no_outlier)
@@ -496,7 +469,7 @@ summary(my_df_no_outlier)
 #' 
 #' For last, we remove all rows with outliers usin
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # remove outliers
 my_df_no_outlier <- na.omit(my_df_no_outlier)
 
@@ -512,14 +485,14 @@ glimpse(my_df_no_outlier)
 #' 
 #' To offset the effect of inflation on price data
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(GetQuandlData)
 library(tidyverse)
 
 # set api (you need your OWN from www.quandl.com)
 my_api_key <- readLines(
   '~/Dropbox/98-pass_and_bash/.quandl_api.txt'
-  )
+)
 
 # set symbol and dates
 my_symbol <- 'RATEINF/INFLATION_USA'
@@ -542,7 +515,7 @@ glimpse(df_inflation)
 #' 
 #' Now, let's create a random dataframe with rando
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 n_T <- nrow(df_inflation)
 
 # create df with prices
@@ -556,7 +529,7 @@ glimpse(my_df)
 #' 
 #' The first step is to create a deflator index ba
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # accumulate: R_a = cumprod(r_t + 1)
 my_df$infl_idx <- cumprod(df_inflation$value/100 +1)
 
@@ -566,14 +539,14 @@ my_df$infl_idx <- my_df$infl_idx/my_df$infl_idx[nrow(my_df)]
 #' 
 #' And now we create the new variables:
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 my_df$x_desinflated <- my_df$x*my_df$infl_idx
 my_df$y_desinflated <- my_df$y*my_df$infl_idx
 
 glimpse(my_df)
 
 #' 
-#' Done. Following the previous example, we could 
+#' Done. We now have two new columns with desinfla
 #' 
 #' 
 #' ## Modifying Time Frequency and Aggregating Dat
@@ -582,18 +555,18 @@ glimpse(my_df)
 #' 
 #' Let's start with an example with the SP500 inde
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## ---- message=FALSE-------------------------------------------------------------------------------------------------
 library(BatchGetSymbols)
 
 df_SP500 <- BatchGetSymbols(tickers = '^GSPC',
                             first.date = '2010-01-01',
                             freq.data = 'daily',
-                            last.date = '2018-01-01')[[2]]
+                            last.date = '2021-01-01')[[2]]
 
 #' 
 #' Every time-frequency operation from higher to l
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # from daily to annual
 df_SP500_annual <- df_SP500 %>%
   mutate(ref_year = lubridate::year(ref.date)) %>%
@@ -604,53 +577,13 @@ df_SP500_annual <- df_SP500 %>%
 glimpse(df_SP500_annual)
 
 #' 
-#' We will create a new column with the years, gro
+#' For the previous chunk of code, we created a ne
 #' 
 #' 
 #' ## Exercises
 #' 
-#' 01. Consider the following `dataframe`:
-#' 
-## ------------------------------------------------------------------------------------------------------------
-library(tidyverse)
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter09-Cleaning-and-Structuring/', 
+                   full.names = TRUE)
 
-my_N <- 100
-
-df <- bind_rows(tibble(ticker = rep('STOCK 1', my_N),
-                       ref_date = Sys.Date() + 1:my_N,
-                       price = 100 + cumsum(rnorm(my_N))),
-                tibble(ticker = rep('STOCK 2', my_N),
-                       ref_date = Sys.Date() + 1:my_N,
-                       price = 100 + cumsum(rnorm(my_N))) )
-
-print(df)
-
-#' 
-#' The format is long or wide? Explain your answer
-#' 
-#' 02. Modify the format of the previous dataframe
-#' 
-#' 03. Consider the following `list`:
-#' 
-## ------------------------------------------------------------------------------------------------------------
-my_l <- list(df1 = tibble(x = 1:100, 
-                          y = runif(100)),
-             df2 = tibble(x = 1:100, 
-                          y = runif(100), 
-                          v = runif(100)),
-             df3 = tibble(x = 1:100, 
-                          y = runif(100), 
-                          z = runif(100)) )
-
-#' 
-#' Aggregate all elements of `my_l` into a single 
-#' 
-#' 04. Use package `BatchGetSymbols` to download S
-#' 
-#' 05. Use the function created in this chapter fo
-#' 
-#' 06. Use function `BatchGetSymbols::BatchGetSymb
-#' 
-#' 07. Use the same daily data from the previous e
-#' 
-#' 08. CHALLENGE - For the previously downloaded F
+compile_eoc_exercises(f_in, type_doc = my_engine)

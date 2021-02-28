@@ -2,7 +2,7 @@
 #' 
 
 #' 
-#' Surely, the very first step of an R script is g
+#' Surely, the very first step of script is gettin
 #' 
 #' Here we will draw a comprehensive list of file 
 #' 
@@ -15,21 +15,24 @@
 #' 
 #' The first lesson in importing data from local f
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 my_file <- 'C:/My Research/data/SP500_Data.csv'
 
 #' 
 #' Note the use of forwarding slashes (`/`) to des
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 my_file <- 'data/SP500_Data.csv'
 
 #' 
 #' Here, it is assumed that in the current working
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## setwd('C:/My Research')
 ## my_file <- 'data/SP500_Data.csv'
+
+#' 
+## Here, again, I reinforce the use of _tab_ and the _autocomplete_ tool of RStudio. It is much more **easier and practical** to find files on your computer's hard disk using _tab_ navigation than to copy and paste the address from your file explorer. To use it, open double or quotes in RStudio, place the _mouse_ cursor in between the quotes and press _tab_.
 
 #' 
 #' Another very important point here is that **the
@@ -41,11 +44,9 @@ my_file <- 'data/SP500_Data.csv'
 #' 
 
 #' 
-#' Consider the data file called `r basename(my_f)
+#' Consider a data file called `r basename(my_f)`,
 #' 
-#' Here we will use package `afedR` for grabbing t
-#' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## # install devtools dependency
 ## install.packages('devtools')
 ## 
@@ -57,14 +58,16 @@ my_file <- 'data/SP500_Data.csv'
 #' 
 #' Let's copy `r basename(my_f)` to your "My Docum
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
-## my_f <- afedR::afedR_get_data_file('SP500.csv')
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
+## my_f <- afedR::get_data_file('SP500.csv')
 ## file.copy(from = my_f, to = '~' )
 
 #' 
 #' Now, if it is your first time working with _.cs
 #' 
-#' The content of `r basename(my_f)` is very stand
+
+#' 
+#' The content of `r basename(my_f)` is standard a
 #' 
 #' 1) Check the existence of text before the actua
 #' 
@@ -76,7 +79,8 @@ my_file <- 'data/SP500_Data.csv'
 #' 
 #' 5) Check the encoding of the text file. Normall
 #' 
-#' Whenever you find an unexpected text structure 
+## Whenever you find an unexpected text structure in a _.csv_ file, use the arguments of the _csv_ reading function to import the information correctly. As a rule of thumb, **never modify raw .csv data manually**. Its far more efficient to use the R code to deal with different structures of _.csv_ files. It takes a bit of work, but such a policy will save you a lot of time in the future as, in a couple of months, you are unlikely to remember how you manually cleaned that _.csv_ file for your R script.
+
 #' 
 #' 
 #' ### Importing Data
@@ -85,22 +89,22 @@ my_file <- 'data/SP500_Data.csv'
 #' 
 #' This is the first package from the `tidyverse` 
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## install.packages('tidyverse')
 
 #' 
 #' After running the previous code, all `tidyverse
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # load library
 library(tidyverse)
 
 #' 
 #' Back to importing data from _.csv_ files, to lo
 #' 
-## ---- message=TRUE-------------------------------------------------------------------------------------------
+## ---- message=TRUE--------------------------------------------------------------------------------------------------
 # set file to read
-my_f <- afedR::afedR_get_data_file('SP500.csv')
+my_f <- afedR::get_data_file('SP500.csv')
 
 # read file
 my_df_sp500 <- read_csv(my_f)
@@ -109,18 +113,18 @@ my_df_sp500 <- read_csv(my_f)
 print(head(my_df_sp500))
 
 #' 
-#' The contents of the imported file are set as a 
+#' The contents of the imported file becomes a `da
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # Check the content of dataframe
 glimpse(my_df_sp500)
 
 #' 
-#' Note that the column of dates (`date`) was impo
+#' Note that the column of dates -- `ref.date` -- 
 #' 
 #' Notice how the previous code presented a messag
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set cols from import message
 my_cols <- cols(ref.date = col_date(),
                 price.close = col_character() ) 
@@ -131,7 +135,7 @@ my_df_sp500 <- read_csv(my_f, col_types = my_cols)
 #' 
 #' As an exercise, Let's import the same data, but
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set cols from import message
 my_cols <- cols(ref.date = col_character(),
                 price.close = col_character() ) 
@@ -147,7 +151,7 @@ glimpse(my_df_sp500)
 #' 
 #' There is also a simpler way of using the classe
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # read file with readr::read_csv
 my_df_sp500 <- read_csv(my_f, 
                         col_types = cols())
@@ -163,14 +167,56 @@ glimpse(my_df_sp500)
 #' - skip _n_ lines before importation (`skip` opt
 #' - custom definition for NA values (`na` option)
 #' 
-#' among many other possibilities. Package `readr`
+#' Now, let's study a more abnormal case of _.csv_
+#' 
+#' - the header has textual information;
+#' - the file will use the comma as a decimal;
+#' - the file text will contain Latin characters.
+#' 
+#' The first 5 lines of the files contain the foll
+#' 
+## ---- echo=FALSE----------------------------------------------------------------------------------------------------
+my_f <- afedR::get_data_file('funky_csv_file.csv')
+
+message(paste0(read_lines(my_f, 
+                          n_max = 5), 
+               collapse = '\n'))
+
+#' 
+#' He ave a header text up to line number 7 and th
+#' 
+#' 
+## -------------------------------------------------------------------------------------------------------------------
+my_f <- adfeR::get_data_file('funky_csv_file.csv')
+
+df_funky <- read_csv(my_f, 
+                     col_types = cols())
+
+glimpse(df_funky)
+
+#' 
+#' Clearly something went wrong, with the issue of
+#' 
+## -------------------------------------------------------------------------------------------------------------------
+df_not_funky <- read_delim(
+        file = my_f, 
+        skip = 7, # how many lines do skip
+        delim = ';', # column separator
+        col_types = cols(), # column types
+        locale = locale(decimal_mark = ',')# locale
+)
+
+glimpse(df_not_funky)
+
+#' 
+#' Note that the data has now been correctly impor
 #' 
 #' 
 #' ### Exporting Data
 #' 
 #' To write a _.csv_ file, use the `readr::write_c
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set the number of rows
 N <- 100
 
@@ -184,19 +230,18 @@ print(head(my_df))
 #' 
 #' And now we use `write_csv` to save it in a new 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set file out
 f_out <- 'data/temp.csv'
 
 # write to files
 write_csv(x = my_df,  
-          path = f_out)
+          file = f_out)
 
 #' 
 #' In the previous example, we save the object `my
 #' 
-#' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # read it
 my_df_imported <- read_csv(f_out)
 
@@ -222,11 +267,11 @@ print(head(my_df_imported))
 #' 
 #' In this section, we will give priority to packa
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(readxl)
 
 # set excel file
-my_f <- afedR::afedR_get_data_file('SP500_Excel.xlsx')
+my_f <- afedR::get_data_file('SP500_Excel.xlsx')
 
 # read excel file 
 my_df <- read_excel(my_f, sheet = 'Sheet1')
@@ -247,7 +292,7 @@ print(head(my_df))
 #' 
 #' An example of `xlsx` usage is given next: \inde
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(xlsx)
 
 # create dataframe
@@ -263,7 +308,7 @@ write.xlsx(x = my_df, file = f_out, sheetName = "my df")
 #' 
 #' If you want to save several `dataframes` into s
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 # create two dataframes
 N <- 25
 my_df_A <- data.frame(y = seq(1, N), 
@@ -289,7 +334,7 @@ write.xlsx(x = my_df_B,
 #' 
 #' As for package `writexl`, its innovation is tha
 #' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------------------------
 ## library(writexl)
 ## # set number of rows
 ## N <- 25
@@ -304,7 +349,7 @@ write.xlsx(x = my_df_B,
 #' 
 #' In order to compare writing performance, let's 
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(writexl)
 library(readxl)
 library(xlsx)
@@ -335,7 +380,7 @@ time_read_xlsx <- system.time(read.xlsx(file = my_file_2,
 #' 
 #' And now we show the results:
 #' 
-## ---- results='hold'-----------------------------------------------------------------------------------------
+## ---- results='hold'------------------------------------------------------------------------------------------------
 # results
 my_formats <- c('xlsx', 'readxl')
 results_read <- c(time_read_xlsx[3], time_read_readxl[3])
@@ -346,13 +391,13 @@ my_text <- paste0('\nTime to WRITE dataframe with ',
                   my_formats, ': ',
                   format(results_write, digits = 4),
                   ' seconds', collapse = '')
-cat(my_text)
+message(my_text)
 
 my_text <- paste0('\nTime to READ dataframe with ',
                   my_formats, ': ',
                   format(results_read, digits = 4),
                   ' seconds', collapse = '')
-cat(my_text)
+message(my_text)
 
 #' 
 #' As we can see, even for low-volume data, a data
@@ -369,7 +414,7 @@ cat(my_text)
 #' 
 #' To create a new _.RData_ file, use the `save` f
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set a object
 my_x <- 1:100
 
@@ -382,7 +427,7 @@ save(list = c('my_x'), file = my_file)
 #' 
 #' We can verify the existence of the file with th
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # check if file exists
 file.exists(my_file)
 
@@ -391,24 +436,25 @@ file.exists(my_file)
 #' 
 #' Importing data from `.rds` files is very simila
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set file path
 my_file <- 'data/temp.rds'
 
 # load content into workspace
-my_y <- read_rds(path = my_file)
+my_y <- read_rds(file = my_file)
 
 #' 
 #' Comparing the code between using `.RData` and `
 #' 
-#' As a suggestion, give preference to the _.rds_ 
+## As a suggestion, give preference to the _.rds_ format, which is more practical, resulting in cleaner code. The difference in speed between one and the other is minimal. The benefit of importing multiple objects into the same `RData` format file becomes irrelevant when using `list` objects, which can incorporate other objects into its content.
+
 #' 
 #' 
 #' ### Exporting Data
 #' 
 #' We can create a new _RData_ file with command `
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set vars
 my_x <- 1:100
 my_y <- 1:100
@@ -421,7 +467,7 @@ save(list = c('my_x', 'my_y'),
 #' 
 #' We can check if the file exists with function `
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 file.exists(my_file)
 
 #' 
@@ -429,17 +475,17 @@ file.exists(my_file)
 #' 
 #' As for _.rds_ files, we save it with function `
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set data and file
 my_x <- 1:100
 my_file <- 'data/temp.rds'
 
 # save as .rds
 write_rds(x = my_x,
-          path = my_file)
+          file = my_file)
 
 # read it
-my_x2 <- read_rds(path = my_file)
+my_x2 <- read_rds(file = my_file)
 
 # test equality
 print(identical(my_x, my_x2))
@@ -455,13 +501,13 @@ print(identical(my_x, my_x2))
 #' 
 #' ### Importing Data
 #' 
-#' Using _fst_ file is very simple and similar to 
+#' Using _fst_ file format is similar to the previ
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(fst)
 
 # set file location
-my_file <- afedR::afedR_get_data_file('temp.fst')
+my_file <- afedR::get_data_file('temp.fst')
 
 # read fst file
 my_df <- read_fst(my_file)
@@ -477,7 +523,7 @@ glimpse(my_df)
 #' 
 #' We use function `fst::write_fst` to save datafr
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(fst)
 
 # create dataframe
@@ -494,7 +540,7 @@ write_fst(x = my_df, path = my_file)
 #' 
 #' As a test of the potential of the `fst` format,
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(fst)
 
 # set number of rows
@@ -523,7 +569,7 @@ file_size_fst <- file.size(my_file_2)/1000000
 #' 
 #' And now we check the results:
 #' 
-## ---- results='hold'-----------------------------------------------------------------------------------------
+## ---- results='hold'------------------------------------------------------------------------------------------------
 # results
 my_formats <- c('.rds', '.fst')
 results_read <- c(time_read_rds[3], time_read_fst[3])
@@ -534,21 +580,24 @@ results_file_size <- c(file_size_rds , file_size_fst)
 my_text <- paste0('\nTime to WRITE dataframe with ',
                   my_formats, ': ',
                   results_write, ' seconds', collapse = '')
-cat(my_text)
+message(my_text)
 
 my_text <- paste0('\nTime to READ dataframe with ',
                   my_formats, ': ',
                   results_read, ' seconds', collapse = '')
-cat(my_text)
+message(my_text)
 
 my_text <- paste0('\nResulting FILE SIZE for ',
                   my_formats, ': ',
                   results_file_size, ' MBs', collapse = '')
-cat(my_text)
+message(my_text)
 
 
 #' 
 #' The difference is very impressive! The `fst` no
+#' 
+## Due to the use of all the computer's cores, the _fst_ format is highly recommended when working with large data on a powerful computer. Not only will the resulting files be smaller, but the writing and reading process will be considerably faster.
+
 #' 
 #' 
 #' ## SQLite Files
@@ -564,11 +613,11 @@ cat(my_text)
 #' 
 #' Assuming the existence of an SQLite file in the
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 library(RSQLite)
 
 # set name of SQLITE file
-f_sqlite <- afedR::afedR_get_data_file('SQLite_db.SQLITE')
+f_sqlite <- afedR::get_data_file('SQLite_db.SQLITE')
 
 # open connection
 my_con <- dbConnect(drv = SQLite(), f_sqlite)
@@ -581,11 +630,11 @@ my_df <- dbReadTable(conn = my_con,
 glimpse(my_df)
 
 #' 
-#' It worked. The `dataframe` from the table `MyTa
+#' It worked. The `dataframe` from table `MyTable1
 #' 
 #' Another example of using SQLite is with the act
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set sql statement
 my_SQL_statement <- "select * from myTable2 where G='A'"
 
@@ -611,7 +660,7 @@ print(str(my_df_A))
 #' 
 
 #' 
-## ---- tidy=FALSE---------------------------------------------------------------------------------------------
+## ---- tidy=FALSE----------------------------------------------------------------------------------------------------
 library(RSQLite)
 
 # set number of rows in df
@@ -651,16 +700,16 @@ dbDisconnect(my_con)
 #' 
 #' The previous packages and functions are suffici
 #' 
-#' Another example is the case of unstructured dat
+#' Another example is the case of importing data f
 #' 
 #' 
 #' ### Importing Data
 #' 
 #' You can read the contents of a text file with f
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set file to read
-my_f <- afedR::afedR_get_data_file('pride_and_prejudice.txt')
+my_f <- afedR::get_data_file('pride_and_prejudice.txt')
 
 # read file line by line
 my_txt <- read_lines(my_f)
@@ -673,7 +722,7 @@ print(str_sub(string = my_txt[1:15],
 #' 
 #' In this example, file `r basename(my_f)` contai
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # count number of lines
 n_lines <- length(my_txt)
 
@@ -702,7 +751,7 @@ my_msg <- paste0('The number of lines found in the file is ',
                  n_lines, '.\n',
                  'The word "', name_to_search, '" appears ', 
                  n_times, ' in the book.')
-cat(my_msg)
+message(my_msg)
 
 #' 
 #' In the example, we once again used `sapply`. In
@@ -712,7 +761,7 @@ cat(my_msg)
 #' 
 #' A typical case of exporting unstructured text i
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 # set file
 my_f <- 'data/temp.txt'
 
@@ -721,12 +770,12 @@ my_text <- paste0('Today is ', Sys.Date(), '\n',
                   'Tomorrow is ', Sys.Date()+1)
 
 # save string to file
-write_lines(x = my_text, path = my_f, append = FALSE)
+write_lines(x = my_text, file = my_f, append = FALSE)
 
 #' 
 #' In the previous example, we created a simple te
 #' 
-## ------------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------------------------
 print(read_lines(my_f))
 
 #' 
@@ -737,39 +786,19 @@ print(read_lines(my_f))
 #' 
 #' The choice of file format is an important topic
 #' 
-#' - speed of reading and write operations;
+#' - speed of reading and writing operations;
 #' - size of the resulting file;
 #' - compatibility with other software and operati
 #' 
 #' Usually, the use of _csv_ files easily satisfie
 #' 
-#' In the specific case of working with bulky tabl
+#' However, there are cases where the execution sp
 #' 
 #' 
 #' ## Exercises {#exerc-importacao-exportacao}
 #' 
-#' 01. Create a dataframe with the following code:
-#' 
-## ---- eval=FALSE---------------------------------------------------------------------------------------------
-## my_N <- 10000
-## my_df <- data.frame(x = 1:my_N,
-##                     y = runif(my_N))
+## ---- echo=FALSE, results='asis'------------------------------------------------------------------------------------
+f_in <- list.files('../02-EOCE-Rmd/Chapter04-Import-Local/', 
+                   full.names = TRUE)
 
-#' 
-#' Export the resulting dataframe to each of the f
-#' 
-#' Which format took more computer space? Tip: You
-#' 
-#' 02. Improve the previous code by measuring the 
-#' 
-#' 03. Within the previous code, change the value 
-#' 
-#' 04. Using functions `afedR::afedR_get_data_file
-#' 
-#' 05. At link [https://eeecon.uibk.ac.at/~zeileis
-#' 
-#' 06. **CHALLENGE** - In the following link:
-#' 
-#' [https://perso.telecom-paristech.fr/eagan/class
-#' 
-#' you can find data about all baby names in Franc
+compile_eoc_exercises(f_in, type_doc = my_engine)

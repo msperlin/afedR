@@ -1,0 +1,49 @@
+```{r solution, echo = FALSE, results = "hide"}
+total_shares <- 100
+price_purchase <- 15
+
+total_purchase_value <- total_shares*price_purchase
+
+qtd_sell_1 <- 30
+price_sell_1 <- 18
+total_sell_1 <- qtd_sell_1*18
+
+qtd_sell_2 <- total_shares-qtd_sell_1
+price_sell_2 <- 22
+total_sell_2 <- qtd_sell_2*price_sell_2
+
+total_sell_value <- total_sell_1 + total_sell_2
+
+# solution
+my_sol <- total_sell_value - total_purchase_value
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol, is_cash = TRUE)
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Let's assume that, on a certain date, you bought `r total_shares` shares in a company, paying `price_purchase` per share. After some time, you sold `r qtd_sell_1` shares for a `r price_sell_1` each and the remaining `r qtd_sell_2` shares were sold for `r price_sell_2` on a later day. Using a _script_ in R, structure this financial problem by creating numeric objects. What is the total gross profit from this sequence of transactions on the stock market?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "numeric 01"
+exshuffle: TRUE
+

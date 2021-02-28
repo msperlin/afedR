@@ -1,0 +1,57 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(ggplot2)
+
+tickers <- c('AAPL', 
+             'MSFT',
+             'AMZN',
+             'GOOG') 
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = Sys.Date() - 500,
+                             last.date = Sys.Date())[[2]]
+
+p <- ggplot(df_stocks, aes(x = ref.date, 
+                           y = price.adjusted,
+                           color = ticker)) + 
+  geom_line() + 
+  labs(title = paste0('Prices for ', tickers) ,
+       subtitle = paste0('Data from ', min(df_stocks$ref.date), ' to ', 
+                         max(df_stocks$ref.date)),
+       caption = "Solution for exercise 02, chapter 10 - afedR")
+
+print(p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Download stock data for:
+
+- APPLE INC. (AAPL)
+- MICROSOFT CORPORATION	(MSFT)
+- AMAZON.COM, INC.	(AMZN)
+- ALPHABET INC. (GOOG)
+  
+using the `BatchGetSymbols` package for the last 1500 days. Display stock prices with different line colors on the same graph. Adapt all other aspects of the graph from previous exercises such as title and axis labels.
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

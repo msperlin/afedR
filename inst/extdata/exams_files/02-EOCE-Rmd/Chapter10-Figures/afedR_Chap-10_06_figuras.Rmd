@@ -1,0 +1,49 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+
+tickers <- c('AAPL', 
+             'MSFT',
+             'AMZN',
+             'GOOG') 
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = Sys.Date() - 500,
+                             last.date = Sys.Date())[[2]]
+
+p <- ggplot(df_stocks, aes(x = ret.adjusted.prices)) + 
+  geom_histogram() + 
+  facet_wrap(~ticker)
+
+print(p)
+
+# save in temp folder
+my_file <- file.path(tempdir(), 'histograms.png')
+ggsave(filename = my_file, plot = p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+For the previous data, present the histogram of the returns of the different stocks in different panels and save the result in a file called `'histograms.png'`.
+
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

@@ -1,0 +1,73 @@
+```{r solution, echo = FALSE, results = "hide"}
+library(BatchGetSymbols)
+
+first_date <- '2019-01-01'
+last_date  <- '2020-01-01'
+
+my_tickers <- c('AAPL', 'BAC', 
+                'GE', 'TSLA',
+                'SNAP')
+	
+df_prices <- BatchGetSymbols(tickers = my_tickers, 
+                             first.date = first_date, 
+                             last.date = last_date)[[2]]
+
+split_l <- split(df_prices, df_prices$ticker)
+
+my_fct <- function(df_in) {
+  price_vec <- df_in$price.adjusted
+  ticker_in <- df_in$ticker[1]
+  
+  total_ret <- last(price_vec)/first(price_vec) - 1
+  
+  return(tibble(ticker = ticker_in,
+                total_ret = total_ret))
+}
+
+df_results <- bind_rows(
+  lapply(split_l, my_fct)
+)
+
+winner <- df_results$ticker[which.max(df_results$total_ret)]
+
+my_sol <- winner
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- afedR::make_random_answers(my_sol, candidates = unique(df_results$ticker))
+```
+
+Question
+========
+
+Using again the `BatchGetSymbols` package, download data between `r first_date` and `r last_date` for the following tickers:
+
+- AAPL: Apple Inc
+- BAC:	Bank of America Corporation
+- GE:	General Electric Company
+- TSLA:	Tesla, Inc.
+- SNAP:	Snap Inc.
+
+Using the **adjusted closing price** column, what company provided higher return to the stock holder during the analyzed period? 
+
+Tip: this is an advanced exercise that will require some coding. To solve it, check out function `split` to split the dataframe of price data and `lapply` to map a function to each dataframe.
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "batchgetsymbols 2"
+exshuffle: TRUE
+

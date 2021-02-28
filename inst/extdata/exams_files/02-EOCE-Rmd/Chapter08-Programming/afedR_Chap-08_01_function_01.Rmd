@@ -1,0 +1,45 @@
+```{r solution, echo = FALSE, eval=FALSE, results = "hide", message=FALSE}
+say_my_name <- function(name_in) {
+  # Print a single name in the prompt
+  #
+  # ARGS: name_in - Name to be printed
+  #
+  # RETURNS: TRUE, if sucessfull
+  
+  my_msg <- paste0('Your name is ', name_in)
+  
+  message(my_msg)
+  
+  # invisible will omit output if function is called without definition of output
+  return(invisible(TRUE))
+}
+
+# testing
+say_my_name('Marcelo')
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Create a function called `say_my_name` that takes a person's name as input and shows the text _Your name is ..._ on the screen. Within the scope of the function, use comments to describe the purpose of the function, its inputs and outputs.
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

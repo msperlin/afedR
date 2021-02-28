@@ -1,0 +1,25 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no data generation
+
+```
+
+Question
+========
+
+Once you have R and RStudio installed, head over to the [CRAN package website](https://cloud.r-project.org/web/packages/available_packages_by_date.html)^[https: //cloud.r- project.org/web/packages/available_packages_by_date.html] and look for technologies you use in your work. For example, if you use [Google Sheets](https://www.google.com/sheets/about/)^[https://www.google.com/sheets/about/] ostensibly in your work, you will soon discover that there is a package in CRAN that interacts with spreadsheets in the cloud.
+
+
+Solution
+================
+
+1) Browse [CRAN package website](https://cloud.r-project.org/web/packages/available_packages_by_date.html)
+2) Search for technologies you use in your work (Excel, Word, Google Docs, ...)
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "Tecnologies RStudio"
+exshuffle: TRUE
+

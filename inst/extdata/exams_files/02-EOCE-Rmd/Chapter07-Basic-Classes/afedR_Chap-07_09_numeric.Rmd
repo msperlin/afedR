@@ -1,0 +1,41 @@
+```{r solution, echo = FALSE, results = "hide", warning=FALSE}
+set.seed(10)
+x <- rnorm(n = 1000, mean = 10, sd = 10)
+
+my_group <- cut(x, 
+                breaks = c(-Inf, 15, Inf))
+
+# solution
+my_sol <- table(my_group)[1]
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol)
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Using `set.seed (10)`, create an object called `x` with random values from the Normal distribution with a mean of 10 and standard deviation of 10. Using the `cut` function, create another object that defines two groups based on values of `x` greater than 15 and lower than 15. How many observations you find in the first group?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: num
+exsolution: `r my_sol`
+exname: "numeric "
+exshuffle: TRUE
+

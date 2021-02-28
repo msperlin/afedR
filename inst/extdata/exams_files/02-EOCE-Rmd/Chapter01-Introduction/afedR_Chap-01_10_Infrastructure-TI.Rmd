@@ -1,0 +1,24 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+If you work in an institution with data infrastructure, talk to the person in charge of the IT department and verify what technologies are used. Check if, through R, it is possible to access all tables in the databases. For now there is no need to write code, yet. Just check if this possibility exists.
+
+
+Solution
+================
+
+At the university we have access to different paid repositories for financial data. Unfortunately, none of them offers any type of API for communicating with R. In fact, this was one of the motivators for writing R packages for free access to financial data. 
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "Infrastructure TI"
+exshuffle: TRUE
+

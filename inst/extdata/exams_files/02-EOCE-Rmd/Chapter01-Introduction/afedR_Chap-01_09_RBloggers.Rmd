@@ -1,0 +1,35 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('Encontrei os artigos!', 
+                'Ainda não fui',
+                'Talvez..',
+                'Não irei!',
+                'TLDR')
+
+check_answers(my_answers)
+```
+
+Question
+========
+
+Go to the [RBloggers website](https://www.r-bloggers.com/)^[https://www.r-bloggers.com/] and look for a topic of interest to you, such as football (_soccer_) or investments (_investments_). Read at least three of the found blog posts.
+
+
+Solution
+================
+
+I am particularly passionate about the sport of tennis. On the RBloggers website I've found the following articles mixing R and tennis:
+
+[Using R to study the evolution of Tennis](https://www.r-bloggers.com/2017/02/using-r-to-study-the-evolution-of-tennis/)
+
+[Visualizing Tennis Grand Slam Winners Performances](https://www.r-bloggers.com/2017/05/visualizing-tennis-grand-slam-winners-performances/)
+
+[Tennis Grand Slam Tournaments Champions Basic Analysis](https://www.r-bloggers.com/2017/12/tennis-grand-slam-tournaments-champions-basic-analysis/)
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "rbloggers"
+exshuffle: TRUE
+

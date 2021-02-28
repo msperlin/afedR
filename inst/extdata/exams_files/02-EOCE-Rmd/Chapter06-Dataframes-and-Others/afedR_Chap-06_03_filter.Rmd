@@ -1,0 +1,37 @@
+```{r solution, echo = FALSE, results = "hide"}
+my_df <- dplyr::tibble(x = -100:100, 
+                       y = x + 5)
+
+# solution
+library(tidyverse)
+
+my_df2 <- my_df %>%
+  filter(y > 0)
+
+# solution
+my_sol <- nrow(my_df2)
+```
+
+Question
+========
+
+Use function `dplyr::filter` function and the pipeline operator to filter `my_df`, keeping only the rows where the value of the `y` column is greater than 0. What is the number of rows in the resulting table?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+#exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: num
+exsolution: `r my_sol`
+exname: "dataframe basic 03"
+exshuffle: TRUE
+

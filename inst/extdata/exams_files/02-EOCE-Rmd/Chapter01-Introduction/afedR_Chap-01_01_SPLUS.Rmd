@@ -1,0 +1,31 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('S', 
+                'C++',
+                'Python',
+                'Julia',
+                'Javascript')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+The R language was developed based on what other programming language?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+Straight from the book, section **What is R**: "R is a modern version of S, a programming language originally created in Bell Laboratories (formerly AT&T, now Lucent Technologies)."
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "S PLUS"
+exshuffle: TRUE
+

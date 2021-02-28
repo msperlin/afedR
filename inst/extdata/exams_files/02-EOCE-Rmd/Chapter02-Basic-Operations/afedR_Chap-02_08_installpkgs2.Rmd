@@ -1,0 +1,34 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no datageneration
+```
+
+Question
+========
+
+Use the `install.packages` function to install the `BatchGetSymbols` package on your computer. After installation, use function `BatchGetSymbols` to download price data for the IBM stock in the last 15 days. Tips: 1) use function `Sys.Date()` to find out the current date and `Sys.Date()- 15` to calculate the date located 15 days in the past; 2) note that the output of `BatchGetSymbols` is a list -- a special type of object -- and that the price data is located in the second element of that list.
+
+
+
+Solution
+================
+
+
+```{r, eval=FALSE}
+if (!require(BatchGetSymbols)) install.packages('BatchGetSymbols')
+
+l_out <- BatchGetSymbols(tickers = 'IBM',
+                         first.date = Sys.Date() - 15,
+                         last.date = Sys.Date())
+
+df_prices <- l_out[[2]]
+str(df_prices)
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "install pkgs"
+exshuffle: TRUE
+

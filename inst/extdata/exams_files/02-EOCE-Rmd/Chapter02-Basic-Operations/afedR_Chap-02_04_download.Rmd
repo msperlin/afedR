@@ -1,0 +1,32 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+book_site_zip <- "https://www.msperlin.com/blog/static/afedr-files/afedR-code-and-data.zip"
+```
+
+Question
+========
+
+Use R to download the compressed zip file with the book material, available at this [link](`r book_site_zip`)^[`r book_site_zip`]. Save it as a file in the temporary session folder (see function `tempfile`).
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+local_file <- tempfile(fileext = '.zip')
+my_url <- 'https://www.msperlin.com/blog/files/pafdr%20files/Code_Data_pafdR.zip'
+
+download.file(url = my_url, 
+              destfile = local_file)
+
+# check if exists
+file.exists(local_file)
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "getwd"
+exshuffle: TRUE
+

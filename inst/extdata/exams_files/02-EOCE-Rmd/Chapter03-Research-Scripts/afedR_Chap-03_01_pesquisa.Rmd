@@ -1,0 +1,37 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('S+', 
+                'C++',
+                'Python',
+                'Matlab',
+                'Javascript')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Imagine a survey involving analyzing your household budget over time. Data are available in electronic spreadsheets separated by month, for 10 years. The objective of the research is to understand if it is possible to purchase a real state property in the next five years. Within this setup, detail in text the elements in each stage of the study, from importing the data to the construction of the report.
+
+
+Solution
+================
+
+The possible stages of the study are:
+
+1) Importing 01: Import all data related to income and family budget, rate of return on investments - fixed income or stocks - and historical property prices in the desired locations;
+
+2) Cleaning 01: Clean the data for outliers and missing data (NA);
+
+3) Manipulation 01: Use personal income data to find the need for monthly savings for each year.
+
+4) Manipulation 02: Based on the historical returns of investments and the inflation of the property, check how many years it takes to save the amount of money needed to buy the property.
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "folders"
+exshuffle: TRUE
+

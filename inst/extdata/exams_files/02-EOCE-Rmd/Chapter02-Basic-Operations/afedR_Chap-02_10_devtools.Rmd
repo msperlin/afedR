@@ -1,0 +1,31 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no datageneration
+
+```
+
+Question
+========
+
+Using the `devtools` package, install the development version of the `ggplot2` package, available in the [Hadley Hickman repository](https://github.com/hadley). Load the package using `library` and create a simple figure with the code `qplot(y = rnorm(10), x = 1:10)`.
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+if (!require(devtools)) install.packages("devtools")
+
+devtools::install_github('hadley/ggplot2')
+
+library(ggplot2)
+qplot(y = rnorm (10), x = 1:10)
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "install pkgs"
+exshuffle: TRUE
+

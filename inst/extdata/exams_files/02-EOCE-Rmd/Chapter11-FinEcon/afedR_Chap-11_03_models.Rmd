@@ -1,0 +1,59 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=TRUE}
+set.seed(5)
+
+# number of obs
+n_row <- 1000
+
+# set x as Normal (0, 1)
+x <- rnorm(n_row)
+
+# set coefficients
+my_alpha <- 1.5
+my_beta <- 0.5
+
+# build y
+y <- my_alpha + my_beta*x + rnorm(n_row)
+
+library(tidyverse)
+
+my_lm <- lm(formula = y ~ x, data = tibble(x, y))
+
+summary(my_lm)
+
+library(gvlma)
+
+# global validation of model
+gvmodel <- gvlma(my_lm) 
+
+# print result
+summary(gvmodel)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+```
+
+Question
+========
+
+Use the `gvlma` package to test the OLS assumptions for the model previously estimated. Does the model pass all tests? If not, increase the value of `n_row` to 1000 and try again. Did the increase in the number of observations of the model impact the assumptions test? In what way?
+
+
+Solution
+================
+
+The estimated model has not passed all the tests. In fact, not even the increase in the number of observations in the simulation resulted in the approval of the model in all aspects.
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

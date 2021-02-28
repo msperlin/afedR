@@ -1,0 +1,77 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(tidyverse)
+
+tickers <- GetSP500Stocks()$Tickers
+first_date <- Sys.Date() - 3*365
+last_date  <- Sys.Date()
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = first_date, 
+                             last.date = last_date)[[2]]
+
+df_sp500 <- BatchGetSymbols(tickers =  '^GSPC', 
+                            first.date = first_date, 
+                            last.date = last_date)[[2]]
+
+idx <- match(df_stocks$ref.date, df_sp500$ref.date)
+df_stocks$ret_mkt <- df_sp500$ret.closing.prices[idx]
+
+# calculate beta for each stock
+estimate_beta <- function(df) {
+  # Function to estimate beta from dataframe of stocks returns
+  #
+  # Args:
+  #   df - Dataframe with columns ret and ret.sp500
+  #
+  # Returns:
+  #   The value of beta
+  
+  my_model <- lm(data = df, 
+                 formula = ret.adjusted.prices ~ ret_mkt)
+  
+  return(coef(my_model)[2])
+}
+
+my_betas <- by(data = df_stocks, 
+               INDICES = df_stocks$ticker, 
+               FUN = estimate_beta)
+
+glimpse(my_betas)
+
+# solution
+p <- ggplot(tibble(betas = my_betas), aes(x = betas)) + 
+  geom_histogram()
+
+print(p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+
+type_question <- 'string'
+ex_name <- 'models 11 04'
+```
+
+Question
+========
+
+Use the `BatchGetSymbols::GetSP500Stocks` function to download data for all stocks that are part of the current SP500 index for the last three years. Using the SP500 itself -- ticker `'^GSPC'` -- as the market index, calculate the beta for each of the stocks. Display the histogram of the estimated _betas_. Note that the SP500 returns are not available in the original database and must be downloaded and added to the original database.
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: `r type_question`
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: `r ex_name`
+exshuffle: TRUE
+

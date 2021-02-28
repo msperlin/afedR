@@ -1,0 +1,54 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(ggplot2)
+
+tickers <- c('AAPL', 
+             'MSFT',
+             'AMZN',
+             'GOOG') 
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = Sys.Date() - 500,
+                             last.date = Sys.Date())[[2]]
+
+p <- ggplot(df_stocks, aes(x = ref.date, 
+                           y = price.adjusted,
+                           color = ticker)) + 
+  geom_line() + 
+  labs(title = paste0('Prices for ', tickers) ,
+       subtitle = paste0('Data from ', min(df_stocks$ref.date), ' to ', 
+                         max(df_stocks$ref.date)),
+       caption = "Solution for exercise 03, chapter 10 - afedR")
+
+
+# add points
+p <- p + geom_point()
+
+print(p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+For the previous plot, add dots in the lines.
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

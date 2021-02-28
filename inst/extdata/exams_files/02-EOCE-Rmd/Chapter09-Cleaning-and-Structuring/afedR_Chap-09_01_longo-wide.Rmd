@@ -1,0 +1,48 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE}
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Consider the `dataframe` created with the following code:
+
+```{r, eval=FALSE}
+library(tidyverse)
+
+my_N <- 100
+
+df <- bind_rows(tibble(ticker = rep('STOCK 1', my_N),
+                       ref_date = Sys.Date() + 1:my_N,
+                       price = 100 + cumsum(rnorm(my_N))),
+                tibble(ticker = rep('STOCK 2', my_N),
+                       ref_date = Sys.Date() + 1:my_N,
+                       price = 100 + cumsum(rnorm(my_N))) )
+
+print(df)
+```
+
+Is the `dataframe` format long or wide? Explain your answer.
+
+
+Solution
+================
+
+The format is long: we have data stacked for two different stocks. Note that, with the addition of new tickers, the table grows with new lines. New variables can be easily added with new columns.
+
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

@@ -1,0 +1,35 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('Compile R packages locally', 
+                'Compile graphics.',
+                'Make coffee (?).',
+                'Build web pages.',
+                'Compile technical reports.')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+On the [CRAN site](https://cloud.r-project.org/bin/windows/) you can also install the Rtools application. What is it for?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+Rtools is an extension particular to R on Windows. It is used to compile packages from source code and is a requirement for those who develop packages. For the average user, however, it is also recommended to install Rtools as some packages require such compilation.
+
+For Linux/Unix or MacOS users, Rtools is not necessary as, generally, compilers are already available by the operating system itself.
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "rtools"
+exshuffle: TRUE
+

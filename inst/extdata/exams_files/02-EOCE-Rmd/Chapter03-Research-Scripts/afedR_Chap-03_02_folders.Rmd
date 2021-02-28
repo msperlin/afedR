@@ -1,0 +1,64 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('S+', 
+                'C++',
+                'Python',
+                'Matlab',
+                'Javascript')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Based on the study proposed earlier, create a directory structure on your computer to accommodate the study. Create mock files for each subdirectory (see directory structure at section \@ref(directories)). Be aware you can create mock files and direction all in R (see functions `cat` and `dir.create`).
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r, eval=FALSE}
+library(fs)
+
+# set temp dir for solving exercise
+temp_dir <- path(tempdir(), 'Chapter 3 exercise')
+
+# create folder
+dir_create(temp_dir)
+
+# create files
+file_create(path(temp_dir, '01-import_data.R'))
+file_create(path(temp_dir, '02-clean_data.R'))
+file_create(path(temp_dir, '03-build_budget_table.R'))
+file_create(path(temp_dir, '04-build_investment_realstate_table.R'))
+file_create(path(temp_dir, '05-build_report.R'))
+
+# create dirs
+dir_create(path(temp_dir, 'data'))
+dir_create(path(temp_dir, 'tabs'))
+dir_create(path(temp_dir, 'figs'))
+
+# fill with files
+for (i_year in 2009:2019) {
+  file_create(path(temp_dir, 'data', 
+                   paste0('annual_budget_', i_year, '.xlsx')) )
+}
+
+file_create(path(temp_dir, 'data', 'fixed_income_index.csv'))
+file_create(path(temp_dir, 'data', 'real_state_data.rds'))
+file_create(path(temp_dir, 'figs', 'Income_and_HousePrices.png'))
+file_create(path(temp_dir, 'tabs',  'Table_with_Results.xlsx'))
+
+dir_tree(temp_dir)
+```
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "folders"
+exshuffle: TRUE
+

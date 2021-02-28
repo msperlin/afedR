@@ -1,0 +1,72 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=TRUE}
+set.seed(5)
+
+# number of obs
+n_row <- 100
+
+# set x as Normal (0, 1)
+x <- rnorm(n_row)
+
+# set coefficients
+my_alpha <- 1.5
+my_beta <- 0.5
+
+# build y
+y <- my_alpha + my_beta*x + rnorm(n_row)
+
+library(tidyverse)
+
+my_lm <- lm(formula = y ~ x, data = tibble(x, y))
+
+summary(my_lm)
+
+my_sol <- coef(my_lm)[2]
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- make_random_answers(my_sol)
+```
+
+Question
+========
+
+Simulate the following linear process in R:
+
+```{r}
+set.seed(5)
+
+# number of obs
+n_row <- 100
+
+# set x as Normal (0, 1)
+x <- rnorm(n_row)
+
+# set coefficients
+my_alpha <- 1.5
+my_beta <- 0.5
+
+# build y
+y <- my_alpha + my_beta*x + rnorm(n_row)
+```
+
+Now, estimate a linear model where `x` is the explanatory variable and `y` is the explained variable. Use the `summary` function on the estimation return object to get more details about the model. What is the estimated beta value of the simulated data?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

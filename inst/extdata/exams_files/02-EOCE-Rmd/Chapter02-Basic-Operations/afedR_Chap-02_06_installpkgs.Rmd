@@ -1,0 +1,30 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no datageneration
+```
+
+Question
+========
+
+Every time the user installs an R package, all package files are stored locally in a specific directory of the hard disk. Using command `Sys.getenv('R_LIBS_USER')` and `list.dirs`, list all the directories in this folder. How many packages are available in this folder on your computer?
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+r_pkg_folder <- Sys.getenv('R_LIBS_USER')
+
+available_dirs <- list.dirs(r_pkg_folder, recursive = FALSE)
+n_dirs <- length(available_dirs)
+
+cat(paste0('There are ', n_dirs, ' folders available  at "', r_pkg_folder, '".'))
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "install pkgs"
+exshuffle: TRUE
+

@@ -1,0 +1,32 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('It was designed for analyzing data and producing statistical output', 
+                'Easy to use',
+                'Quick code execution',
+                'Makes it easy to write mobile apps',
+                'Works on any plataform such as Windows, Unix, MacOS')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Why is R special when comparing to other programming languages, such as Python, C++, javascript and others?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+Undoubtedly, the main differential of the R language is the ease with which data can be analyzed on the platform. Although other languages also allow data analysis, it is in R where this process is supported by a wide range of specialized packages.
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "about R"
+exshuffle: TRUE
+

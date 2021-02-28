@@ -1,0 +1,29 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no data generation
+
+```
+
+Question
+========
+
+In RStudio, create a new _script_ and save it in a personal folder. Now, write R commands in the script that define two objects: one holding a sequence between 1 and 100 and the other with the text of your name (ex. 'Richard'). Execute the whole script with the keyboard shortcuts.
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+x <- 1:100
+y <- 'Richard'
+
+# press control+shift+enter to run this chunk of code in RStudio
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "Basic"
+exshuffle: TRUE
+

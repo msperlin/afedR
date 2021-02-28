@@ -1,0 +1,48 @@
+```{r solution, echo = FALSE, results = "hide", warning=FALSE}
+set.seed(15)
+my_char <- paste(sample(letters, 5000, replace = T), 
+                 collapse = '')
+
+# solution
+my_sol <- str_count(my_char, 'x')
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol)
+
+#check_answers(my_answers)
+```
+
+
+Question
+========
+
+Create the following object with the following code:
+
+```{r}
+set.seed(15)
+my_char <- paste(sample(letters, 5000, replace = T), 
+                 collapse = '')
+```
+
+How many times is the letter `'x'` found in the resulting text object?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: num
+exsolution: `r my_sol`
+exname: "numeric "
+exshuffle: TRUE
+

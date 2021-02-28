@@ -1,0 +1,41 @@
+```{r solution, echo = FALSE, results = "hide"}
+my_file <- afedR::get_data_file('grunfeld.csv')
+
+df_grunfeld <- read_csv(my_file, 
+                        col_types = cols())
+
+# solution
+glimpse(df_grunfeld)
+
+my_sol <- nrow(df_grunfeld)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol)
+
+#check_answers(my_answers)
+```
+
+
+Question
+========
+
+Use functions `afedR::get_data_file` and `readr::read_csv` to import data from the `grunfeld.csv` file. Now, use function `dplyr::glimpse` functions to find out the number of lines in the imported data. What is the number of rows in the imported table?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+Meta-information
+================
+extype: num
+exsolution: `r my_sol`
+exname: "grunfeld"
+exshuffle: TRUE
+

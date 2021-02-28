@@ -1,0 +1,59 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+
+indexes <- c('^BVSP', '^GSPC', '^FTSE', '^N225')
+
+df_indices <- BatchGetSymbols(tickers = indexes, 
+                              first.date = '2010-01-01',
+                              last.date = Sys.Date())[[2]]
+
+tab <- tibble()
+for (index in indexes) {
+  
+  temp_df <- df_indices %>%
+    filter(ticker == index)
+  
+  avg_ret <- mean(temp_df$ret.adjusted.prices, 
+                  na.rm = TRUE)
+  max_ret <- max(temp_df$ret.adjusted.prices, 
+                 na.rm = TRUE)
+  min_ret <- min(temp_df$ret.adjusted.prices, 
+                 na.rm = TRUE)
+  
+  # save result
+  tab <- bind_rows(tab, tibble(index = index,
+                               mean_ret = avg_ret, 
+                               max_ret = max_ret, 
+                               min_ret = min_ret))
+  
+}
+
+print(tab)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(NA, 5)
+
+```
+
+Question
+========
+
+Use the `BatchGetSymbols` package to download data from the SP500 (`'^GSPC'`), Ibovespa (`'^BVSP'`), FTSE (`'^ FSTE'`) and Nikkei 225 (`'^N225'` index)) from '2010-01-01'` to the current date. With the imported data, use a loop to calculate the average, maximum and minimum return for each index during the analyzed period. Save all results in a single table and show it in the _prompt_ of R.
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 05"
+exshuffle: TRUE
+

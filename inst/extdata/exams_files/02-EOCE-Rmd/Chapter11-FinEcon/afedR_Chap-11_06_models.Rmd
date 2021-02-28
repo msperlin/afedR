@@ -1,0 +1,57 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(tidyverse)
+
+tickers <- GetSP500Stocks()$Tickers
+first_date <- Sys.Date() - 3*365
+last_date  <- Sys.Date()
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = first_date, 
+                             last.date = last_date)[[2]]
+
+df_sp500 <- BatchGetSymbols(tickers =  '^GSPC', 
+                            first.date = first_date, 
+                            last.date = last_date)[[2]]
+
+library(dplyr)
+
+my_tab <- df_stocks %>%
+  group_by(ticker) %>%
+  do(my_arima = arima(x = .$ret.adjusted.prices, 
+                      order = c(1,0,0))) %>%
+  mutate(arima_forecast = predict(my_arima, n.ahead = 1 )$pred[1])
+
+glimpse(my_tab)
+
+# solution
+idx <- which.max(my_tab$arima_forecast )
+print(my_tab$ticker[idx])
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+```
+
+Question
+========
+
+Using the tidyverse functions, `dplyr::group_by` and `dplyr::do`, estimate an ARIMA model for the returns of each stock, available from the import process of previous exercise. In the same output dataframe, create a new column with the forecast in _t + 1_ for each model. Which stock has the highest expected return for _t + 1_?
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

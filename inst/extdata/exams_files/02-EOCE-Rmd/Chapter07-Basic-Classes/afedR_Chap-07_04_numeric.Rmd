@@ -1,0 +1,37 @@
+```{r solution, echo = FALSE, results = "hide"}
+seq_2 <- seq(from = 0, 
+             to = 100, 
+             length.out = 1000)
+
+# solution
+my_sol <- sd(seq_2)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol)
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Define another object called `seq_2` containing a sequence of size 1000, with values between 0 and 100. What is the standard deviation (function` sd`) of this sequence?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "numeric "
+exshuffle: TRUE
+

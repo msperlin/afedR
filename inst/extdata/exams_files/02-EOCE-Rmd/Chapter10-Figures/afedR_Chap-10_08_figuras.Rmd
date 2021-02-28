@@ -1,0 +1,31 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Head over to the [Kaggle data website](https://www.kaggle.com/datasets)^[https://www.kaggle.com/datasets] and choose a particular dataset for your analysis. It need not be related to economics or finance. Feel free to make a decision based on your own interests. After downloading the data, create a visual analysis of the data. Fell free to try out one or more plots of interest. 
+
+
+Solution
+================
+
+Head over to [https://www.kaggle.com/datasets](https://www.kaggle.com/datasets):
+
+1) Choose a dataset
+2) Build a visualization plot of the chosen data
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

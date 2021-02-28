@@ -1,0 +1,54 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(tidyverse)
+
+my_f <-  afedR::get_data_file('grunfeld.csv')
+
+df_grunfeld <- read_csv(my_f, col_types = cols())
+
+my_tab <- tibble(nrows = nrow(df_grunfeld),
+                 ncol = ncol(df_grunfeld),
+                 n_companies = length(unique(df_grunfeld$firm)),
+                 n_years = length(unique(df_grunfeld$year)))
+
+my_tab
+
+library(xtable)
+
+# Save to lates
+# save to temp file
+my_tex_file <- tempfile(pattern = 'table', fileext = '.tex')
+print(xtable(my_tab), file = my_tex_file)
+
+readr::read_lines(my_tex_file)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+
+type_question <- 'string'
+ex_name <- 'reporting 12 01'
+```
+
+Question
+========
+
+Observe the data available in the `grunfeld.csv` file. Import the data into R using package `afedR` and create a descriptive table of the variables. This table should provide enough information for the reader to understand the data. Use `xtable` package to report it in _LaTeX_ or Word/Writer format.
+
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: `r type_question`
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: `r ex_name`
+exshuffle: TRUE
+

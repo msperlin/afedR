@@ -1,0 +1,83 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE}
+library(tidyverse)
+library(BatchGetSymbols)
+
+ticker <- '^FTSE'
+
+first_date <- '2010-01-01'
+last_date <- '2021-01-01'
+
+df_FTSE_daily <- BatchGetSymbols(tickers = ticker, 
+                            first.date = first_date,
+                            last.date = last_date)[[2]]
+
+# buy at t, sell at t+30
+trade_window <- 30 
+
+# find largest drops
+largest_drops <- df_FTSE_daily %>%
+  arrange(ret.adjusted.prices) %>%
+  slice(1:20)
+
+# There are many ways to solve the exercise. 
+# Here we will use a loop which is the simplest way to looking at the problem.
+# You could also solve it with the functional approach of package purrrr,
+# that is, writing a function.
+
+tab <- tibble()
+for (i_date in seq_along(largest_drops$ref.date)) {
+  
+  my_date <- largest_drops$ref.date[i_date]
+  # filter data to keep only datapoints in each horizon
+  temp_df <- df_FTSE_daily %>%
+    filter(ref.date >= my_date,
+           ref.date <= my_date + trade_window)
+  
+  
+  buy_price <- first(temp_df$price.adjusted)
+  sell_price <- last(temp_df$price.adjusted)
+  return <- sell_price/buy_price - 1
+  
+  tab <- bind_rows(tab, 
+                   tibble(date = my_date, 
+                          buy_price = buy_price, 
+                          sell_price = sell_price, 
+                          return = return))
+}
+
+print(tab)
+
+# solution
+my_sol <- mean(tab$return)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- afedR::format_percent(as.numeric(
+  afedR::make_random_answers(my_sol))
+)
+```
+
+Question
+========
+
+For the same daily FTSE data, check the dates and prices of the 20 biggest price drops. If, for each of these cases, an investor bought the index at the price of the biggest drops and kept it for 30 days, what would be his average nominal return per transaction?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

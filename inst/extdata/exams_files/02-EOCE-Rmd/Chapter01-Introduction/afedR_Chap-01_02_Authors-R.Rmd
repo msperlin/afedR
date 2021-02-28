@@ -1,0 +1,32 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('Ross Ihaka and Robert Gentleman', 
+                'John Chambers and Robert Engle',
+                'Roger Federer and Rafael Nadal',
+                'Guido van Rossum and Bjarne Stroustrup',
+                'Linus Torvalds and Richard Stallman')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+What are the names of the two authors of R?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+Straight from the book: "... The base code of R was developed by two academics, **Ross Ihaka** and **Robert Gentleman**, resulting in the programming platform we have today.".
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "R authors"
+exshuffle: TRUE
+

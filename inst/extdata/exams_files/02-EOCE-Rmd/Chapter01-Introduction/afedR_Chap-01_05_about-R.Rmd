@@ -1,0 +1,52 @@
+```{r solution, echo = FALSE, results = "hide"}
+library(tidyverse)
+
+text1 <- tibble(text = c ('R is a mature and stable programming platform;',
+                          'R was developed in 2018 and is an innovative and unstable project;'),
+                sol = c (TRUE, FALSE))
+
+text2 <- tibble(text = c ('RStudio is an modern interface to R, increasing productivity;',
+                          'RStudio is an alternative programming language to R;'),
+                sol = c (TRUE, FALSE))
+
+text3 <- tibble(text = c ('R has compatibility with different programming languages;',
+                          'R is not compatible with different programming languages;'),
+                sol = c (TRUE, FALSE))
+
+l <- afedR::build_answers_text(text1,
+                               text2,
+                               text3)
+
+my_answers <- l$my_answers
+my_texts <- l$texts
+```
+
+Question
+========
+
+Consider the following alternatives about R and RStudio:
+
+I - `r my_texts [1]`
+
+II - `r my_texts [2]`
+
+III - `r my_texts [3]`
+
+Which alternatives are correct?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+See section "Why Choose R" in the "Introduction" chapter.
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "S PLUS"
+exshuffle: TRUE
+

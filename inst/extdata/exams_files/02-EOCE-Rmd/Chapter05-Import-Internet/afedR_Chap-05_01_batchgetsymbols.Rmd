@@ -1,0 +1,41 @@
+```{r solution, echo = FALSE, results = "hide"}
+library(BatchGetSymbols)
+
+ticker <- 'FB'
+first_date <- '2019-01-01'
+last_date  <- '2020-01-01'
+
+df_prices <- BatchGetSymbols(tickers = ticker, 
+                             first.date = first_date, 
+                             last.date = last_date)[[2]]
+
+my_sol <- min(df_prices$price.close, 
+              na.rm = TRUE)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+#my_answers <- afedR::make_random_answers(my_sol)
+
+#afedR::check_answers(my_answers)
+```
+
+Question
+========
+
+Using the `BatchGetSymbols` package, download daily data of the Facebook stock (FB) from _Yahoo Finance_ for the period between 2019 and 2020. What is the lowest **unadjusted closing price (column `price.close`)** in the analyzed period? 
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: num
+exsolution: `r my_sol`
+exname: "batchgetsymbols"
+exshuffle: TRUE
+

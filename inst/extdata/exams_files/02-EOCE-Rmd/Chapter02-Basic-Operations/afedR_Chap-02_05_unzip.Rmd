@@ -1,0 +1,34 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no datageneration
+```
+
+Question
+========
+
+Use the `unzip` function to unzip the downloaded file from previous question to a directory called` 'afedR-files'` inside the "Desktop" folder. How many files are available in the resulting folder? Tip: use the `recursive = TRUE` argument with `list.files` to also search for all available subdirectories.
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+my_folder <- '~/Desktop/adfeR-Files' # this is probably C:/Users/USERNAME/Desktop for Windows
+unzip(local_file, exdir = my_folder) # local_file comes from previous exercise
+
+files <- list.files(my_folder, 
+                    full.names = TRUE, 
+                    recursive = TRUE)
+
+n_files <- length(files)
+
+message(paste0('There are ', n_files, ' files available at folder "', my_folder, '".'))
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "unzip"
+exshuffle: TRUE
+

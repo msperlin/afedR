@@ -1,0 +1,57 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+
+tickers <- c('AAPL', 
+             'MSFT',
+             'AMZN',
+             'GOOG') 
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = Sys.Date() - 500,
+                             last.date = Sys.Date())[[2]]
+
+p <- ggplot(df_stocks, aes(x = ref.date, 
+                           y = price.adjusted,
+                           color = ticker)) + 
+  geom_line() + 
+  labs(title = paste0('Prices for ', tickers) ,
+       subtitle = paste0('Data from ', min(df_stocks$ref.date), ' to ', 
+                         max(df_stocks$ref.date)),
+       caption = "Solution for exercise 05, chapter 10 - afedR")
+
+# add points and facet_wrap
+p <- p + geom_point() + 
+  facet_wrap(~ticker, scales = 'free') + 
+  theme_bw() + 
+  scale_color_grey()
+
+# 
+print(p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Change the theme of the previous graph to a black and white scale, both for the graph area and for the colors of the lines.
+
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

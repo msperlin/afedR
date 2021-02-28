@@ -1,0 +1,41 @@
+```{r solution, echo = FALSE, results = "hide", cache=TRUE}
+my_link <- 'https://www.gutenberg.org/ebooks/2264.txt.utf-8'
+
+my_book <- readr::read_lines(my_link)
+
+# solution
+full_text <- paste0(my_book, collapse = '\n')
+my_sol <- stringr::str_count(full_text, stringr::fixed('King'))
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol)
+
+#check_answers(my_answers)
+```
+
+
+Question
+========
+
+Bind the vector of characters in `my_book` into a single object  called `full_text` using command `paste0(my_book, collapse = '\n'`. Using the `stringr` package, how many times is the word `'King'` repeated throughout the text?
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: num
+exsolution: `r my_sol`
+exname: "pride and prejudice"
+exshuffle: TRUE
+

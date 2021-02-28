@@ -1,0 +1,95 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no datageneration
+
+```
+
+Question
+========
+
+Create a `dataframe` with the following code:
+
+```{r, eval=FALSE}
+library(dplyr)
+
+my_N <- 10000
+my_df <- tibble(x = 1:my_N,
+                y = runif(my_N))
+```
+
+Export the resulting `dataframe` to each of the five formats: csv, rds, xlsx, fst. Which of the formats took up the most space in the computer's memory? Tip: `file.size` calculates the size of files within R.
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+library(tidyverse)
+
+do_tests <- function(my_N) {
+  
+  my_df <- tibble(x = 1:my_N,
+                  y = runif(my_N))
+  
+  # csv
+  my_f <- tempfile(pattern = 'temp', fileext = '.csv')
+  time.csv <- system.time({
+    write_csv(my_df, my_f)
+  })['elapsed']
+  size.csv <- file.size(my_f)/1000000
+  
+  # rds
+  my_f <- tempfile(pattern = 'temp', fileext = '.rds')
+  time.rds <- system.time({
+    write_rds(my_df, my_f)
+  })['elapsed']
+  
+  size.rds <- file.size(my_f)/1000000
+  
+  # xlsx
+  my_f <- tempfile(pattern = 'temp', fileext = '.xlsx')
+  library(writexl) 
+  time.xlsx <- system.time({
+    write_xlsx(my_df, my_f)
+  })['elapsed']
+  
+  size.xlsx <- file.size(my_f)/1000000
+  
+  # fst
+  library(fst)
+  my_f <- tempfile(pattern = 'temp', fileext = '.fst')
+  time.fst <- system.time({
+    write_fst(my_df, my_f)
+  })['elapsed']
+  
+  size.fst <- file.size(my_f)/1000000
+  
+  print(c(size.csv, size.rds, size.xlsx, size.fst))
+  
+  print(c(time.csv, time.rds, time.xlsx, time.fst))
+  
+  tab <- tibble(Result = c('csv', 'rds', 'xlsx', 'fst'), 
+                Size =  c(size.csv, size.rds, size.xlsx, size.fst),
+                Time = c(time.csv, time.rds, time.xlsx, time.fst))
+  
+  return(tab)
+}
+
+my_N <- 10000
+
+tab <- do_tests(my_N)
+print(tab)
+
+my_msg <- paste0('The format with largest disk space for N = ', my_N, ' is ', 
+                 tab$Result[which.max(tab$Size)], '.')
+message(my_msg)
+
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "export file"
+exshuffle: TRUE
+

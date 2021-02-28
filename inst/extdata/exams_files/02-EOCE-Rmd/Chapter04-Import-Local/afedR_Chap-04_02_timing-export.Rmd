@@ -1,0 +1,34 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- c('S+', 
+                'C++',
+                'Python',
+                'Matlab',
+                'Javascript')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Improve the previous code by measuring the execution time for saving the data in different formats. Which file format resulted in the fastest execution for exporting data? Tip: use the `system.time` function or the` tictoc` package to calculate the execution times.
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+# do notice that this chunk requires the execution of previous solution
+my_msg <- paste0('The format with least execution time for N = ', my_N, ' is ', 
+                 tab$Result[which.min(tab$Time)], '.')
+message(my_msg)
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "timing export"
+exshuffle: TRUE
+

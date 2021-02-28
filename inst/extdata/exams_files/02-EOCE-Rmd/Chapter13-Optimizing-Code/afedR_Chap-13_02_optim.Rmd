@@ -1,0 +1,52 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(Rcpp)
+
+cppFunction('Rcpp::NumericVector sum_vectors_C(NumericVector x, NumericVector y) {
+  int n = x.size();
+  
+  Rcpp::NumericVector total(x.size());
+  
+  for(int i = 0; i < n; ++i) {
+    total[i] = x[i] + y[i];
+  }
+  return total;
+}')
+
+x <- runif(100)
+y <- runif(100)
+
+sol_C <- sum_vectors_C(x, y)
+sol_R <- x + y
+
+identical(sol_C, sol_R)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+
+type_question <- 'string'
+ex_name <- 'otimizing 13-02'
+```
+
+Question
+========
+
+Use the `Rcpp` package to write a C++ language function that will add elements of two numerical vectors. The output must be another vector of the same size and with elements equivalent to the `x + y` operation. Use the `identical` function to test that all elements of both vectors are equal.
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: `r type_question`
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: `r ex_name`
+exshuffle: TRUE
+

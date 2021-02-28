@@ -1,0 +1,56 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(tidyverse)
+
+df_sp500 <- GetSP500Stocks()
+
+my_tickers <- df_sp500$Tickers
+
+future::plan(future::multisession, 
+             workers = floor(parallel::detectCores()/2))
+
+first_date <- '2015-01-01'
+df_prices <- BatchGetSymbols(tickers = my_tickers, 
+                             first.date = first_date, 
+                             last.date = Sys.Date(),
+                             freq.data = 'yearly', 
+                             do.parallel = TRUE)[[2]]
+
+tab <- df_prices %>%
+  na.omit() %>%
+  group_by(ticker) %>%
+  summarise(mean = mean(ret.adjusted.prices),
+            sd = sd(ret.adjusted.prices))
+
+p <- ggplot(tab, aes(x = sd, y = mean)) + 
+  geom_point() + 
+  xlim(0, 0.5) + ylim(-0.5, 0.5)
+
+print(p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Use the `BatchGetSymbols::GetSP500Stocks` function to discover all tickers currently belonging to the SP500 index. Using `BatchGetSymbols`, download the annual return data for all stocks in the index, from `r '2015-01-01'` to the current day. After that, create the average/variance map by plotting the average annual return as the y axis and the standard deviation as the x axis. Tip: Use the parallel option in `BatchGetSymbols` to speed up the execution of the code. Also, you will find many outliers in the raw data. Make sure that the graph is visible limiting the x and y axes (see the `ggplot2::xlim` and `ggplot2::ylim` functions).
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

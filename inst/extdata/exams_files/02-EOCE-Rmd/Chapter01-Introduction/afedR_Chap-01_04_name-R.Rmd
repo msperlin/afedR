@@ -1,0 +1,32 @@
+```{r solution, echo = FALSE, results = "hide"}
+my_answers <- c ('Letter R is shared in the first names of its authors.',
+                 'R = Reausable code.',
+                 'It was the only available letter, not yet used as a programming language.',
+                 'The mother of one of the authors is called Renata.',
+                 'Letter R is cool!')
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+What was the reason the programming language was named R?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+The letter R was chosen due to its use in the first letter of the two authors of the platform.
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "S PLUS"
+exshuffle: TRUE
+

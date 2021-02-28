@@ -1,0 +1,62 @@
+```{r solution, echo = FALSE, results = "hide"}
+library(simfinR)
+library(tidyverse)
+
+# set api key - make sure you got your own at https://simfin.com/data/access/api
+my_api_key <- read_lines('~/Dropbox/98-pass_and_bash/.api_key_simfin.txt')
+# get info
+
+df_info_companies <- simfinR_get_available_companies(my_api_key)
+
+company_name <- 'TESLA INC'
+id_companies <- 56317 # id of TESLA
+type_statements <- 'pl' # profit/loss
+periods = 'FY' # final year
+years = 2018:2020
+
+df_fin_FY <- simfinR_get_fin_statements(id_companies,
+                                        type_statements = type_statements,
+                                        periods = periods,
+                                        years = years,
+                                        api_key = my_api_key)
+
+glimpse(df_fin_FY)
+
+desired_acc <- 'Net Income'
+tbl_ac <- df_fin_FY %>%
+  dplyr::filter(acc_name == desired_acc)
+
+latest_acc_value <- tbl_ac$acc_value[which.max(tbl_ac$year)]
+
+my_sol <- latest_acc_value 
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- afedR::make_random_answers(my_sol, 
+                                         is_cash = TRUE)
+```
+
+Question
+========
+
+With package `simfinR`, download the PL (profit/loss) statement for FY (final year) data of company `r company_name` (id = `r id_companies`) for years `r paste0(years, collapse=', ')`.  What is the latest `r desired_acc` of the company?
+
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "simfinr 02"
+exshuffle: TRUE
+

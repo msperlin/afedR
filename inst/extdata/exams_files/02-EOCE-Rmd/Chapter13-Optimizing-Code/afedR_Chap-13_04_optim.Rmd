@@ -1,0 +1,51 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(Quandl)
+library(memoise)
+library(tictoc)
+
+mem_quandl <- memoise(f = Quandl, cache = cache_memory())
+
+id <- 'FRED/DDOE01USA086NWDB'
+
+tic('Using original Quandl')
+df <- Quandl(code = id)
+toc()
+
+tic('Using memoise version (first call)')
+df <- mem_quandl(code = id)
+toc()
+
+tic('Using memoise version (second call)')
+df <- mem_quandl(code = id)
+toc()
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+
+type_question <- 'string'
+ex_name <-  'otimizing 13-04'
+```
+
+Question
+========
+
+Use the `memoise` package to create a memorized version of function `Quandl::Quandl`. Use the new function to import data about the United States Consumer Price Index (quandl code `'FRED/DDOE01USA086NWDB'`). How much percentage speed gain do you get from the second call to the memorized version?
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: `r type_question`
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: `r ex_name`
+exshuffle: TRUE
+

@@ -1,0 +1,64 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(tidyverse)
+
+tickers <- GetSP500Stocks()$Tickers
+first_date <- Sys.Date() - 3*365
+last_date  <- Sys.Date()
+
+df_stocks <- BatchGetSymbols(tickers = tickers, 
+                             first.date = first_date, 
+                             last.date = last_date)[[2]]
+
+library(dplyr)
+library(fGarch)
+
+tab_models <- df_stocks %>%
+  na.omit() %>%
+  group_by(ticker) %>%
+  do(my_garch = garchFit(formula = ~ arma(1,0) + garch(1,1), 
+                         data = .$ret.adjusted.prices, 
+                         trace = FALSE) ) 
+
+tab_models <- tab_models %>%
+  mutate(forecast_mean = predict(my_garch, 
+                                 n.ahead = 1)$meanForecast[1],
+         forecast_sd = predict(my_garch, 
+                               n.ahead = 1)$standardDeviation[1],
+         sharpe_index = forecast_mean/forecast_sd)
+
+glimpse(tab_models)
+
+# solution
+idx <- which.max(tab_models$sharpe_index)
+print(tab_models$ticker[idx])
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+#my_answers <- make_random_answers(my_sol)
+my_answers <- rep(NA, 5)
+```
+
+Question
+========
+
+In the same code used for the previous question, add a new column-list with the estimation of an ARMA (1, 0)-GARCH(1, 1) model for the returns of each stock. Add another column with the volatility forecast (standard deviation) at _t + 1_. 
+
+By dividing the expected return calculated in the previous item by the expected risk, we have a market direction index, where those stocks with the highest index value have the highest ratio of expected return to risk. Which stock is more attractive and has the highest value of this index?
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

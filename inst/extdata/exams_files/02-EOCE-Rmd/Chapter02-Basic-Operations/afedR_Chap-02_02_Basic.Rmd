@@ -1,0 +1,31 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no data generation
+
+```
+
+Question
+========
+
+In the previously created _script_, use function `message` to  display the following phrase in R's _prompt_:` "My name is ...." `.
+
+
+Solution
+================
+
+```{r, eval=FALSE}
+x <- 36
+y <- 'Richard'
+
+message(paste0('My name is ', y))
+
+# press control+shift+enter to run this chunk of code in RStudio
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "Basic"
+exshuffle: TRUE
+

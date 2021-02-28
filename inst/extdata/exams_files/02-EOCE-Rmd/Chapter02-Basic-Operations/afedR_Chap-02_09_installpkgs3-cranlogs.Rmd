@@ -1,0 +1,38 @@
+```{r solution, echo = FALSE, results = "hide", message = FALSE}
+#if (!require(cranlogs)) install.packages('cranlogs')
+
+pkgs <- cranlogs::cran_top_downloads(when = 'last-month')
+
+my_sol <- pkgs$package[1]
+
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- make_random_answers(my_sol, unique(pkgs$package))
+
+check_answers(my_answers)
+```
+
+Question
+========
+
+The `cranlogs` package allows access to downloads statistics of CRAN packages. After installing `cranlogs` on your computer, use the `cranlogs::cran_top_downloads` function to check which are the 10 most installed packages by the global community in the last month. Which package comes first? Tip: Set the `cran_top_downloads` function input to `when = 'last-month'`. Also, be aware that the answer here may not be the same as you got because it depends on the day the R code was executed.
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "install pkgs 03"
+exshuffle: TRUE
+

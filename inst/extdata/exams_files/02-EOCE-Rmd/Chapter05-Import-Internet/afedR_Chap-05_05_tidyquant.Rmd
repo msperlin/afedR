@@ -1,0 +1,47 @@
+```{r solution, echo = FALSE, results = "hide"}
+library(tidyquant)
+library(tidyverse)
+
+# print available indices
+available_index <- tq_index_options()
+
+my_index <- sample(available_index, 1)
+
+# get components of "DOWJONES"
+comp_idx <- tq_index(my_index)
+
+highest_weight <- comp_idx$company[which.max(comp_idx$weight)]
+
+my_sol <- highest_weight 
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- afedR::make_random_answers(my_sol, 
+                                  candidates = comp_idx$company)
+```
+
+Question
+========
+
+Using function `tidyquant::tq_index`, download current composition of index `r my_index`. What is the company with the highest percentage in the composition of the index? 
+
+Be aware that the answer is time-dependent and the reported result might be different from what you actually got in your R session.
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "tidyquant"
+exshuffle: TRUE
+

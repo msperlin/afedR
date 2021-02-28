@@ -1,0 +1,27 @@
+```{r datageneration, echo = FALSE, results = "hide"}
+# no data generations
+
+#check_answers(my_answers)
+```
+
+Question
+========
+
+Use [Google](https://www.google.com/search?q=R+groups+in+my+city) to search for R groups in your region. Check if the meetings are frequent and, if you don't have a major impediment, go to one of these meetings and make new friends.
+
+
+Solution
+================
+
+It is not uncommon for programmers to have a tendency for  introversion. This was certainly my case at the beginning of my career. But, know that shyness is a non-permanent state, a defense mechanism created by yourself against threats that don't really exist! In the same way that you will improve in any sport at the rate of how often you practice it, the more comunicative you'll become by simply speaking more. 
+
+The sad (or not) reality for the timid is that communication is a fundamental part of the adult life and is a way to maintain your professional network. The more people who know your work and your personality, the better. Perhaps a person you met in one of these groups can refer you to a job vacancy or future project. So, resuming, what do you really have to lose by going to one of these meetings?
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "R groups"
+exshuffle: TRUE
+

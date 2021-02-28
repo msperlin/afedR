@@ -8,7 +8,7 @@
 #' @examples
 #'
 #' print(afedR_get_links_book())
-afedR_get_links_book <- function() {
+get_links_book <- function() {
 
   my_l <- list(book_site = 'https://www.msperlin.com/blog/publication/2020_book-afedr-en/',
                book_site_zip = 'TODO',
@@ -32,7 +32,7 @@ afedR_get_links_book <- function() {
 #' \dontrun{
 #' flag <- afedR_get_book_files()
 #' }
-afedR_get_book_files <- function(path_to_copy = '~') {
+copy_book_files <- function(path_to_copy = '~') {
 
   if (!dir.exists(path_to_copy)) {
     stop(paste0('Path ', path_to_copy, ' does not exists. Perhaps create it ?'))
@@ -55,20 +55,20 @@ afedR_get_book_files <- function(path_to_copy = '~') {
   if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
 
   # Slides
-  slides_path_files <- system.file('extdata/slides', package = 'afedR')
-  slides_path_to_copy <- file.path(path_to_copy, 'afedR files/slides')
-
-  message('Copying slides files files to ', slides_path_to_copy)
-  if (!dir.exists(slides_path_to_copy)) dir.create(slides_path_to_copy,
-                                                   recursive = TRUE)
-
-  files_to_copy <- list.files(slides_path_files, full.names = TRUE,
-                              include.dirs = TRUE)
-
-  flag <- file.copy(from = files_to_copy, to = slides_path_to_copy,
-                    overwrite = TRUE, recursive = TRUE)
-
-  if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
+  # slides_path_files <- system.file('extdata/slides', package = 'afedR')
+  # slides_path_to_copy <- file.path(path_to_copy, 'afedR files/slides')
+  #
+  # message('Copying slides files files to ', slides_path_to_copy)
+  # if (!dir.exists(slides_path_to_copy)) dir.create(slides_path_to_copy,
+  #                                                  recursive = TRUE)
+  #
+  # files_to_copy <- list.files(slides_path_files, full.names = TRUE,
+  #                             include.dirs = TRUE)
+  #
+  # flag <- file.copy(from = files_to_copy, to = slides_path_to_copy,
+  #                   overwrite = TRUE, recursive = TRUE)
+  #
+  # if (all(flag)) message(paste0('\t', length(flag), ' files copied'))
 
   # EOC exercises
   eoc_exerc_path_files <- system.file('extdata/eoc-exercises', package = 'afedR')
@@ -91,7 +91,7 @@ afedR_get_book_files <- function(path_to_copy = '~') {
   r_code_path_files <- system.file('extdata/R-code', package = 'afedR')
   r_code_exerc_path_to_copy <- file.path(path_to_copy, 'afedR files/R-code')
 
-  message('Copying end-of-chapter (eoc) exercises with solutions to ',
+  message('Copying R code to ',
           r_code_exerc_path_to_copy)
   if (!dir.exists(r_code_exerc_path_to_copy)) dir.create(r_code_exerc_path_to_copy,
                                                          recursive = TRUE)
@@ -106,3 +106,56 @@ afedR_get_book_files <- function(path_to_copy = '~') {
 
   return(invisible(TRUE))
 }
+
+#' Fromats cash values
+#'
+#' @param x A numeric
+#' @param type_cash Type of cash
+#'
+#' @return A formatted string
+#' @export
+#'
+#' @examples
+format_cash <- function(x, type_cash = 'USD') {
+  require(scales)
+
+  if (type_cash == 'USD') {
+    x.formatted <- dollar(x,
+                          prefix = '$',
+                          decimal.mark = '.',
+                          big.mark = ',',
+                          largest_with_cents = Inf)
+
+  }
+  if (type_cash == 'BRL') {
+    x.formatted <- dollar(x,
+                          prefix = 'R$',
+                          decimal.mark = ',',
+                          big.mark = '.',
+                          largest_with_cents = Inf)
+  }
+
+  return(x.formatted)
+}
+
+#' Formats percent
+#'
+#' @param x a percentage
+#'
+#' @return string
+#' @export
+#'
+#' @examples
+format_percent <- function(x) {
+  require(scales)
+
+  # english percentage
+  x.formatted <- percent(x,
+                         decimal.mark = '.',
+                         big.mark = ',', accuracy = 0.01)
+
+  return(x.formatted)
+}
+
+
+

@@ -1,0 +1,49 @@
+```{r solution, echo = FALSE, results = "hide", message=FALSE, eval=FALSE}
+library(BatchGetSymbols)
+library(tidyverse)
+
+tickers <- 'TLSA'
+
+df_tlsa<- BatchGetSymbols(tickers = tickers, 
+                         first.date = Sys.Date() - 500,
+                         last.date = Sys.Date())[[2]]
+
+p <- ggplot(df_tlsa, aes(x = ref.date, y = price.adjusted)) + 
+  geom_line() + 
+  labs(title = paste0('Prices for ', tickers) ,
+       subtitle = paste0('Data from ', min(df_tlsa$ref.date), ' to ', 
+                         max(df_tlsa$ref.date)),
+       caption = "Solution for exercise 01, chapter 10 - afedR")
+
+print(p)
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+# none
+my_answers <- rep(0, 5)
+```
+
+Question
+========
+
+Download TESLA (TSLA) stock data with the `BatchGetSymbols` package for the last 500 days. Display the price line chart adjusted over time using the `ggplot2 :: ggplot` function. Make sure that:
+
+- x and y axes are correctly named;
+- The chart has a title ("Prices for TESLA"), subtitle ("Data from YYYY-MM-DD to YYYY-MM-DD") and a _caption_ ("Solution for exercise 01, chapter 10 - afedR").
+
+
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: string
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "function 01"
+exshuffle: TRUE
+

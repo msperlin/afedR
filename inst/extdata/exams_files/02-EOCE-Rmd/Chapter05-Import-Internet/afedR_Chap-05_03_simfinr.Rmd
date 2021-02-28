@@ -1,0 +1,43 @@
+```{r solution, echo = FALSE, results = "hide"}
+library(simfinR)
+library(tidyverse)
+
+# set api key - make sure you got your own at https://simfin.com/data/access/api
+my_api_key <- read_lines('~/Dropbox/98-pass_and_bash/.api_key_simfin.txt')
+# get info
+
+df_info_companies <- simfinR_get_available_companies(my_api_key)
+
+# check it
+n_companies <- n_distinct(df_info_companies$name)
+
+my_sol <- n_companies
+```
+
+```{r datageneration, echo = FALSE, results = "hide"}
+my_answers <- afedR::make_random_answers(my_sol)
+```
+
+Question
+========
+
+Use function `simfinR::simfinR_get_available_companies` to import data about all available companies in [Simfin](https://simfin.com). How many companies do you find? Be aware that the number of rows is not necessarily equal to the number of companies. You need to check the number of unique values in column `name` (see function `dplyr::n_distinct`. 
+
+```{r questionlist, echo = FALSE, results = "asis"}
+exams::answerlist(my_answers, markup = "markdown")
+```
+
+Solution
+================
+
+```{r solution, eval=FALSE}
+```
+
+
+Meta-information
+================
+extype: schoice
+exsolution: `r mchoice2string(c(TRUE, FALSE, FALSE, FALSE, FALSE), single = TRUE)`
+exname: "simfinr 01"
+exshuffle: TRUE
+

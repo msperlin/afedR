@@ -4,20 +4,20 @@ library(GetQuandlData)
 id_series <- c(COFFEE = 'CEPEA/COFFEE_A')
 
 # set api key (make sure you got your own!)
-my_api_key <- readLines('~/Dropbox/98-pass_and_bash/.quandl_api.txt')
+#my_api_key <- readLines('~/Dropbox/98-pass_and_bash/.quandl_api.txt')
 
 first_date <- '2010-01-01'
 last_date <- '2020-12-31'
 
-df_coffee <- get_Quandl_series(id_in = id_series, 
-                               first_date = first_date,
-                               last_date = last_date,
-                               api_key = my_api_key,
-                               do_cache = TRUE)
+#df_coffee <- get_Quandl_series(id_in = id_series, 
+ #                              first_date = first_date,
+  #                             last_date = last_date,
+   #                            api_key = my_api_key,
+    #                           do_cache = TRUE)
 
 # find most recent
-idx <- which.max(df_coffee$ref_date)
-my_sol <- as.numeric(df_coffee$`Cash Price US$`[idx])
+#idx <- which.max(df_coffee$ref_date)
+#my_sol <- as.numeric(df_coffee$`Cash Price US$`[idx])
 ```
 
 ```{r datageneration, echo = FALSE, results = "hide"}
@@ -41,8 +41,8 @@ Solution
 
 Meta-information
 ================
-extype: num
-exsolution: `r my_sol`
+extype: string
+exsolution: `r NA`
 exname: "quandl"
 exshuffle: TRUE
 

@@ -21,4 +21,5 @@ Imports:
   dplyr,
   stats,
   exams,
-  tinytex
+  tinytex,
+  tidyquant

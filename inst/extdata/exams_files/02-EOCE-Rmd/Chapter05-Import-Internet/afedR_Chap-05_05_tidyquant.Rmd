@@ -1,6 +1,5 @@
 ```{r solution, echo = FALSE, results = "hide"}
 library(tidyquant)
-library(tidyverse)
 
 # print available indices
 available_index <- tq_index_options()

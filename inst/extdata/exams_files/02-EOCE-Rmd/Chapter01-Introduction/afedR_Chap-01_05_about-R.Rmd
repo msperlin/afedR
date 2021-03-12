@@ -1,5 +1,6 @@
 ```{r solution, echo = FALSE, results = "hide"}
 library(dplyr)
+library(tidyr)
 
 text1 <- tibble(text = c ('R is a mature and stable programming platform;',
                           'R was developed in 2018 and is an innovative and unstable project;'),

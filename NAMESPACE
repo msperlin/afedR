@@ -3,6 +3,7 @@
 export(add_html_content)
 export(add_tex_content)
 export(afedR_gen_rnd_vec)
+export(build_answer_key)
 export(build_answers_text)
 export(calc_ret)
 export(check_answers)

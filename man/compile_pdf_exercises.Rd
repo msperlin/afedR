@@ -30,7 +30,7 @@ compile_pdf_exercises(
 \item{solution}{Wheter to include solution or not..}
 }
 \value{
-a list
+a dtaframe with solutions
 }
 \description{
 Builds pdf exercices

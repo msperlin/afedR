@@ -142,9 +142,10 @@ make_random_answers <- function(solution,
       if (n_decimals ==0) {
         my_answers <- floor(solution*gen_rnd_vec())
       } else {
+
         if (n_decimals > 4) n_decimals <- 4
-        my_answers <- format(solution*gen_rnd_vec(),
-                             digits = n_decimals)
+
+        my_answers <- prettyNum(solution*gen_rnd_vec())
       }
 
       if (is_cash) {
